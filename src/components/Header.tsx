@@ -19,10 +19,27 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const pathname = usePathname();
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      // Check if scrolled from top
+      setIsScrolled(currentScrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 animate-fade-in-down">
+    <header className={cn(
+      "fixed top-0 left-0 right-0 z-50 w-full border-b transition-all duration-300 animate-fade-in-down",
+      isScrolled
+        ? "bg-background/98 backdrop-blur-md shadow-lg"
+        : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    )}>
       <nav className="container flex items-center justify-between h-16 px-6 md:px-12">
         {/* Logo */}
         <Link href="/" className="hover:scale-105 transition-all duration-300 animate-scale-in">
