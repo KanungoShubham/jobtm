@@ -14,7 +14,7 @@ const navigation = [
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Contact", href: "/contact" },
-  { name: "Marketing", href: "/marketing-materials" },
+  // { name: "Marketing", href: "/marketing-materials" },
 ];
 
 export function Header() {
@@ -66,12 +66,12 @@ export function Header() {
           <div className="animate-scale-in animate-delay-400">
             <ThemeToggle />
           </div>
-          <Link href="/auth" className="animate-scale-in-bounce animate-delay-500">
+          {/* <Link href="/auth" className="animate-scale-in-bounce animate-delay-500">
             <Button size="sm" className="gap-2 hover-lift hover-shine">
               <HiLogin className="h-4 w-4" />
               Sign in
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Mobile Menu Button */}
