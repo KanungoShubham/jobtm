@@ -28,12 +28,6 @@ const TYPE_CFG: Record<ApprovalType, { icon: any; color: string; bg: string; lab
   complaint: { icon: HiFlag,          color: 'text-red-500',    bg: 'bg-red-50',     label: 'Report' },
 };
 
-const SAMPLE: GenericItem[] = [
-  { id: 's1', type: 'job',       title: 'Job Post Review Required', subtitle: 'Data Entry – XYZ BPO',       detail: 'Suspicious salary: ₹50K/month for freshers',      time: '25 min ago' },
-  { id: 's2', type: 'aadhar',    title: 'Aadhar Re-Verification',   subtitle: 'User #4521 – Priya Nair',    detail: 'Document mismatch flagged by system',              time: '1 hr ago' },
-  { id: 's3', type: 'complaint', title: 'User Complaint',           subtitle: 'Fake job – "FastCash Jobs"', detail: 'Reported by 3 users for advance fee fraud',        time: '2 hr ago' },
-  { id: 's4', type: 'job',       title: 'Job Post Review Required', subtitle: 'Work From Home – Data Entry',detail: 'Flagged: "No experience needed, earn ₹5000/day"',  time: '4 hr ago' },
-];
 
 const FILTERS = ['All', 'Employer', 'Job', 'Aadhar', 'Report'];
 
@@ -73,7 +67,7 @@ function RejectModal({ companyName, onConfirm, onCancel }: {
 
 export default function AdminApprovalsPage() {
   const [companies,  setCompanies]  = useState<CompanyItem[]>([]);
-  const [items,      setItems]      = useState<GenericItem[]>(SAMPLE);
+  const [items,      setItems]      = useState<GenericItem[]>([]);
   const [dismissed,  setDismissed]  = useState<Set<string>>(new Set());
   const [filter,     setFilter]     = useState('All');
   const [loading,    setLoading]    = useState(true);

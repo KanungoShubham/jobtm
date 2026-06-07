@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   HiUsers, HiBriefcase, HiDocumentText, HiExclamationCircle,
-  HiCheckCircle, HiFlag, HiRefresh, HiTrendingUp, HiClock,
+  HiCheckCircle, HiRefresh,
 } from 'react-icons/hi';
 import { dashboardApi } from '@/lib/api';
 import { getAdminToken } from '@/lib/adminAuth';
@@ -54,18 +54,6 @@ function StatCard({ label, value, sub, icon: Icon, color, bg, border, badge }: {
   );
 }
 
-const RECENT_FLAGS = [
-  { type: 'job',   msg: 'Suspicious job post by "XYZ Corp"',         time: '5 min ago',  sev: 'high' },
-  { type: 'user',  msg: 'Multiple login attempts – +91 9876…',        time: '22 min ago', sev: 'medium' },
-  { type: 'doc',   msg: 'Aadhar verification failed for User #3041',  time: '1 hr ago',   sev: 'low' },
-  { type: 'job',   msg: 'Job post with misleading salary range',      time: '2 hr ago',   sev: 'medium' },
-];
-
-const SEV_COLOR: Record<string, string> = {
-  high:   'bg-red-100 text-red-600',
-  medium: 'bg-amber-100 text-amber-600',
-  low:    'bg-blue-100 text-blue-600',
-};
 
 export default function AdminDashboard() {
   const [stats,   setStats]   = useState<Stats | null>(null);
@@ -170,61 +158,61 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Platform Health */}
+        {/* Platform Breakdown */}
         <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-          <p className="text-sm font-extrabold text-slate-900 mb-4">Platform Health</p>
-          <div className="space-y-4">
-            {[
-              { label: 'Aadhar Verifications',  value: 342, max: 500, color: 'bg-emerald-500' },
-              { label: 'Job Posts Reviewed',    value: 128, max: 200, color: 'bg-blue-500' },
-              { label: 'Reports Resolved',      value: 89,  max: 100, color: 'bg-violet-500' },
-            ].map((h) => {
-              const pct = Math.round((h.value / h.max) * 100);
-              return (
-                <div key={h.label} className="space-y-1.5">
-                  <div className="flex justify-between">
-                    <p className="text-xs text-slate-500">{h.label}</p>
-                    <p className="text-xs font-semibold text-slate-700">{h.value}/{h.max}</p>
+          <p className="text-sm font-extrabold text-slate-900 mb-4">Platform Breakdown</p>
+          {stats ? (
+            <div className="space-y-4">
+              {[
+                { label: 'Job Seekers',       value: stats.jobSeekers       ?? 0, max: Math.max(stats.totalUsers, 1),     color: 'bg-blue-500' },
+                { label: 'Employers',          value: stats.employers         ?? 0, max: Math.max(stats.totalUsers, 1),     color: 'bg-violet-500' },
+                { label: 'Verified Companies', value: stats.verifiedCompanies ?? 0, max: Math.max(stats.totalCompanies, 1), color: 'bg-emerald-500' },
+              ].map((h) => {
+                const pct = Math.min(100, Math.round((h.value / h.max) * 100));
+                return (
+                  <div key={h.label} className="space-y-1.5">
+                    <div className="flex justify-between">
+                      <p className="text-xs text-slate-500">{h.label}</p>
+                      <p className="text-xs font-semibold text-slate-700">{h.value.toLocaleString('en-IN')}</p>
+                    </div>
+                    <div className="bg-slate-100 h-2 rounded-full overflow-hidden">
+                      <div className={`h-2 rounded-full ${h.color}`} style={{ width: `${pct}%` }} />
+                    </div>
                   </div>
-                  <div className="bg-slate-100 h-2 rounded-full overflow-hidden">
-                    <div className={`h-2 rounded-full ${h.color}`} style={{ width: `${pct}%` }} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-sm text-slate-400 text-center py-4">Loading…</p>
+          )}
         </div>
       </div>
 
-      {/* Recent Flags */}
+      {/* Pending Reviews */}
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
-          <p className="text-sm font-extrabold text-slate-900">Recent Flags</p>
+          <p className="text-sm font-extrabold text-slate-900">Pending Reviews</p>
           <Link href="/admin/approvals" className="text-xs font-semibold text-red-500 hover:text-red-600">View all →</Link>
         </div>
-        <div className="divide-y divide-slate-50">
-          {RECENT_FLAGS.map((f, i) => (
-            <div key={i} className="flex items-start gap-3 px-5 py-3.5">
-              <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                f.type === 'job' ? 'bg-violet-50' : f.type === 'user' ? 'bg-blue-50' : 'bg-amber-50'
-              }`}>
-                {f.type === 'job' ? <HiBriefcase className="w-4 h-4 text-violet-600" />
-                  : f.type === 'user' ? <HiUsers className="w-4 h-4 text-blue-600" />
-                  : <HiFlag className="w-4 h-4 text-amber-600" />}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-slate-700 truncate">{f.msg}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <HiClock className="w-3 h-3 text-slate-400" />
-                  <span className="text-[10px] text-slate-400">{f.time}</span>
-                </div>
-              </div>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full capitalize ${SEV_COLOR[f.sev]}`}>
-                {f.sev}
-              </span>
-            </div>
-          ))}
-        </div>
+        {pendingTotal > 0 ? (
+          <div className="px-5 pb-5">
+            <p className="text-sm text-slate-600">
+              There {pendingTotal === 1 ? 'is' : 'are'}{' '}
+              <span className="font-bold text-red-600">{pendingTotal}</span>{' '}
+              pending {pendingTotal === 1 ? 'review' : 'reviews'} awaiting your attention.
+            </p>
+            <Link href="/admin/approvals"
+              className="mt-3 inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">
+              <HiExclamationCircle className="w-4 h-4" />
+              Review Now
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center py-8 gap-2">
+            <HiCheckCircle className="w-8 h-8 text-emerald-400" />
+            <p className="text-sm text-slate-400">All caught up — no pending reviews.</p>
+          </div>
+        )}
       </div>
     </div>
   );
