@@ -1,35 +1,29 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import {
-  HiCheckCircle, HiX, HiExclamationCircle, HiBriefcase,
-  HiOfficeBuilding, HiIdentification, HiFlag, HiPhone,
-  HiDocumentText, HiRefresh,
+  HiCheckCircle, HiX, HiExclamationCircle, HiOfficeBuilding,
+  HiPhone, HiDocumentText, HiRefresh, HiMail, HiGlobe,
+  HiLocationMarker, HiIdentification, HiEye,
 } from 'react-icons/hi';
 import { companiesApi } from '@/lib/api';
 import { getAdminToken } from '@/lib/adminAuth';
 
-type ApprovalType = 'job' | 'employer' | 'aadhar' | 'complaint';
-
-interface CompanyItem {
-  id: string; name: string; industry: string; size: string; city: string;
-  pan_number: string; cin_number: string; verify_status: string;
-  registered_at: string; profiles?: { full_name: string; mobile: string };
-}
-
-interface GenericItem {
-  id: string; type: ApprovalType; title: string;
-  subtitle: string; detail: string; time: string;
-}
-
-const TYPE_CFG: Record<ApprovalType, { icon: any; color: string; bg: string; label: string }> = {
-  job:       { icon: HiBriefcase,     color: 'text-violet-600', bg: 'bg-violet-50',  label: 'Job' },
-  employer:  { icon: HiOfficeBuilding,color: 'text-blue-600',   bg: 'bg-blue-50',    label: 'Employer' },
-  aadhar:    { icon: HiIdentification,color: 'text-emerald-600',bg: 'bg-emerald-50', label: 'Aadhar' },
-  complaint: { icon: HiFlag,          color: 'text-red-500',    bg: 'bg-red-50',     label: 'Report' },
+type Tab = 'Pending' | 'Approved' | 'Rejected';
+const TAB_STATUS: Record<Tab, string> = { Pending: 'pending', Approved: 'approved', Rejected: 'rejected' };
+const TAB_ACCENT: Record<Tab, string> = {
+  Pending:  'bg-amber-500 border-amber-500',
+  Approved: 'bg-emerald-500 border-emerald-500',
+  Rejected: 'bg-red-500 border-red-500',
 };
 
-
-const FILTERS = ['All', 'Employer', 'Job', 'Aadhar', 'Report'];
+interface CompanyItem {
+  id: string; name: string; industry: string; size: string;
+  city: string; state: string; address: string; phone: string; email: string; website?: string;
+  pan_number: string; cin_number: string; gst_number?: string;
+  pan_doc_url?: string; cin_doc_url?: string;
+  verify_status: string; rejection_note?: string; registered_at: string;
+  profiles?: { full_name: string; mobile: string };
+}
 
 function RejectModal({ companyName, onConfirm, onCancel }: {
   companyName: string; onConfirm: (note: string) => void; onCancel: () => void;
@@ -41,10 +35,10 @@ function RejectModal({ companyName, onConfirm, onCancel }: {
         <h2 className="text-base font-extrabold text-slate-900 mb-1">Reject Company</h2>
         <p className="text-sm text-slate-500 mb-4">{companyName}</p>
         <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
-          Rejection note (optional)
+          Rejection Reason (optional)
         </label>
         <textarea
-          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-red-400 resize-none"
+          className="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-red-400 resize-none"
           rows={3}
           placeholder="Reason for rejection…"
           value={note}
@@ -65,28 +59,158 @@ function RejectModal({ companyName, onConfirm, onCancel }: {
   );
 }
 
+function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
+  co: CompanyItem; tab: Tab; processing: string | null;
+  onApprove: (id: string) => void; onRejectClick: (co: CompanyItem) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const isProcessing = processing === co.id;
+
+  return (
+    <div className="bg-white rounded-2xl border-2 border-amber-300 shadow-sm overflow-hidden">
+      {/* Accent bar */}
+      <div className="bg-amber-50 border-b border-amber-100 px-5 py-3 flex items-center gap-2">
+        <HiOfficeBuilding className="w-4 h-4 text-amber-600" />
+        <span className="text-xs font-bold text-amber-700 flex-1">
+          {tab === 'Pending' ? 'New Company Registration' : tab === 'Approved' ? 'Approved Company' : 'Rejected Company'}
+        </span>
+        <span className="text-xs text-slate-400">{new Date(co.registered_at).toLocaleDateString('en-IN')}</span>
+      </div>
+
+      <div className="p-5 space-y-4">
+        {/* Company header */}
+        <button onClick={() => setExpanded(!expanded)} className="w-full flex items-center gap-4 text-left">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+            <span className="text-xl font-extrabold text-blue-600">{co.name.charAt(0)}</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-base font-extrabold text-slate-900">{co.name}</p>
+            <p className="text-xs text-slate-500">{co.industry} · {co.city} · {co.size}</p>
+          </div>
+          <span className="text-slate-400 text-xs">{expanded ? '▲ less' : '▼ more'}</span>
+        </button>
+
+        {/* Expanded full details */}
+        {expanded && (
+          <div className="bg-slate-50 rounded-xl p-4 space-y-2">
+            {[
+              { icon: HiMail,           label: 'Email',   value: co.email },
+              { icon: HiPhone,          label: 'Phone',   value: co.phone },
+              { icon: HiGlobe,          label: 'Website', value: co.website ?? '—', href: co.website },
+              { icon: HiLocationMarker, label: 'Address', value: `${co.address}, ${co.city}, ${co.state}` },
+              { icon: HiIdentification, label: 'PAN No.', value: co.pan_number },
+              { icon: HiDocumentText,   label: 'CIN',     value: co.cin_number },
+              ...(co.gst_number ? [{ icon: HiDocumentText, label: 'GST', value: co.gst_number }] : []),
+            ].map((row) => (
+              <div key={row.label} className="flex items-start gap-2 text-sm">
+                <row.icon className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                <span className="text-slate-400 w-16 flex-shrink-0 text-xs">{row.label}</span>
+                {(row as any).href ? (
+                  <a href={(row as any).href} target="_blank" rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline text-xs font-medium">{row.value}</a>
+                ) : (
+                  <span className="text-slate-700 font-medium text-xs">{row.value}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Documents */}
+        <div>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Documents</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: 'PAN Card',         url: co.pan_doc_url, icon: HiDocumentText },
+              { label: 'Reg. Certificate', url: co.cin_doc_url, icon: HiIdentification },
+            ].map((doc) => (
+              <div key={doc.label}
+                className={`flex items-center gap-2 rounded-xl px-3 py-2.5 border ${
+                  doc.url ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'
+                }`}>
+                <doc.icon className={`w-4 h-4 ${doc.url ? 'text-blue-500' : 'text-slate-400'}`} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-slate-400">{doc.label}</p>
+                  {doc.url ? (
+                    <a href={doc.url} target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1">
+                      <HiEye className="w-3 h-3" /> View Document
+                    </a>
+                  ) : (
+                    <p className="text-xs font-semibold text-slate-400">Not uploaded</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Owner */}
+        {co.profiles && (
+          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5">
+            <HiPhone className="w-4 h-4 text-slate-400" />
+            <span className="text-xs text-slate-500">Owner:</span>
+            <span className="text-xs font-bold text-slate-900">{co.profiles.full_name}</span>
+            <span className="text-xs text-slate-500">· {co.profiles.mobile}</span>
+          </div>
+        )}
+
+        {/* Rejection note */}
+        {tab === 'Rejected' && co.rejection_note && (
+          <div className="bg-red-50 border border-red-200 rounded-xl px-3 py-2.5">
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-0.5">Rejection Reason</p>
+            <p className="text-xs text-red-700">{co.rejection_note}</p>
+          </div>
+        )}
+
+        {/* Actions */}
+        {tab === 'Pending' && (
+          <div className="flex gap-2.5">
+            <button
+              disabled={isProcessing}
+              onClick={() => onApprove(co.id)}
+              className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-white font-bold py-3 rounded-2xl text-sm transition">
+              {isProcessing
+                ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                : <HiCheckCircle className="w-4 h-4" />}
+              Approve Company
+            </button>
+            <button
+              disabled={isProcessing}
+              onClick={() => onRejectClick(co)}
+              className="w-12 flex items-center justify-center bg-red-500 hover:bg-red-400 disabled:opacity-60 text-white rounded-2xl transition">
+              <HiX className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+        {tab === 'Approved' && (
+          <div className="flex items-center gap-2 bg-emerald-50 rounded-xl px-3 py-2">
+            <HiCheckCircle className="w-4 h-4 text-emerald-500" />
+            <span className="text-xs text-emerald-700 font-semibold">Verified & Approved</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminApprovalsPage() {
-  const [companies,  setCompanies]  = useState<CompanyItem[]>([]);
-  const [items,      setItems]      = useState<GenericItem[]>([]);
-  const [dismissed,  setDismissed]  = useState<Set<string>>(new Set());
-  const [filter,     setFilter]     = useState('All');
-  const [loading,    setLoading]    = useState(true);
-  const [error,      setError]      = useState('');
+  const [tab,         setTab]         = useState<Tab>('Pending');
+  const [companies,   setCompanies]   = useState<CompanyItem[]>([]);
+  const [loading,     setLoading]     = useState(true);
+  const [error,       setError]       = useState('');
   const [rejectTarget, setRejectTarget] = useState<CompanyItem | null>(null);
-  const [processing, setProcessing] = useState<string | null>(null);
+  const [processing,  setProcessing]  = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true); setError('');
     try {
       const token = getAdminToken() ?? '';
-      const res   = await companiesApi.list(token, 'pending');
+      const res   = await companiesApi.list(token, TAB_STATUS[tab]);
       setCompanies(res.data ?? []);
-    } catch (e: any) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoading(false); }
+  }, [tab]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -109,16 +233,6 @@ export default function AdminApprovalsPage() {
     finally { setProcessing(null); }
   };
 
-  const dismissItem = (id: string) => setDismissed((p) => new Set([...p, id]));
-  const approveItem = (id: string) => setDismissed((p) => new Set([...p, id]));
-
-  const pendingCompanies = companies;
-  const visibleItems = items
-    .filter((i) => !dismissed.has(i.id))
-    .filter((i) => filter === 'All' || TYPE_CFG[i.type].label === filter);
-
-  const totalPending = pendingCompanies.length + visibleItems.length;
-
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       {/* Header */}
@@ -129,7 +243,7 @@ export default function AdminApprovalsPage() {
         </div>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center shadow shadow-red-600/30">
-            <span className="text-sm font-extrabold text-white">{totalPending}</span>
+            <span className="text-sm font-extrabold text-white">{companies.length}</span>
           </div>
           <button onClick={load} disabled={loading}
             className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 bg-white px-3 py-1.5 rounded-xl text-sm transition">
@@ -145,158 +259,46 @@ export default function AdminApprovalsPage() {
         </div>
       )}
 
-      {/* Filter chips */}
-      <div className="flex flex-wrap gap-2">
-        {FILTERS.map((f) => (
-          <button key={f} onClick={() => setFilter(f)}
-            className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
-              filter === f
-                ? 'bg-red-600 text-white border-red-600'
-                : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+      {/* Tabs */}
+      <div className="flex gap-2">
+        {(['Pending', 'Approved', 'Rejected'] as Tab[]).map((t) => (
+          <button key={t} onClick={() => setTab(t)}
+            className={`px-5 py-2 rounded-full text-sm font-bold border transition ${
+              tab === t ? `${TAB_ACCENT[t]} text-white` : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
             }`}>
-            {f}
+            {t}
           </button>
         ))}
       </div>
 
-      {/* Company Registrations */}
-      {(filter === 'All' || filter === 'Employer') && (
-        <>
-          {loading ? (
-            <div className="flex justify-center py-8">
-              <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : pendingCompanies.length > 0 && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full tracking-wider">
-                  COMPANY VERIFY
-                </span>
-                <span className="text-xs font-semibold text-slate-500">{pendingCompanies.length} pending</span>
-              </div>
-
-              {pendingCompanies.map((co) => (
-                <div key={co.id} className="bg-white rounded-2xl border-2 border-amber-300 shadow-sm overflow-hidden">
-                  <div className="bg-amber-50 border-b border-amber-100 px-5 py-3 flex items-center gap-2">
-                    <HiOfficeBuilding className="w-4 h-4 text-amber-600" />
-                    <span className="text-xs font-bold text-amber-700 flex-1">New Company Registration</span>
-                    <span className="text-xs text-slate-400">
-                      {new Date(co.registered_at).toLocaleDateString('en-IN')}
-                    </span>
-                  </div>
-
-                  <div className="p-5 space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center">
-                        <span className="text-xl font-extrabold text-blue-600">{co.name.charAt(0)}</span>
-                      </div>
-                      <div>
-                        <p className="text-base font-extrabold text-slate-900">{co.name}</p>
-                        <p className="text-xs text-slate-500">{co.industry} · {co.city} · {co.size} employees</p>
-                      </div>
-                    </div>
-
-                    <div>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Documents</p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {[
-                          { label: 'PAN Card', value: co.pan_number, icon: HiDocumentText },
-                          { label: 'CIN',      value: co.cin_number, icon: HiIdentification },
-                        ].map((doc) => (
-                          <div key={doc.label}
-                            className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5">
-                            <doc.icon className="w-4 h-4 text-slate-400" />
-                            <div>
-                              <p className="text-[10px] text-slate-400">{doc.label}</p>
-                              <p className="text-xs font-bold text-slate-800">{doc.value}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {co.profiles && (
-                      <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5">
-                        <HiPhone className="w-4 h-4 text-slate-400" />
-                        <span className="text-xs text-slate-500">Admin: </span>
-                        <span className="text-xs font-bold text-slate-900">{co.profiles.mobile}</span>
-                        <span className="text-xs text-slate-500 ml-1">({co.profiles.full_name})</span>
-                      </div>
-                    )}
-
-                    <div className="flex gap-2.5">
-                      <button
-                        disabled={processing === co.id}
-                        onClick={() => approveCompany(co.id)}
-                        className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-white font-bold py-3 rounded-2xl text-sm transition">
-                        {processing === co.id
-                          ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          : <HiCheckCircle className="w-4 h-4" />}
-                        Approve Company
-                      </button>
-                      <button
-                        disabled={processing === co.id}
-                        onClick={() => setRejectTarget(co)}
-                        className="w-12 flex items-center justify-center bg-red-500 hover:bg-red-400 disabled:opacity-60 text-white rounded-2xl transition">
-                        <HiX className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Generic approval items */}
-      {visibleItems.length > 0 && (
-        <div className="space-y-3">
-          {visibleItems.map((item) => {
-            const cfg = TYPE_CFG[item.type];
-            return (
-              <div key={item.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="flex items-start gap-3 p-4">
-                  <div className={`w-10 h-10 rounded-xl ${cfg.bg} flex items-center justify-center flex-shrink-0`}>
-                    <cfg.icon className={`w-5 h-5 ${cfg.color}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-slate-900">{item.title}</p>
-                    <p className="text-xs text-slate-500 truncate">{item.subtitle}</p>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
-                      {cfg.label}
-                    </span>
-                    <p className="text-[10px] text-slate-400 mt-1">{item.time}</p>
-                  </div>
-                </div>
-                <div className="mx-4 mb-3 bg-slate-50 border border-slate-100 rounded-xl px-3 py-2.5">
-                  <p className="text-xs text-slate-600">{item.detail}</p>
-                </div>
-                <div className="flex gap-2 px-4 pb-4">
-                  <button onClick={() => approveItem(item.id)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-bold transition">
-                    <HiCheckCircle className="w-3.5 h-3.5" /> Approve
-                  </button>
-                  <button onClick={() => dismissItem(item.id)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white text-xs font-bold transition">
-                    <HiX className="w-3.5 h-3.5" /> Reject
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+      {loading ? (
+        <div className="flex justify-center py-8">
+          <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
         </div>
-      )}
-
-      {!loading && totalPending === 0 && (
+      ) : companies.length === 0 ? (
         <div className="flex flex-col items-center py-20 gap-3">
           <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center">
             <HiCheckCircle className="w-9 h-9 text-emerald-500" />
           </div>
-          <p className="text-base font-semibold text-slate-500">All caught up!</p>
-          <p className="text-sm text-slate-400">No pending reviews.</p>
+          <p className="text-base font-semibold text-slate-500">
+            {tab === 'Pending' ? 'No pending reviews' : `No ${tab.toLowerCase()} companies`}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <span className={`text-white text-[10px] font-extrabold px-3 py-1 rounded-full tracking-wider ${TAB_ACCENT[tab].split(' ')[0]}`}>
+              COMPANY {tab.toUpperCase()}
+            </span>
+            <span className="text-xs font-semibold text-slate-500">{companies.length} companies</span>
+          </div>
+          {companies.map((co) => (
+            <CompanyCard
+              key={co.id} co={co} tab={tab} processing={processing}
+              onApprove={approveCompany}
+              onRejectClick={setRejectTarget}
+            />
+          ))}
         </div>
       )}
 

@@ -5,15 +5,23 @@ import Link from 'next/link';
 import {
   HiViewGrid, HiCheckCircle, HiUsers, HiBriefcase,
   HiClipboardList, HiLogout, HiShieldCheck, HiMenuAlt2, HiX,
+  HiCash, HiLightningBolt, HiTicket, HiAcademicCap, HiPhotograph, HiUserGroup, HiTag,
 } from 'react-icons/hi';
 import { getAdminToken, getAdminUser, clearAdminSession } from '@/lib/adminAuth';
 
 const NAV = [
-  { href: '/admin/dashboard',  label: 'Dashboard', icon: HiViewGrid },
-  { href: '/admin/approvals',  label: 'Approvals', icon: HiCheckCircle },
-  { href: '/admin/users',      label: 'Users',      icon: HiUsers },
-  { href: '/admin/jobs',       label: 'Jobs',       icon: HiBriefcase },
-  { href: '/admin/audit',      label: 'Audit Log',  icon: HiClipboardList },
+  { href: '/admin/dashboard',   label: 'Dashboard',   icon: HiViewGrid      },
+  { href: '/admin/approvals',   label: 'Approvals',   icon: HiCheckCircle   },
+  { href: '/admin/users',       label: 'Users',       icon: HiUsers         },
+  { href: '/admin/jobs',        label: 'Jobs',        icon: HiBriefcase     },
+  { href: '/admin/activities',  label: 'Activities',  icon: HiAcademicCap   },
+  { href: '/admin/advertisers', label: 'Advertisers', icon: HiUserGroup     },
+  { href: '/admin/ads',         label: 'Ads',         icon: HiPhotograph    },
+  { href: '/admin/ad-plans',    label: 'Ad Plans',    icon: HiTag           },
+  { href: '/admin/subscriptions', label: 'Subscriptions', icon: HiCash      },
+  { href: '/admin/launch-offer',  label: 'Launch Offer',  icon: HiLightningBolt },
+  { href: '/admin/coupons',       label: 'Coupons',       icon: HiTicket    },
+  { href: '/admin/audit',         label: 'Audit Log',     icon: HiClipboardList },
 ];
 
 function Sidebar({ user, onLogout, onClose }: {
