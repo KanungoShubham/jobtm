@@ -1,13 +1,15 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  HiPhotograph, HiRefresh, HiExclamationCircle, HiCheck, HiX,
-  HiCheckCircle, HiSearch, HiExternalLink, HiClock, HiCash,
+  HiPhotograph, HiRefresh, HiExclamationCircle, HiCheckCircle, HiX,
+  HiSearch, HiExternalLink,
 } from 'react-icons/hi';
 import { adsAdminApi } from '@/lib/api';
 import { getAdminToken } from '@/lib/adminAuth';
 
 type Tab = 'pending' | 'active' | 'rejected' | 'expired';
+
+const PAGE_SIZE = 10;
 
 const STATUS_PILL: Record<string, string> = {
   pending_payment: 'bg-slate-100 text-slate-500',
@@ -27,7 +29,6 @@ function AdCard({ ad, onApprove, onReject, actioning }: {
   const isBusy = actioning === ad.id;
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-      {/* Banner preview */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={ad.image_url} alt={ad.title} className="w-full object-cover bg-slate-50" style={{ aspectRatio: '3 / 1' }} />
 
@@ -83,32 +84,72 @@ function AdCard({ ad, onApprove, onReject, actioning }: {
 }
 
 export default function AdminAdsPage() {
-  const [tab,       setTab]       = useState<Tab>('pending');
-  const [ads,       setAds]       = useState<any[]>([]);
-  const [loading,   setLoading]   = useState(true);
-  const [error,     setError]     = useState('');
-  const [actioning, setActioning] = useState<string | null>(null);
-  const [query,     setQuery]     = useState('');
+  const [tab,          setTab]          = useState<Tab>('pending');
+  const [ads,          setAds]          = useState<any[]>([]);
+  const [page,         setPage]         = useState(1);
+  const [total,        setTotal]        = useState(0);
+  const [loading,      setLoading]      = useState(true);
+  const [loadingMore,  setLoadingMore]  = useState(false);
+  const [error,        setError]        = useState('');
+  const [actioning,    setActioning]    = useState<string | null>(null);
+  const [query,        setQuery]        = useState('');
   const [rejectTarget, setRejectTarget] = useState<string | null>(null);
   const [rejectNote,   setRejectNote]   = useState('');
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
   const token = getAdminToken() ?? '';
 
-  const load = useCallback(async () => {
-    setLoading(true); setError('');
+  const hasMore = ads.length < total;
+
+  // Load page 1 (resets the list)
+  const loadFirst = useCallback(async () => {
+    setLoading(true); setError(''); setAds([]); setPage(1); setTotal(0);
     try {
-      const res = await adsAdminApi.list(token, tab);
+      const res = await adsAdminApi.list(token, tab, 1, PAGE_SIZE);
       setAds(res.data ?? []);
+      setTotal(res.total ?? 0);
     } catch (e: any) { setError(e.message); }
     finally { setLoading(false); }
   }, [tab, token]);
 
-  useEffect(() => { load(); }, [load]);
+  // Append next page
+  const loadNext = useCallback(async (nextPage: number) => {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const res = await adsAdminApi.list(token, tab, nextPage, PAGE_SIZE);
+      setAds((prev) => [...prev, ...(res.data ?? [])]);
+      setTotal(res.total ?? 0);
+      setPage(nextPage);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoadingMore(false); }
+  }, [tab, token, loadingMore]);
+
+  useEffect(() => { loadFirst(); }, [loadFirst]);
+
+  // IntersectionObserver — fires when sentinel scrolls into view
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading && !loadingMore) {
+          loadNext(page + 1);
+        }
+      },
+      { rootMargin: '120px' },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loading, loadingMore, loadNext, page]);
 
   const handleApprove = async (id: string) => {
     setActioning(id);
-    try { await adsAdminApi.verify(token, id, 'approve'); setAds((prev) => prev.filter((a) => a.id !== id)); }
-    catch (e: any) { setError(e.message); }
+    try {
+      await adsAdminApi.verify(token, id, 'approve');
+      setAds((prev) => prev.filter((a) => a.id !== id));
+      setTotal((t) => t - 1);
+    } catch (e: any) { setError(e.message); }
     finally { setActioning(null); }
   };
 
@@ -118,6 +159,7 @@ export default function AdminAdsPage() {
     try {
       await adsAdminApi.verify(token, rejectTarget, 'reject', rejectNote);
       setAds((prev) => prev.filter((a) => a.id !== rejectTarget));
+      setTotal((t) => t - 1);
       setRejectTarget(null); setRejectNote('');
     } catch (e: any) { setError(e.message); }
     finally { setActioning(null); }
@@ -145,28 +187,34 @@ export default function AdminAdsPage() {
           </h1>
           <p className="text-sm text-slate-400 mt-0.5">Review paid banner ads · approve to go live in the app</p>
         </div>
-        <button onClick={load} disabled={loading}
+        <button onClick={loadFirst} disabled={loading}
           className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 bg-white px-3 py-1.5 rounded-xl text-sm transition">
           <HiRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {TABS.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
-              tab === t.key ? 'bg-red-600 text-white border-red-600' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
-            }`}>
-            {t.label}{tab === t.key && filtered.length > 0 ? ` (${filtered.length})` : ''}
+              tab === t.key ? 'text-white border-indigo-600' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+            }`}
+            style={tab === t.key ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            {t.label}
           </button>
         ))}
+        {total > 0 && (
+          <span className="ml-1 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+            {ads.length} / {total}
+          </span>
+        )}
       </div>
 
       <div className="relative">
         <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by title or advertiser…"
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-300 transition" />
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-300 transition" />
       </div>
 
       {error && (
@@ -196,7 +244,7 @@ export default function AdminAdsPage() {
 
       {loading ? (
         <div className="flex justify-center py-16">
-          <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-3">
@@ -204,11 +252,25 @@ export default function AdminAdsPage() {
           <p className="text-base font-semibold text-slate-400">No {tab} ads</p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 gap-4">
-          {filtered.map((ad) => (
-            <AdCard key={ad.id} ad={ad} onApprove={handleApprove} onReject={(id) => setRejectTarget(id)} actioning={actioning} />
-          ))}
-        </div>
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {filtered.map((ad) => (
+              <AdCard key={ad.id} ad={ad} onApprove={handleApprove} onReject={(id) => setRejectTarget(id)} actioning={actioning} />
+            ))}
+          </div>
+
+          {/* Scroll sentinel */}
+          <div ref={sentinelRef} className="py-6 flex justify-center">
+            {loadingMore ? (
+              <div className="flex items-center gap-2 text-slate-400 text-sm">
+                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                Loading more…
+              </div>
+            ) : !hasMore && total > 0 ? (
+              <p className="text-xs text-slate-300 font-medium">All {total} ads loaded</p>
+            ) : null}
+          </div>
+        </>
       )}
     </div>
   );

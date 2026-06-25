@@ -10,17 +10,17 @@ import {
 import { getAdminToken, getAdminUser, clearAdminSession } from '@/lib/adminAuth';
 
 const NAV = [
-  { href: '/admin/dashboard',   label: 'Dashboard',   icon: HiViewGrid      },
-  { href: '/admin/approvals',   label: 'Approvals',   icon: HiCheckCircle   },
-  { href: '/admin/users',       label: 'Users',       icon: HiUsers         },
-  { href: '/admin/jobs',        label: 'Jobs',        icon: HiBriefcase     },
-  { href: '/admin/activities',  label: 'Activities',  icon: HiAcademicCap   },
-  { href: '/admin/advertisers', label: 'Advertisers', icon: HiUserGroup     },
-  { href: '/admin/ads',         label: 'Ads',         icon: HiPhotograph    },
-  { href: '/admin/ad-plans',    label: 'Ad Plans',    icon: HiTag           },
-  { href: '/admin/subscriptions', label: 'Subscriptions', icon: HiCash      },
+  { href: '/admin/dashboard',     label: 'Dashboard',     icon: HiViewGrid      },
+  { href: '/admin/approvals',     label: 'Approvals',     icon: HiCheckCircle   },
+  { href: '/admin/users',         label: 'Users',         icon: HiUsers         },
+  { href: '/admin/jobs',          label: 'Jobs',          icon: HiBriefcase     },
+  { href: '/admin/activities',    label: 'Activities',    icon: HiAcademicCap   },
+  { href: '/admin/advertisers',   label: 'Advertisers',   icon: HiUserGroup     },
+  { href: '/admin/ads',           label: 'Ads',           icon: HiPhotograph    },
+  { href: '/admin/ad-plans',      label: 'Ad Plans',      icon: HiTag           },
+  { href: '/admin/subscriptions', label: 'Subscriptions', icon: HiCash          },
   { href: '/admin/launch-offer',  label: 'Launch Offer',  icon: HiLightningBolt },
-  { href: '/admin/coupons',       label: 'Coupons',       icon: HiTicket    },
+  { href: '/admin/coupons',       label: 'Coupons',       icon: HiTicket        },
   { href: '/admin/audit',         label: 'Audit Log',     icon: HiClipboardList },
 ];
 
@@ -32,22 +32,23 @@ function Sidebar({ user, onLogout, onClose }: {
   const pathname = usePathname();
 
   return (
-    <aside className="flex flex-col h-full bg-slate-900 w-64 flex-shrink-0">
+    <aside className="flex flex-col h-full w-64 flex-shrink-0 bg-[#1a1f36]">
       {/* Brand */}
-      <div className="flex items-center justify-between px-5 py-5 border-b border-slate-800">
+      <div className="flex items-center justify-between px-5 py-5 border-b border-white/[0.07]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow shadow-red-600/40">
-            <HiShieldCheck className="w-4.5 h-4.5 text-white" />
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", boxShadow: "0 4px 12px rgba(99,102,241,0.4)" }}>
+            <HiShieldCheck className="w-5 h-5 text-white" />
           </div>
           <div>
             <span className="text-white font-extrabold text-sm tracking-tight">jobstm</span>
-            <span className="ml-1.5 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-widest">
+            <span className="ml-1.5 bg-indigo-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-widest">
               ADMIN
             </span>
           </div>
         </div>
         {onClose && (
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition lg:hidden">
+          <button onClick={onClose} className="text-white/40 hover:text-white transition lg:hidden">
             <HiX className="w-5 h-5" />
           </button>
         )}
@@ -61,10 +62,15 @@ function Sidebar({ user, onLogout, onClose }: {
             <Link key={href} href={href} onClick={onClose}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition group ${
                 active
-                  ? 'bg-red-600 text-white shadow shadow-red-600/30'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-              }`}>
-              <Icon className={`w-4.5 h-4.5 flex-shrink-0 ${active ? 'text-white' : 'text-slate-500 group-hover:text-white'}`} />
+                  ? 'text-white'
+                  : 'text-white/50 hover:bg-white/[0.07] hover:text-white'
+              }`}
+              style={active
+                ? { background: "linear-gradient(135deg, #6366f1, #8b5cf6)", boxShadow: "0 4px 14px rgba(99,102,241,0.35)" }
+                : {}
+              }
+            >
+              <Icon className={`w-4.5 h-4.5 flex-shrink-0 transition ${active ? 'text-white' : 'text-white/40 group-hover:text-white'}`} />
               {label}
             </Link>
           );
@@ -72,20 +78,21 @@ function Sidebar({ user, onLogout, onClose }: {
       </nav>
 
       {/* User + Logout */}
-      <div className="px-3 py-4 border-t border-slate-800">
+      <div className="px-3 py-4 border-t border-white/[0.07]">
         <div className="flex items-center gap-3 px-3 py-2.5 mb-1">
-          <div className="w-8 h-8 rounded-full bg-red-600/20 border border-red-600/40 flex items-center justify-center">
-            <span className="text-red-400 text-xs font-bold">
+          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}>
+            <span className="text-white text-xs font-bold">
               {(user?.name ?? 'A').charAt(0).toUpperCase()}
             </span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white text-xs font-semibold truncate">{user?.name ?? 'Super Admin'}</p>
-            <p className="text-slate-500 text-[10px]">Administrator</p>
+            <p className="text-white/35 text-[10px]">Administrator</p>
           </div>
         </div>
         <button onClick={onLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-red-400 text-sm font-semibold transition">
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-white/50 hover:bg-white/[0.07] hover:text-white text-sm font-semibold transition">
           <HiLogout className="w-4 h-4" />
           Sign out
         </button>
@@ -116,8 +123,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (!ready) {
     return (
-      <div className="flex h-screen items-center justify-center bg-slate-950">
-        <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
+      <div className="flex h-screen items-center justify-center bg-[#0f1225]">
+        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -129,7 +136,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -147,11 +154,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile topbar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-slate-200">
-          <button onClick={() => setSidebarOpen(true)} className="text-slate-600 hover:text-slate-900">
+        <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-[#1a1f36] border-b border-white/[0.07]">
+          <button onClick={() => setSidebarOpen(true)} className="text-white/60 hover:text-white transition">
             <HiMenuAlt2 className="w-6 h-6" />
           </button>
-          <span className="font-bold text-slate-900 text-sm">jobstm Admin</span>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-lg flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}>
+              <HiShieldCheck className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span className="font-bold text-white text-sm">jobstm Admin</span>
+          </div>
         </div>
 
         <main className="flex-1 overflow-y-auto">

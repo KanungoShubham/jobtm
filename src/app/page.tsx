@@ -1,8 +1,5 @@
 import Link from "next/link";
 import {
-  HiDatabase,
-  HiDocumentText,
-  HiLockClosed,
   HiClock,
   HiTrendingUp,
   HiViewGridAdd,
@@ -13,354 +10,456 @@ import {
   HiBriefcase,
   HiCheckCircle,
   HiLocationMarker,
+  HiDatabase,
+  HiDocumentText,
+  HiLockClosed,
+  HiArrowRight,
 } from "react-icons/hi";
 import { Button } from "@/components/ui/Button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/Card";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function HomePage() {
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 md:py-32 overflow-hidden relative">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float-slow"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float"></div>
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden bg-gradient-to-br from-secondary/8 via-background to-primary/5">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-1/3 right-0 w-[600px] h-[600px] bg-secondary/6 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 -left-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
         </div>
         <div className="container relative z-10">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-6 flex flex-col sm:flex-row items-center gap-3 justify-center md:justify-start animate-fade-in-up">
-              <span className="inline-flex items-center rounded-md border border-transparent bg-secondary text-secondary-foreground px-4 py-1.5 text-sm font-medium hover-lift hover-shine">
-                By Maikal and Taksharya Pvt Limited
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-md border px-4 py-1.5 text-sm font-medium hover-lift hover-shine">
-                <HiLocationMarker className="h-4 w-4" />
-                Khandwa, MP
-              </span>
+          <div className="grid gap-12 lg:grid-cols-2 items-center max-w-7xl mx-auto">
+            {/* Left: Content */}
+            <div className="animate-fade-in-up">
+              <div className="mb-6 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/10 text-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wide">
+                  Verification-First Platform
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 text-muted-foreground px-4 py-1.5 text-xs font-medium">
+                  <HiLocationMarker className="h-3.5 w-3.5" />
+                  Khandwa, MP · Since 2011
+                </span>
+              </div>
+              <h1 className="font-heading text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl mb-6 leading-[1.1]">
+                Trusted Gig<br />Hiring.{" "}
+                <span className="text-secondary">Verified</span><br />
+                <span className="text-secondary">Talent.</span>
+              </h1>
+              <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
+                We are building a secure, verification-first gig hiring ecosystem
+                that connects qualified gig workers with trusted companies—quickly,
+                transparently, and at scale.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 mb-10">
+                <Link href="/auth">
+                  <Button size="lg" className="w-full sm:w-auto rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-warm-lg hover-lift px-8">
+                    Get Started
+                    <HiCheckCircle className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full border-secondary/40 text-secondary hover:bg-secondary hover:text-secondary-foreground hover-lift px-8">
+                    Contact Us
+                    <HiArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                {[
+                  { icon: HiShieldCheck, label: "100% Verified" },
+                  { icon: HiLightningBolt, label: "Fast Onboarding" },
+                  { icon: HiBadgeCheck, label: "Trusted Platform" },
+                ].map(({ icon: Icon, label }) => (
+                  <div key={label} className="flex items-center gap-1.5">
+                    <Icon className="h-4 w-4 text-secondary" />
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6 animate-slide-in-rotate animate-delay-100">
-              Trusted Gig Hiring.{" "}
-              <span className="text-primary bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent animate-bounce-in-up">Verified Talent.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-in-up animate-delay-200">
-              Smarter Workforce Through Verification-First Onboarding
-            </p>
-            <p className="text-lg text-muted-foreground mb-10 max-w-2xl animate-fade-in-up animate-delay-300">
-              We are building a secure, verification-first gig hiring ecosystem
-              that connects qualified gig workers and students with trusted
-              companies—quickly, transparently, and at scale.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animate-delay-400">
-              <Link href="/auth">
-                <Button size="lg" className="w-full sm:w-auto shadow-warm hover:shadow-warm-lg hover-lift hover-shine">
-                  Get Started
-                  <HiCheckCircle className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto hover-lift hover-shine">
-                  Contact Us
-                </Button>
-              </Link>
+
+            {/* Right: Floating UI Mockup */}
+            <div className="relative animate-fade-in-up animate-delay-200 hidden lg:block">
+              {/* Main verification card */}
+              <div className="rounded-3xl border border-border/60 bg-white shadow-warm-lg p-6 relative z-10">
+                <div className="flex items-center justify-between mb-5">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest text-secondary/50 mb-0.5">Live Status</p>
+                    <h3 className="font-heading text-base font-bold">Verification Dashboard</h3>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 text-green-600 px-3 py-1 text-xs font-semibold">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                    Active
+                  </span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { label: "Identity Verified", pct: 100, done: true },
+                    { label: "Skills Profile", pct: 87, done: false },
+                    { label: "Document Check", pct: 100, done: true },
+                    { label: "Company Match", pct: 72, done: false },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center gap-3">
+                      <div className={`h-7 w-7 rounded-xl flex items-center justify-center flex-shrink-0 ${item.done ? "bg-secondary text-white" : "bg-secondary/10"}`}>
+                        <HiCheckCircle className={`h-4 w-4 ${item.done ? "text-white" : "text-secondary/50"}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-medium">{item.label}</span>
+                          <span className="text-xs font-bold text-secondary">{item.pct}%</span>
+                        </div>
+                        <div className="h-1.5 bg-secondary/10 rounded-full overflow-hidden">
+                          <div className="h-full bg-secondary rounded-full transition-all" style={{ width: `${item.pct}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating stat card — bottom left */}
+              <div className="absolute -bottom-5 -left-6 rounded-2xl bg-secondary text-white px-5 py-4 shadow-warm-lg z-20">
+                <div className="text-2xl font-bold">2.4×</div>
+                <div className="text-xs text-white/70 font-medium">Faster Hiring</div>
+              </div>
+
+              {/* Floating notification — top right */}
+              <div className="absolute -top-4 -right-4 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 flex items-center gap-3 z-20">
+                <div className="h-8 w-8 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <HiCheckCircle className="h-4 w-4 text-green-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold">Profile Verified!</p>
+                  <p className="text-xs text-muted-foreground">Just now</p>
+                </div>
+              </div>
+
+              {/* Floating users card — middle right */}
+              <div className="absolute top-1/2 -right-8 -translate-y-1/2 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 z-20">
+                <div className="flex items-center gap-2 mb-1">
+                  <HiUsers className="h-4 w-4 text-secondary" />
+                  <span className="text-xs font-bold">Matches Found</span>
+                </div>
+                <div className="text-2xl font-bold text-secondary">48</div>
+                <div className="text-xs text-muted-foreground">Verified companies</div>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Band */}
+      <section className="py-14 border-y border-border/40 bg-white">
+        <div className="container">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {[
+              { number: "100%", label: "Verified Profiles", icon: HiBadgeCheck, bg: "#136BAB" },
+              { number: "Zero", label: "Duplicate Records", icon: HiDatabase, bg: "#1a8c6e" },
+              { number: "Fast", label: "Hiring Process", icon: HiLightningBolt, bg: "#7c3aed" },
+              { number: "Secure", label: "Document Gateway", icon: HiLockClosed, bg: "#dc6b19" },
+            ].map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.label}
+                  className="flex flex-col items-center text-center p-6 rounded-3xl text-white hover:-translate-y-1 hover:shadow-warm-lg transition-all duration-300 group"
+                  style={{ backgroundColor: stat.bg }}
+                >
+                  <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform" style={{ backgroundColor: "rgba(255,255,255,0.2)" }}>
+                    <Icon className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="text-3xl font-bold mb-1">{stat.number}</div>
+                  <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>{stat.label}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* One Platform Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse animate-delay-500"></div>
+      <section className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: "#0d1f35" }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full" style={{ backgroundColor: "rgba(19,107,171,0.12)" }} />
+          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.25)" }} />
         </div>
         <div className="container relative z-10">
           <ScrollReveal animation="fade-up">
-            <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <span className="inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold mb-5" style={{ backgroundColor: "rgba(19,107,171,0.25)", color: "#7bb8e8" }}>
+                Core Infrastructure
+              </span>
+              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4 text-white">
                 One Platform. One Source of Truth.
               </h2>
-              <p className="text-lg text-muted-foreground">
-                All user data and documents are securely managed within our core
-                Jobstm system.
+              <p className="text-lg" style={{ color: "rgba(255,255,255,0.6)" }}>
+                All user data and documents are securely managed within our core Jobstm system.
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto perspective-container">
-            <ScrollReveal animation="scale" delay={100}>
-              <Card className="py-6 border-2 hover:border-primary/50 transition-all duration-300 card-3d hover-shine group h-full">
-                <CardHeader>
-                  <HiDatabase className="h-10 w-10 text-primary mb-3 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
-                  <CardTitle className="leading-none">No Duplicate Storage</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    Single centralized database ensures data integrity and
-                    consistency across the platform
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-            <ScrollReveal animation="scale" delay={200}>
-              <Card className="py-6 border-2 hover:border-primary/50 transition-all duration-300 card-3d hover-shine group h-full">
-                <CardHeader>
-                  <HiDocumentText className="h-10 w-10 text-primary mb-3 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
-                  <CardTitle className="leading-none">
-                    No Fragmented Records
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    One verified profile per user maintained in our unified system
-                    of record
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-            <ScrollReveal animation="scale" delay={300}>
-              <Card className="py-6 border-2 hover:border-primary/50 transition-all duration-300 card-3d hover-shine group h-full">
-                <CardHeader>
-                  <HiLockClosed className="h-10 w-10 text-primary mb-3 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
-                  <CardTitle className="leading-none">Secure Gateway</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    Professional onboarding portal with all data residing in the
-                    secure Jobstm core
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
+          <div className="grid gap-5 md:grid-cols-3 max-w-5xl mx-auto">
+            {[
+              { icon: HiDatabase, title: "No Duplicate Storage", description: "Single centralized database ensures data integrity and consistency across the platform", accent: "#136BAB", bg: "rgba(19,107,171,0.2)" },
+              { icon: HiDocumentText, title: "No Fragmented Records", description: "One verified profile per user maintained in our unified system of record", accent: "#1a8c6e", bg: "rgba(26,140,110,0.2)" },
+              { icon: HiLockClosed, title: "Secure Gateway", description: "Professional onboarding portal with all data residing in the secure Jobstm core", accent: "#7c3aed", bg: "rgba(124,58,237,0.2)" },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <ScrollReveal key={item.title} animation="fade-up" delay={index * 100}>
+                  <div className="rounded-3xl p-7 h-full flex flex-col hover:-translate-y-1 transition-all duration-300" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-5 flex-shrink-0" style={{ backgroundColor: item.bg }}>
+                      <Icon className="h-6 w-6" style={{ color: item.accent }} />
+                    </div>
+                    <h3 className="font-heading text-lg font-bold text-white mb-3">{item.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>{item.description}</p>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Verification-First Onboarding */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-10 right-20 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-float-slow"></div>
+      <section className="py-20 md:py-28 bg-secondary relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.05)" }} />
+          <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.08)" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.03)" }} />
         </div>
         <div className="container relative z-10">
+
+          {/* White header on blue bg */}
           <ScrollReveal animation="fade-up">
-            <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <span className="inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#ffffff" }}>
+                Verification Process
+              </span>
+              <h2 className="font-heading text-3xl font-bold sm:text-4xl md:text-5xl mb-4 text-white">
                 Verification-First Onboarding
               </h2>
-              <p className="text-lg text-muted-foreground">
-                Our platform is designed to meet modern hiring standards,
-                combining technology, compliance, and ease of use.
+              <p className="text-lg text-balance" style={{ color: "rgba(255,255,255,0.7)" }}>
+                Our platform is designed to meet modern hiring standards, combining technology, compliance, and ease of use.
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-8 lg:grid-cols-2 max-w-6xl mx-auto perspective-container">
-            {/* For Gig Workers */}
-            <ScrollReveal animation="fade-left" delay={100}>
-              <Card className="py-6 border-2 hover-3d hover-shine group h-full">
-              <CardHeader>
-                <span className="inline-flex w-fit items-center rounded-md border border-transparent bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium mb-3 animate-bounce-in">
-                  For Gig Workers
-                </span>
-                <CardTitle className="text-2xl">
-                  Structured Yet Simple Verification
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">
-                    What We Verify:
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Identity and age eligibility (18+)
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Education and skill profile
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Work preferences and availability
-                    </li>
-                  </ul>
+
+          {/* Bento grid layout */}
+          <div className="max-w-5xl mx-auto grid gap-4 lg:grid-cols-2">
+
+            {/* Left: Gig Workers — white card */}
+            <ScrollReveal animation="fade-up" delay={100}>
+              <div className="rounded-3xl bg-white p-7 h-full flex flex-col shadow-warm-lg">
+                {/* Header row */}
+                <div className="flex items-center gap-3 mb-6 pb-5" style={{ borderBottom: "1px solid rgba(19,107,171,0.1)" }}>
+                  <div className="h-11 w-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#136BAB" }}>
+                    <HiUsers className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(19,107,171,0.5)" }}>For</p>
+                    <h3 className="font-heading text-lg font-bold text-foreground">Gig Workers</h3>
+                  </div>
+                  <span className="ml-auto inline-flex items-center rounded-full text-xs font-semibold px-3 py-1" style={{ backgroundColor: "rgba(19,107,171,0.1)", color: "#136BAB" }}>
+                    Workers
+                  </span>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">
-                    Why It Matters:
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Genuine profiles only
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Faster shortlisting for companies
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Higher trust for hiring companies
-                    </li>
-                  </ul>
+
+                {/* Verify grid: 2-col icon badges */}
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "rgba(19,107,171,0.5)" }}>What We Verify</p>
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {[
+                    { icon: HiShieldCheck, label: "Identity" },
+                    { icon: HiBadgeCheck, label: "Education" },
+                    { icon: HiClock, label: "Availability" },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex flex-col items-center gap-2 p-4 rounded-2xl text-center" style={{ backgroundColor: "rgba(19,107,171,0.06)" }}>
+                        <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: "rgba(19,107,171,0.12)" }}>
+                          <Icon className="h-4 w-4" style={{ color: "#136BAB" }} />
+                        </div>
+                        <span className="text-xs font-semibold text-foreground/70">{item.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <p className="text-sm font-medium pt-2">
-                  This ensures companies work with ready-to-hire, verified
-                  talent.
-                </p>
-              </CardContent>
-            </Card>
+
+                {/* Why it matters: checklist */}
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "rgba(19,107,171,0.5)" }}>Why It Matters</p>
+                <div className="space-y-2 flex-1">
+                  {["Genuine profiles only", "Faster shortlisting for companies", "Higher trust for hiring companies"].map((item) => (
+                    <div key={item} className="flex items-center gap-2.5 text-sm text-foreground/75">
+                      <HiCheckCircle className="h-4 w-4 flex-shrink-0" style={{ color: "#136BAB" }} />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom tag */}
+                <div className="mt-6 rounded-2xl px-4 py-3 text-sm font-medium text-white" style={{ backgroundColor: "#136BAB" }}>
+                  Ready-to-hire, verified talent from day one.
+                </div>
+              </div>
             </ScrollReveal>
 
-            {/* For Companies */}
-            <ScrollReveal animation="fade-right" delay={200}>
-              <Card className="py-6 border-2 hover-3d hover-shine group h-full">
-              <CardHeader>
-                <span className="inline-flex w-fit items-center rounded-md border border-transparent bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium mb-3 animate-bounce-in animate-delay-200">
-                  For Companies
-                </span>
-                <CardTitle className="text-2xl">
-                  Business-Grade Verification
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">
-                    What We Verify:
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Company identity and industry
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Official contact details
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Authorized hiring representative
-                    </li>
-                  </ul>
+            {/* Right col: two stacked cards */}
+            <div className="flex flex-col gap-4">
+
+              {/* Companies card */}
+              <ScrollReveal animation="fade-up" delay={200}>
+                <div className="rounded-3xl bg-white p-7 shadow-warm-lg">
+                  <div className="flex items-center gap-3 mb-5 pb-4" style={{ borderBottom: "1px solid rgba(59,130,246,0.1)" }}>
+                    <div className="h-11 w-11 rounded-2xl flex items-center justify-center flex-shrink-0 bg-primary">
+                      <HiBriefcase className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-primary/50">For</p>
+                      <h3 className="font-heading text-lg font-bold text-foreground">Companies</h3>
+                    </div>
+                    <span className="ml-auto inline-flex items-center rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1">
+                      Business
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 mb-5">
+                    {[
+                      { icon: HiShieldCheck, label: "Identity" },
+                      { icon: HiDocumentText, label: "Contact" },
+                      { icon: HiUsers, label: "Auth Rep" },
+                    ].map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={item.label} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-primary/5 text-center">
+                          <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <Icon className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <span className="text-xs font-semibold text-foreground/70">{item.label}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="space-y-2">
+                    {["Safe hiring environment", "Trusted job postings", "Better engagement from gig workers"].map((item) => (
+                      <div key={item} className="flex items-center gap-2.5 text-sm text-foreground/75">
+                        <HiCheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">
-                    Why It Matters:
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Safe hiring environment
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Trusted job postings
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <HiCheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                      Better engagement from gig workers
-                    </li>
-                  </ul>
+              </ScrollReveal>
+
+              {/* Bottom accent card */}
+              <ScrollReveal animation="fade-up" delay={300}>
+                <div className="rounded-3xl p-6 shadow-warm-lg" style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                  <div className="flex items-start gap-4">
+                    <div className="h-11 w-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "rgba(255,255,255,0.2)" }}>
+                      <HiBadgeCheck className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-heading font-bold text-white mb-1">Platform Promise</h4>
+                      <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        Only verified users on both sides. Every hire is backed by real identity and document checks.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm font-medium pt-2">
-                  Only verified organizations can post opportunities on the
-                  platform.
-                </p>
-              </CardContent>
-            </Card>
-            </ScrollReveal>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* For Gig Workers Feature Section */}
-      <section className="py-16 md:py-24 bg-muted/30 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/3 left-10 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-        </div>
-        <div className="container relative z-10">
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container">
           <div className="grid gap-12 lg:grid-cols-2 items-center max-w-6xl mx-auto">
             <ScrollReveal animation="fade-right" delay={100}>
               <div>
-                <span className="inline-flex w-fit items-center rounded-md border border-transparent bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium mb-4">
+                <span className="inline-flex items-center rounded-full bg-secondary text-white px-4 py-1.5 text-xs font-semibold mb-6">
                   For Gig Workers
                 </span>
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-                Find Work That Fits Your Life
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Take control of your career with flexible gig opportunities that
-                match your skills and schedule.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex gap-4 animate-slide-from-left animate-delay-100 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-primary/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiClock className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Work on Your Schedule</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Choose when and where you work with complete flexibility
-                    </p>
-                  </div>
+                <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl mb-5">
+                  Find Work That Fits Your Life
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 max-w-lg">
+                  Take control of your career with flexible gig opportunities that match your skills and schedule.
+                </p>
+                <div className="grid grid-cols-2 gap-3 mb-10">
+                  {[
+                    { icon: HiClock, title: "Flexible Schedule", desc: "Work when you want" },
+                    { icon: HiTrendingUp, title: "Grow Income", desc: "Multiple streams" },
+                    { icon: HiViewGridAdd, title: "Skill Matched", desc: "Right opportunities" },
+                    { icon: HiBadgeCheck, title: "Build Reputation", desc: "Ratings & reviews" },
+                  ].map((feature) => {
+                    const Icon = feature.icon;
+                    return (
+                      <div key={feature.title} className="flex flex-col gap-3 p-5 rounded-2xl border border-secondary/15 hover:border-secondary/40 hover:bg-secondary/3 hover:-translate-y-0.5 transition-all duration-300 group">
+                        <div className="h-10 w-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "rgba(19,107,171,0.1)" }}>
+                          <Icon className="h-5 w-5" style={{ color: "#136BAB" }} />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-sm mb-0.5 group-hover:text-secondary transition-colors">{feature.title}</h3>
+                          <p className="text-xs text-muted-foreground">{feature.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="flex gap-4 animate-slide-from-left animate-delay-200 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-primary/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiTrendingUp className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Grow Your Income</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Access multiple income streams and increase your earning
-                      potential
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 animate-slide-from-left animate-delay-300 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-primary/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiViewGridAdd className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Match Your Skills</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Find gigs that align with your expertise and interests
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 animate-slide-from-left animate-delay-400 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-primary/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiBadgeCheck className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">
-                      Build Your Reputation
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Earn ratings and reviews to unlock better opportunities
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <Link href="/contact">
-                <Button className="shadow-warm hover-lift hover-shine">
-                  Start Working Today
-                  <HiCheckCircle className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+                <Link href="/contact">
+                  <Button className="rounded-full bg-secondary text-white hover:bg-secondary/90 shadow-warm hover-lift px-6">
+                    Start Working Today
+                    <HiArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
             </ScrollReveal>
+
             <ScrollReveal animation="fade-left" delay={200}>
-              <div className="relative group">
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 p-8 shadow-warm-lg card-3d transition-all duration-500 group-hover:shadow-2xl">
-                  <div className="h-full w-full rounded-xl bg-card border-2 border-primary/20 flex items-center justify-center transition-all duration-500 group-hover:border-primary/40">
-                    <HiBriefcase className="h-32 w-32 text-primary/40 animate-card-float transition-all duration-500 group-hover:text-primary/60 group-hover:scale-110" />
+              <div className="rounded-3xl overflow-hidden shadow-warm-lg border border-secondary/15">
+                {/* App-style header bar */}
+                <div className="px-6 py-4 flex items-center gap-3" style={{ backgroundColor: "#136BAB" }}>
+                  <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center">
+                    <HiUsers className="h-4 w-4 text-white" />
                   </div>
+                  <div>
+                    <p className="text-xs text-white/60 font-medium">Jobstm</p>
+                    <p className="text-sm font-bold text-white">Worker Dashboard</p>
+                  </div>
+                  <span className="ml-auto flex items-center gap-1.5 text-xs font-semibold text-white/80">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+                    Live
+                  </span>
+                </div>
+                {/* Stats row */}
+                <div className="grid grid-cols-3 divide-x" style={{ borderBottom: "1px solid rgba(19,107,171,0.1)" }}>
+                  {[{ val: "100%", label: "Verified" }, { val: "48", label: "Matches" }, { val: "4.9★", label: "Rating" }].map((s) => (
+                    <div key={s.label} className="flex flex-col items-center py-4 bg-white">
+                      <span className="text-lg font-bold" style={{ color: "#136BAB" }}>{s.val}</span>
+                      <span className="text-xs text-muted-foreground">{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Feature rows */}
+                <div className="bg-white p-5 space-y-2.5">
+                  {[
+                    { icon: HiBadgeCheck, label: "Identity Verified", value: "✓ Complete" },
+                    { icon: HiClock, label: "Availability Set", value: "Weekdays" },
+                    { icon: HiViewGridAdd, label: "Skills Matched", value: "Smart AI" },
+                    { icon: HiTrendingUp, label: "Income Track", value: "Growing" },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex items-center justify-between p-3 rounded-2xl" style={{ backgroundColor: "rgba(19,107,171,0.05)" }}>
+                        <div className="flex items-center gap-3">
+                          <div className="h-8 w-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: "rgba(19,107,171,0.12)" }}>
+                            <Icon className="h-4 w-4" style={{ color: "#136BAB" }} />
+                          </div>
+                          <span className="text-sm font-medium">{item.label}</span>
+                        </div>
+                        <span className="text-xs font-bold" style={{ color: "#136BAB" }}>{item.value}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </ScrollReveal>
@@ -369,96 +468,96 @@ export default function HomePage() {
       </section>
 
       {/* For Businesses Feature Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute bottom-1/3 right-10 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-float-slow"></div>
-        </div>
-        <div className="container relative z-10">
+      <section className="py-20 md:py-28" style={{ backgroundColor: "#f0f5ff" }}>
+        <div className="container">
           <div className="grid gap-12 lg:grid-cols-2 items-center max-w-6xl mx-auto">
             <ScrollReveal animation="fade-right" delay={200}>
-              <div className="order-2 lg:order-1 relative group">
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-accent/20 to-primary/20 p-8 shadow-warm-lg card-3d transition-all duration-500 group-hover:shadow-2xl">
-                  <div className="h-full w-full rounded-xl bg-card border-2 border-accent/20 flex items-center justify-center transition-all duration-500 group-hover:border-accent/40">
-                    <HiUsers className="h-32 w-32 text-accent/40 animate-card-tilt transition-all duration-500 group-hover:text-accent/60 group-hover:scale-110" />
+              <div className="rounded-3xl overflow-hidden shadow-warm-lg border border-primary/15">
+                {/* App header */}
+                <div className="px-6 py-4 flex items-center gap-3 bg-primary">
+                  <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center">
+                    <HiBriefcase className="h-4 w-4 text-white" />
                   </div>
+                  <div>
+                    <p className="text-xs text-white/60 font-medium">Jobstm</p>
+                    <p className="text-sm font-bold text-white">Hiring Dashboard</p>
+                  </div>
+                  <span className="ml-auto flex items-center gap-1.5 text-xs font-semibold text-white/80">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+                    Active
+                  </span>
+                </div>
+                {/* Stats */}
+                <div className="grid grid-cols-3 divide-x" style={{ borderBottom: "1px solid rgba(59,130,246,0.1)" }}>
+                  {[{ val: "12", label: "Hired" }, { val: "3min", label: "Avg. Match" }, { val: "0", label: "Fraud Cases" }].map((s) => (
+                    <div key={s.label} className="flex flex-col items-center py-4 bg-white">
+                      <span className="text-lg font-bold text-primary">{s.val}</span>
+                      <span className="text-xs text-muted-foreground">{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-white p-5 space-y-2.5">
+                  {[
+                    { icon: HiLightningBolt, label: "Onboarding Speed", value: "Minutes" },
+                    { icon: HiShieldCheck, label: "Background Checked", value: "All Workers" },
+                    { icon: HiTrendingUp, label: "Cost Efficiency", value: "High" },
+                    { icon: HiBadgeCheck, label: "Quality Rating", value: "Tracked" },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex items-center justify-between p-3 rounded-2xl bg-primary/5">
+                        <div className="flex items-center gap-3">
+                          <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <Icon className="h-4 w-4 text-primary" />
+                          </div>
+                          <span className="text-sm font-medium">{item.label}</span>
+                        </div>
+                        <span className="text-xs font-bold text-primary">{item.value}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </ScrollReveal>
+
             <ScrollReveal animation="fade-left" delay={100}>
-              <div className="order-1 lg:order-2">
-                <span className="inline-flex w-fit items-center rounded-md border border-transparent bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium mb-4">
+              <div>
+                <span className="inline-flex items-center rounded-full bg-primary text-white px-4 py-1.5 text-xs font-semibold mb-6">
                   For Businesses
                 </span>
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-                Hire Skilled Talent On-Demand
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Scale your workforce instantly with qualified gig workers ready
-                to deliver results.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex gap-4 animate-slide-from-right animate-delay-100 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-accent/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiLightningBolt className="h-5 w-5 text-accent" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Fast Hiring</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Post a job and connect with qualified workers in minutes
-                    </p>
-                  </div>
+                <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl mb-5">
+                  Hire Skilled Talent On-Demand
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 max-w-lg">
+                  Scale your workforce instantly with qualified gig workers ready to deliver results.
+                </p>
+                <div className="grid grid-cols-2 gap-3 mb-10">
+                  {[
+                    { icon: HiLightningBolt, title: "Fast Hiring", desc: "Connect in minutes" },
+                    { icon: HiShieldCheck, title: "Pre-Verified", desc: "Background checked" },
+                    { icon: HiTrendingUp, title: "Cost-Effective", desc: "Pay per work" },
+                    { icon: HiViewGridAdd, title: "Quality Tracked", desc: "Ratings & reviews" },
+                  ].map((feature) => {
+                    const Icon = feature.icon;
+                    return (
+                      <div key={feature.title} className="flex flex-col gap-3 p-5 rounded-2xl bg-white border border-primary/15 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 group shadow-sm">
+                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                          <Icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-sm mb-0.5 group-hover:text-primary transition-colors">{feature.title}</h3>
+                          <p className="text-xs text-muted-foreground">{feature.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="flex gap-4 animate-slide-from-right animate-delay-200 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-accent/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiShieldCheck className="h-5 w-5 text-accent" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">
-                      Verified Professionals
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      All workers are pre-screened and background-checked
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 animate-slide-from-right animate-delay-300 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-accent/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiTrendingUp className="h-5 w-5 text-accent" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Cost-Effective</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Pay only for the work you need without long-term
-                      commitments
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 animate-slide-from-right animate-delay-400 hover-float transition-all duration-300 p-3 rounded-lg group hover:bg-accent/5">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <HiViewGridAdd className="h-5 w-5 text-accent" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Quality Guaranteed</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Rate and review workers to ensure consistent quality
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <Link href="/contact">
-                <Button variant="outline" className="shadow-warm hover-lift hover-shine">
-                  Post Your First Job
-                  <HiCheckCircle className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+                <Link href="/contact">
+                  <Button className="rounded-full bg-primary text-white hover:bg-primary/90 shadow-warm hover-lift px-6">
+                    Post Your First Job
+                    <HiArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
             </ScrollReveal>
           </div>
@@ -466,73 +565,51 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse animate-delay-700"></div>
+      <section className="py-20 md:py-28 bg-secondary relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.05)" }} />
+          <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.1)" }} />
         </div>
         <div className="container relative z-10">
           <ScrollReveal animation="fade-up">
-            <div className="mx-auto max-w-3xl text-center mb-16">
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <span className="inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#ffffff" }}>
+                Simple Process
+              </span>
+              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4 text-white">
                 How Jobstm Works
               </h2>
-              <p className="text-lg text-muted-foreground">
-                Getting started is simple. Follow these easy steps to begin your
-                gig work journey.
+              <p className="text-lg" style={{ color: "rgba(255,255,255,0.7)" }}>
+                Getting started is simple. Follow these four steps to begin your gig work journey.
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto perspective-container">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
             {[
-              {
-                number: "01",
-                icon: HiUsers,
-                title: "Sign Up",
-                description:
-                  "Create your free account in minutes with Internet Identity authentication",
-              },
-              {
-                number: "02",
-                icon: HiViewGridAdd,
-                title: "Complete Profile",
-                description:
-                  "Add your skills, experience, and preferences to match with the right opportunities",
-              },
-              {
-                number: "03",
-                icon: HiBriefcase,
-                title: "Browse & Apply",
-                description:
-                  "Explore available gigs or post jobs, then connect with the perfect match",
-              },
-              {
-                number: "04",
-                icon: HiTrendingUp,
-                title: "Work & Earn",
-                description:
-                  "Complete projects, get paid securely, and build your reputation on the platform",
-              },
+              { number: "01", icon: HiUsers, title: "Sign Up", description: "Create your free account in minutes with secure authentication" },
+              { number: "02", icon: HiViewGridAdd, title: "Complete Profile", description: "Add skills, experience, and preferences for smart matching" },
+              { number: "03", icon: HiBriefcase, title: "Browse & Apply", description: "Explore gigs or post jobs, then connect with the perfect match" },
+              { number: "04", icon: HiTrendingUp, title: "Work & Earn", description: "Complete projects, get paid, and build your reputation" },
             ].map((step, index) => {
               const Icon = step.icon;
               return (
-                <ScrollReveal key={step.number} animation="slide-up" delay={index * 150}>
-                  <Card className="py-6 relative border-2 hover:border-primary/50 transition-all card-3d hover-shine group h-full">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-5xl font-bold text-primary/20 font-heading transition-all duration-500 group-hover:text-primary/50 group-hover:scale-125">
-                          {step.number}
-                        </span>
-                        <Icon className="h-8 w-8 text-primary transition-all duration-500 group-hover:scale-150 group-hover:rotate-[360deg]" />
+                <ScrollReveal key={step.number} animation="fade-up" delay={index * 120}>
+                  <div className="rounded-3xl bg-white p-7 h-full flex flex-col shadow-warm-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="text-4xl font-black" style={{ color: "rgba(19,107,171,0.15)" }}>{step.number}</span>
+                      <div className="h-10 w-10 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(19,107,171,0.1)" }}>
+                        <Icon className="h-5 w-5" style={{ color: "#136BAB" }} />
                       </div>
-                      <CardTitle className="text-xl">{step.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        {step.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
+                    </div>
+                    <h3 className="font-heading text-lg font-bold mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                    {index < 3 && (
+                      <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold" style={{ color: "#136BAB" }}>
+                        <span>Next step</span>
+                        <HiArrowRight className="h-3 w-3" />
+                      </div>
+                    )}
+                  </div>
                 </ScrollReveal>
               );
             })}
@@ -541,57 +618,92 @@ export default function HomePage() {
       </section>
 
       {/* Why Trust Us */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+      <section className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: "#0d1f35" }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full" style={{ backgroundColor: "rgba(19,107,171,0.1)" }} />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.2)" }} />
         </div>
         <div className="container relative z-10">
           <ScrollReveal animation="fade-up">
-            <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-                Why Companies & Gig Workers Trust Us
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <span className="inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold mb-5" style={{ backgroundColor: "rgba(19,107,171,0.25)", color: "#7bb8e8" }}>
+                Trust &amp; Safety
+              </span>
+              <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4 text-white">
+                Why Companies &amp; Gig Workers Trust Us
               </h2>
-              <p className="text-lg text-muted-foreground">
-                Built for scale, security, and speed with industry-standard
-                practices
+              <p className="text-lg" style={{ color: "rgba(255,255,255,0.6)" }}>
+                Built for scale, security, and speed with industry-standard practices
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
             {[
-              {
-                title: "Verified Profiles",
-                description: "Both sides verified for trust and safety",
-              },
-              {
-                title: "Faster Hiring",
-                description: "Streamlined onboarding and matching process",
-              },
-              {
-                title: "Professional Experience",
-                description: "Business-grade platform and support",
-              },
-              {
-                title: "Compliance-Ready",
-                description: "Industry-standard data handling and security",
-              },
-              {
-                title: "Secure Documents",
-                description: "Centralized, encrypted document management",
-              },
-              {
-                title: "Long-Term Scalability",
-                description: "Built to grow with your needs",
-              },
+              { title: "Verified Profiles", description: "Both sides verified for trust and safety", accent: "#136BAB" },
+              { title: "Faster Hiring", description: "Streamlined onboarding and matching process", accent: "#1a8c6e" },
+              { title: "Professional Experience", description: "Business-grade platform and support", accent: "#7c3aed" },
+              { title: "Compliance-Ready", description: "Industry-standard data handling and security", accent: "#dc6b19" },
+              { title: "Secure Documents", description: "Centralized, encrypted document management", accent: "#136BAB" },
+              { title: "Long-Term Scalability", description: "Built to grow with your needs", accent: "#1a8c6e" },
             ].map((benefit, index) => (
-              <ScrollReveal key={benefit.title} animation="fade-up" delay={index * 100}>
-                <div className="flex gap-3 p-4 rounded-lg hover:bg-muted/50 transition-all duration-300 hover-float group cursor-pointer border border-transparent hover:border-primary/20">
-                  <HiCheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1 transition-all duration-500 group-hover:scale-150 group-hover:rotate-[360deg]" />
+              <ScrollReveal key={benefit.title} animation="fade-up" delay={index * 80}>
+                <div className="flex gap-4 p-5 rounded-2xl hover:-translate-y-0.5 transition-all duration-300" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <div className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${benefit.accent}25` }}>
+                    <HiCheckCircle className="h-5 w-5" style={{ color: benefit.accent }} />
+                  </div>
                   <div>
-                    <h3 className="font-semibold mb-1 transition-colors duration-300 group-hover:text-primary">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {benefit.description}
-                    </p>
+                    <h3 className="font-semibold mb-1 text-white">{benefit.title}</h3>
+                    <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>{benefit.description}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container">
+          <ScrollReveal animation="fade-up">
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <span className="inline-flex items-center rounded-full bg-secondary/10 text-secondary px-5 py-2 text-sm font-semibold mb-5">
+                What People Say
+              </span>
+              <h2 className="font-heading text-3xl font-bold sm:text-4xl md:text-5xl mb-4">
+                Trusted by Workers &amp; Companies
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Here&apos;s what our verified users have to say
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className="grid gap-5 md:grid-cols-3 max-w-5xl mx-auto">
+            {[
+              { quote: "Jobstm helped me find verified gig work within days. The verification process gave companies confidence to hire me immediately.", name: "Ravi Sharma", role: "Gig Worker · Khandwa", accent: "#136BAB", stars: 5 },
+              { quote: "We hired 12 verified workers in one week. Zero background-check issues. The platform's verification-first approach saved us hours.", name: "Priya Mehta", role: "HR Manager · Indore", accent: "#7c3aed", stars: 5 },
+              { quote: "As a student, getting my first gig was seamless. My verified profile stood out and I got matched with the right opportunity instantly.", name: "Ankit Verma", role: "Student Worker · MP", accent: "#1a8c6e", stars: 5 },
+            ].map((t, index) => (
+              <ScrollReveal key={t.name} animation="fade-up" delay={index * 100}>
+                <div className="rounded-3xl bg-white p-7 shadow-warm hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300 h-full flex flex-col overflow-hidden relative" style={{ border: `1px solid ${t.accent}25` }}>
+                  {/* Top accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl" style={{ backgroundColor: t.accent }} />
+                  <div className="flex gap-0.5 mb-4 mt-2">
+                    {Array.from({ length: t.stars }).map((_, i) => (
+                      <HiBadgeCheck key={i} className="h-4 w-4" style={{ color: t.accent }} />
+                    ))}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-6">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-border/40">
+                    <div className="h-9 w-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ backgroundColor: t.accent }}>
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">{t.role}</p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -601,36 +713,44 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute top-10 left-20 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-10 right-20 w-80 h-80 bg-accent/30 rounded-full blur-3xl animate-float-slow"></div>
+      <section className="py-20 md:py-28 bg-secondary text-secondary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-1/2 -right-1/4 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
+          <div className="absolute -bottom-1/2 -left-1/4 w-[500px] h-[500px] bg-black/10 rounded-full blur-3xl" />
         </div>
         <div className="container relative z-10">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-6 animate-scale-in-bounce">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-6">
               Ready to Transform Your Work Life?
             </h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in-up animate-delay-200">
+            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
               Join Jobstm today and discover the freedom of gig work or the
               flexibility of on-demand hiring
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animate-delay-300">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact">
-                <Button size="lg" className="w-full sm:w-auto shadow-warm-lg hover-lift hover-shine animate-glow">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto rounded-full bg-white text-secondary hover:bg-white/90 shadow-warm-lg hover-lift px-8"
+                >
                   Sign Up Now
                   <HiCheckCircle className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/about">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto hover-lift hover-shine">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto rounded-full border-white/40 bg-transparent text-white hover:bg-white/15 hover:border-white/60 hover-lift px-8"
+                >
                   Learn More
+                  <HiArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
-            <p className="text-sm text-muted-foreground mt-8 animate-fade-in animate-delay-500">
+            <p className="text-sm text-white/55 mt-10">
               Proudly built by{" "}
-              <span className="font-semibold">
+              <span className="font-semibold text-white/80">
                 Maikal and Taksharya Pvt Limited
               </span>{" "}
               • Indore, Madhya Pradesh

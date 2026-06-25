@@ -40,14 +40,14 @@ export const dashboardApi = {
 
 // ── Users ─────────────────────────────────────────────────────
 export const usersApi = {
-  list: (token: string, params?: { role?: string; status?: string; q?: string; page?: number }) => {
+  list: (token: string, params?: { role?: string; status?: string; q?: string; page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
     if (params?.role)   qs.set('role',   params.role);
     if (params?.status) qs.set('status', params.status);
     if (params?.q)      qs.set('q',      params.q);
-    if (params?.page)   qs.set('page',   String(params.page));
-    const q = qs.toString();
-    return req<{ data: any[]; total: number }>('GET', `/api/admin/users${q ? `?${q}` : ''}`, undefined, token);
+    qs.set('page',  String(params?.page  ?? 1));
+    qs.set('limit', String(params?.limit ?? 10));
+    return req<{ data: any[]; total: number; page: number }>('GET', `/api/admin/users?${qs}`, undefined, token);
   },
 
   get: (token: string, id: string) =>
@@ -59,8 +59,10 @@ export const usersApi = {
 
 // ── Companies ─────────────────────────────────────────────────
 export const companiesApi = {
-  list: (token: string, status = 'pending') =>
-    req<{ data: any[] }>('GET', `/api/admin/companies?status=${status}`, undefined, token),
+  list: (token: string, status = 'pending', page = 1, limit = 10) => {
+    const qs = new URLSearchParams({ status, page: String(page), limit: String(limit) });
+    return req<{ data: any[]; total: number; page: number }>('GET', `/api/admin/companies?${qs}`, undefined, token);
+  },
 
   verify: (token: string, id: string, action: 'approve' | 'reject', note?: string) =>
     req('PUT', `/api/admin/companies/${id}/verify`, { action, note }, token),
@@ -68,12 +70,13 @@ export const companiesApi = {
 
 // ── Jobs ──────────────────────────────────────────────────────
 export const jobsAdminApi = {
-  list: (token: string, params?: { status?: string; q?: string }) => {
+  list: (token: string, params?: { status?: string; q?: string; page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
     if (params?.status) qs.set('status', params.status);
     if (params?.q)      qs.set('q',      params.q);
-    const q = qs.toString();
-    return req<{ data: any[] }>('GET', `/api/admin/jobs${q ? `?${q}` : ''}`, undefined, token);
+    qs.set('page',  String(params?.page  ?? 1));
+    qs.set('limit', String(params?.limit ?? 10));
+    return req<{ data: any[]; total: number; page: number }>('GET', `/api/admin/jobs?${qs}`, undefined, token);
   },
 
   moderate: (token: string, id: string, status: string, note?: string) =>
@@ -129,13 +132,14 @@ export const couponsAdminApi = {
 
 // ── Activities (Extra Curricular) ─────────────────────────────
 export const activitiesAdminApi = {
-  list: (token: string, params?: { status?: string; category?: string; q?: string }) => {
+  list: (token: string, params?: { status?: string; category?: string; q?: string; page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
     if (params?.status)   qs.set('status',   params.status);
     if (params?.category) qs.set('category', params.category);
     if (params?.q)        qs.set('q',        params.q);
-    const q = qs.toString();
-    return req<{ data: any[] }>('GET', `/api/admin/activities${q ? `?${q}` : ''}`, undefined, token);
+    qs.set('page',  String(params?.page  ?? 1));
+    qs.set('limit', String(params?.limit ?? 10));
+    return req<{ data: any[]; total: number; page: number }>('GET', `/api/admin/activities?${qs}`, undefined, token);
   },
 
   verify: (token: string, id: string, action: 'approve' | 'reject', note?: string) =>
@@ -152,17 +156,21 @@ export const activitiesAdminApi = {
 
 // ── Ads (Advertisement Banners) ───────────────────────────────
 export const adsAdminApi = {
-  list: (token: string, status?: string) => {
-    const qs = status ? `?status=${status}` : '';
-    return req<{ data: any[] }>('GET', `/api/admin/ads${qs}`, undefined, token);
+  list: (token: string, status?: string, page = 1, limit = 10) => {
+    const params = new URLSearchParams({ page: String(page), limit: String(limit) });
+    if (status) params.set('status', status);
+    return req<{ data: any[]; total: number; page: number; limit: number }>(
+      'GET', `/api/admin/ads?${params}`, undefined, token,
+    );
   },
   verify: (token: string, id: string, action: 'approve' | 'reject', note?: string) =>
     req('PUT', `/api/admin/ads/${id}/verify`, { action, note }, token),
 
   // Advertiser (business) profiles
-  listAdvertisers: (token: string, status?: string) => {
-    const qs = status ? `?status=${status}` : '';
-    return req<{ data: any[] }>('GET', `/api/admin/advertisers${qs}`, undefined, token);
+  listAdvertisers: (token: string, status?: string, page = 1, limit = 10) => {
+    const qs = new URLSearchParams({ page: String(page), limit: String(limit) });
+    if (status) qs.set('status', status);
+    return req<{ data: any[]; total: number; page: number }>('GET', `/api/admin/advertisers?${qs}`, undefined, token);
   },
   verifyAdvertiser: (token: string, id: string, action: 'approve' | 'reject', note?: string) =>
     req('PUT', `/api/admin/advertisers/${id}/verify`, { action, note }, token),
@@ -192,14 +200,14 @@ export const subscriptionsApi = {
   stats: (token: string) =>
     req<{ data: any }>('GET', '/api/admin/subscription-stats', undefined, token),
 
-  list: (token: string, params?: { plan_type?: string; active?: string; page?: number }) => {
+  list: (token: string, params?: { plan_type?: string; active?: string; page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
     if (params?.plan_type) qs.set('plan_type', params.plan_type);
     if (params?.active)    qs.set('active',    params.active);
-    if (params?.page)      qs.set('page',      String(params.page));
-    const q = qs.toString();
+    qs.set('page',  String(params?.page  ?? 1));
+    qs.set('limit', String(params?.limit ?? 10));
     return req<{ data: any[]; total: number }>(
-      'GET', `/api/admin/subscriptions${q ? `?${q}` : ''}`, undefined, token
+      'GET', `/api/admin/subscriptions?${qs}`, undefined, token
     );
   },
 };

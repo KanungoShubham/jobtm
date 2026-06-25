@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   HiCheckCircle, HiX, HiExclamationCircle, HiOfficeBuilding,
   HiPhone, HiDocumentText, HiRefresh, HiMail, HiGlobe,
@@ -10,11 +10,13 @@ import { getAdminToken } from '@/lib/adminAuth';
 
 type Tab = 'Pending' | 'Approved' | 'Rejected';
 const TAB_STATUS: Record<Tab, string> = { Pending: 'pending', Approved: 'approved', Rejected: 'rejected' };
-const TAB_ACCENT: Record<Tab, string> = {
-  Pending:  'bg-amber-500 border-amber-500',
-  Approved: 'bg-emerald-500 border-emerald-500',
-  Rejected: 'bg-red-500 border-red-500',
+const TAB_GRADIENT: Record<Tab, string> = {
+  Pending:  'linear-gradient(135deg,#f59e0b,#d97706)',
+  Approved: 'linear-gradient(135deg,#10b981,#059669)',
+  Rejected: 'linear-gradient(135deg,#ef4444,#dc2626)',
 };
+
+const PAGE_SIZE = 10;
 
 interface CompanyItem {
   id: string; name: string; industry: string; size: string;
@@ -39,9 +41,7 @@ function RejectModal({ companyName, onConfirm, onCancel }: {
         </label>
         <textarea
           className="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-red-400 resize-none"
-          rows={3}
-          placeholder="Reason for rejection…"
-          value={note}
+          rows={3} placeholder="Reason for rejection…" value={note}
           onChange={(e) => setNote(e.target.value)}
         />
         <div className="flex gap-3 mt-4">
@@ -68,7 +68,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
 
   return (
     <div className="bg-white rounded-2xl border-2 border-amber-300 shadow-sm overflow-hidden">
-      {/* Accent bar */}
       <div className="bg-amber-50 border-b border-amber-100 px-5 py-3 flex items-center gap-2">
         <HiOfficeBuilding className="w-4 h-4 text-amber-600" />
         <span className="text-xs font-bold text-amber-700 flex-1">
@@ -78,7 +77,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
       </div>
 
       <div className="p-5 space-y-4">
-        {/* Company header */}
         <button onClick={() => setExpanded(!expanded)} className="w-full flex items-center gap-4 text-left">
           <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center flex-shrink-0">
             <span className="text-xl font-extrabold text-blue-600">{co.name.charAt(0)}</span>
@@ -90,7 +88,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
           <span className="text-slate-400 text-xs">{expanded ? '▲ less' : '▼ more'}</span>
         </button>
 
-        {/* Expanded full details */}
         {expanded && (
           <div className="bg-slate-50 rounded-xl p-4 space-y-2">
             {[
@@ -116,7 +113,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
           </div>
         )}
 
-        {/* Documents */}
         <div>
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Documents</p>
           <div className="grid grid-cols-2 gap-2">
@@ -125,9 +121,7 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
               { label: 'Reg. Certificate', url: co.cin_doc_url, icon: HiIdentification },
             ].map((doc) => (
               <div key={doc.label}
-                className={`flex items-center gap-2 rounded-xl px-3 py-2.5 border ${
-                  doc.url ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'
-                }`}>
+                className={`flex items-center gap-2 rounded-xl px-3 py-2.5 border ${doc.url ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'}`}>
                 <doc.icon className={`w-4 h-4 ${doc.url ? 'text-blue-500' : 'text-slate-400'}`} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[10px] text-slate-400">{doc.label}</p>
@@ -145,7 +139,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
           </div>
         </div>
 
-        {/* Owner */}
         {co.profiles && (
           <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5">
             <HiPhone className="w-4 h-4 text-slate-400" />
@@ -155,7 +148,6 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
           </div>
         )}
 
-        {/* Rejection note */}
         {tab === 'Rejected' && co.rejection_note && (
           <div className="bg-red-50 border border-red-200 rounded-xl px-3 py-2.5">
             <p className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-0.5">Rejection Reason</p>
@@ -163,21 +155,16 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
           </div>
         )}
 
-        {/* Actions */}
         {tab === 'Pending' && (
           <div className="flex gap-2.5">
-            <button
-              disabled={isProcessing}
-              onClick={() => onApprove(co.id)}
+            <button disabled={isProcessing} onClick={() => onApprove(co.id)}
               className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-white font-bold py-3 rounded-2xl text-sm transition">
               {isProcessing
                 ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 : <HiCheckCircle className="w-4 h-4" />}
               Approve Company
             </button>
-            <button
-              disabled={isProcessing}
-              onClick={() => onRejectClick(co)}
+            <button disabled={isProcessing} onClick={() => onRejectClick(co)}
               className="w-12 flex items-center justify-center bg-red-500 hover:bg-red-400 disabled:opacity-60 text-white rounded-2xl transition">
               <HiX className="w-5 h-5" />
             </button>
@@ -195,30 +182,64 @@ function CompanyCard({ co, tab, processing, onApprove, onRejectClick }: {
 }
 
 export default function AdminApprovalsPage() {
-  const [tab,         setTab]         = useState<Tab>('Pending');
-  const [companies,   setCompanies]   = useState<CompanyItem[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [error,       setError]       = useState('');
+  const [tab,          setTab]          = useState<Tab>('Pending');
+  const [companies,    setCompanies]    = useState<CompanyItem[]>([]);
+  const [page,         setPage]         = useState(1);
+  const [total,        setTotal]        = useState(0);
+  const [loading,      setLoading]      = useState(true);
+  const [loadingMore,  setLoadingMore]  = useState(false);
+  const [error,        setError]        = useState('');
   const [rejectTarget, setRejectTarget] = useState<CompanyItem | null>(null);
-  const [processing,  setProcessing]  = useState<string | null>(null);
+  const [processing,   setProcessing]   = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    setLoading(true); setError('');
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const hasMore = companies.length < total;
+
+  const loadFirst = useCallback(async () => {
+    setLoading(true); setError(''); setCompanies([]); setPage(1); setTotal(0);
     try {
       const token = getAdminToken() ?? '';
-      const res   = await companiesApi.list(token, TAB_STATUS[tab]);
+      const res   = await companiesApi.list(token, TAB_STATUS[tab], 1, PAGE_SIZE);
       setCompanies(res.data ?? []);
+      setTotal(res.total ?? 0);
     } catch (e: any) { setError(e.message); }
     finally { setLoading(false); }
   }, [tab]);
 
-  useEffect(() => { load(); }, [load]);
+  const loadNext = useCallback(async (nextPage: number) => {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const token = getAdminToken() ?? '';
+      const res   = await companiesApi.list(token, TAB_STATUS[tab], nextPage, PAGE_SIZE);
+      setCompanies((prev) => [...prev, ...(res.data ?? [])]);
+      setTotal(res.total ?? 0);
+      setPage(nextPage);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoadingMore(false); }
+  }, [tab, loadingMore]);
+
+  useEffect(() => { loadFirst(); }, [loadFirst]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading && !loadingMore) loadNext(page + 1);
+      },
+      { rootMargin: '120px' },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loading, loadingMore, loadNext, page]);
 
   const approveCompany = async (id: string) => {
     setProcessing(id);
     try {
       await companiesApi.verify(getAdminToken() ?? '', id, 'approve');
       setCompanies((p) => p.filter((c) => c.id !== id));
+      setTotal((t) => t - 1);
     } catch (e: any) { setError(e.message); }
     finally { setProcessing(null); }
   };
@@ -229,23 +250,25 @@ export default function AdminApprovalsPage() {
     try {
       await companiesApi.verify(getAdminToken() ?? '', id, 'reject', note || undefined);
       setCompanies((p) => p.filter((c) => c.id !== id));
+      setTotal((t) => t - 1);
     } catch (e: any) { setError(e.message); }
     finally { setProcessing(null); }
   };
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">Review Queue</p>
           <h1 className="text-2xl font-extrabold text-slate-900">Approvals</h1>
         </div>
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center shadow shadow-red-600/30">
-            <span className="text-sm font-extrabold text-white">{companies.length}</span>
-          </div>
-          <button onClick={load} disabled={loading}
+          {total > 0 && (
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              {companies.length} / {total}
+            </span>
+          )}
+          <button onClick={loadFirst} disabled={loading}
             className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 bg-white px-3 py-1.5 rounded-xl text-sm transition">
             <HiRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
@@ -259,13 +282,13 @@ export default function AdminApprovalsPage() {
         </div>
       )}
 
-      {/* Tabs */}
       <div className="flex gap-2">
         {(['Pending', 'Approved', 'Rejected'] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-5 py-2 rounded-full text-sm font-bold border transition ${
-              tab === t ? `${TAB_ACCENT[t]} text-white` : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
-            }`}>
+              tab === t ? 'text-white border-transparent' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+            }`}
+            style={tab === t ? { background: TAB_GRADIENT[t] } : {}}>
             {t}
           </button>
         ))}
@@ -273,7 +296,7 @@ export default function AdminApprovalsPage() {
 
       {loading ? (
         <div className="flex justify-center py-8">
-          <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : companies.length === 0 ? (
         <div className="flex flex-col items-center py-20 gap-3">
@@ -285,21 +308,28 @@ export default function AdminApprovalsPage() {
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <span className={`text-white text-[10px] font-extrabold px-3 py-1 rounded-full tracking-wider ${TAB_ACCENT[tab].split(' ')[0]}`}>
-              COMPANY {tab.toUpperCase()}
-            </span>
-            <span className="text-xs font-semibold text-slate-500">{companies.length} companies</span>
+        <>
+          <div className="space-y-4">
+            {companies.map((co) => (
+              <CompanyCard
+                key={co.id} co={co} tab={tab} processing={processing}
+                onApprove={approveCompany}
+                onRejectClick={setRejectTarget}
+              />
+            ))}
           </div>
-          {companies.map((co) => (
-            <CompanyCard
-              key={co.id} co={co} tab={tab} processing={processing}
-              onApprove={approveCompany}
-              onRejectClick={setRejectTarget}
-            />
-          ))}
-        </div>
+
+          <div ref={sentinelRef} className="py-4 flex justify-center">
+            {loadingMore ? (
+              <div className="flex items-center gap-2 text-slate-400 text-sm">
+                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                Loading more…
+              </div>
+            ) : !hasMore && total > 0 ? (
+              <p className="text-xs text-slate-300 font-medium">All {total} companies loaded</p>
+            ) : null}
+          </div>
+        </>
       )}
 
       {rejectTarget && (

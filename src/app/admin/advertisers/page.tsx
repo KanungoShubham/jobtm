@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   HiUserGroup, HiRefresh, HiExclamationCircle, HiX, HiCheckCircle,
   HiSearch, HiExternalLink, HiPhone, HiMail, HiOfficeBuilding,
@@ -8,6 +8,7 @@ import { adsAdminApi } from '@/lib/api';
 import { getAdminToken } from '@/lib/adminAuth';
 
 type Tab = 'pending' | 'approved' | 'rejected';
+const PAGE_SIZE = 10;
 
 const PILL: Record<string, string> = {
   pending:  'bg-amber-100 text-amber-700',
@@ -47,12 +48,12 @@ function AdvertiserCard({ a, onApprove, onReject, actioning }: {
       </div>
 
       <div className="grid grid-cols-2 gap-3 bg-slate-50 rounded-xl p-3">
-        <Row label="Mobile"  value={a.mobile} icon={HiPhone} />
-        <Row label="Email"   value={a.email} icon={HiMail} />
-        <Row label="Company" value={a.company_name} icon={HiOfficeBuilding} />
+        <Row label="Mobile"   value={a.mobile} icon={HiPhone} />
+        <Row label="Email"    value={a.email} icon={HiMail} />
+        <Row label="Company"  value={a.company_name} icon={HiOfficeBuilding} />
         <Row label="Reg. No." value={a.business_reg_number} />
-        <Row label="Website" value={a.website} icon={HiExternalLink} link />
-        <Row label="Address" value={a.company_address} />
+        <Row label="Website"  value={a.website} icon={HiExternalLink} link />
+        <Row label="Address"  value={a.company_address} />
       </div>
 
       {a.status === 'rejected' && a.reject_note && (
@@ -80,38 +81,79 @@ function AdvertiserCard({ a, onApprove, onReject, actioning }: {
 }
 
 export default function AdminAdvertisersPage() {
-  const [tab, setTab] = useState<Tab>('pending');
-  const [list, setList] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [actioning, setActioning] = useState<string | null>(null);
-  const [query, setQuery] = useState('');
+  const [tab,          setTab]          = useState<Tab>('pending');
+  const [list,         setList]         = useState<any[]>([]);
+  const [page,         setPage]         = useState(1);
+  const [total,        setTotal]        = useState(0);
+  const [loading,      setLoading]      = useState(true);
+  const [loadingMore,  setLoadingMore]  = useState(false);
+  const [error,        setError]        = useState('');
+  const [actioning,    setActioning]    = useState<string | null>(null);
+  const [query,        setQuery]        = useState('');
   const [rejectTarget, setRejectTarget] = useState<string | null>(null);
-  const [rejectNote, setRejectNote] = useState('');
+  const [rejectNote,   setRejectNote]   = useState('');
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
   const token = getAdminToken() ?? '';
+  const hasMore = list.length < total;
 
-  const load = useCallback(async () => {
-    setLoading(true); setError('');
-    try { const res = await adsAdminApi.listAdvertisers(token, tab); setList(res.data ?? []); }
-    catch (e: any) { setError(e.message); } finally { setLoading(false); }
+  const loadFirst = useCallback(async () => {
+    setLoading(true); setError(''); setList([]); setPage(1); setTotal(0);
+    try {
+      const res = await adsAdminApi.listAdvertisers(token, tab, 1, PAGE_SIZE);
+      setList(res.data ?? []);
+      setTotal(res.total ?? 0);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoading(false); }
   }, [tab, token]);
 
-  useEffect(() => { load(); }, [load]);
+  const loadNext = useCallback(async (nextPage: number) => {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const res = await adsAdminApi.listAdvertisers(token, tab, nextPage, PAGE_SIZE);
+      setList((prev) => [...prev, ...(res.data ?? [])]);
+      setTotal(res.total ?? 0);
+      setPage(nextPage);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoadingMore(false); }
+  }, [tab, token, loadingMore]);
+
+  useEffect(() => { loadFirst(); }, [loadFirst]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading && !loadingMore) loadNext(page + 1);
+      },
+      { rootMargin: '120px' },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loading, loadingMore, loadNext, page]);
 
   const handleApprove = async (id: string) => {
     setActioning(id);
-    try { await adsAdminApi.verifyAdvertiser(token, id, 'approve'); setList((p) => p.filter((x) => x.id !== id)); }
-    catch (e: any) { setError(e.message); } finally { setActioning(null); }
+    try {
+      await adsAdminApi.verifyAdvertiser(token, id, 'approve');
+      setList((p) => p.filter((x) => x.id !== id));
+      setTotal((t) => t - 1);
+    } catch (e: any) { setError(e.message); }
+    finally { setActioning(null); }
   };
+
   const handleRejectConfirm = async () => {
     if (!rejectTarget) return;
     setActioning(rejectTarget);
     try {
       await adsAdminApi.verifyAdvertiser(token, rejectTarget, 'reject', rejectNote);
       setList((p) => p.filter((x) => x.id !== rejectTarget));
+      setTotal((t) => t - 1);
       setRejectTarget(null); setRejectNote('');
-    } catch (e: any) { setError(e.message); } finally { setActioning(null); }
+    } catch (e: any) { setError(e.message); }
+    finally { setActioning(null); }
   };
 
   const filtered = list.filter((a) => !query ||
@@ -135,17 +177,27 @@ export default function AdminAdvertisersPage() {
           </h1>
           <p className="text-sm text-slate-400 mt-0.5">Approve advertiser business profiles before they can run ads</p>
         </div>
-        <button onClick={load} disabled={loading}
-          className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 bg-white px-3 py-1.5 rounded-xl text-sm transition">
-          <HiRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
-        </button>
+        <div className="flex items-center gap-3">
+          {total > 0 && (
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              {list.length} / {total}
+            </span>
+          )}
+          <button onClick={loadFirst} disabled={loading}
+            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 border border-slate-200 bg-white px-3 py-1.5 rounded-xl text-sm transition">
+            <HiRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
+          </button>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {TABS.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
-            className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${tab === t.key ? 'bg-red-600 text-white border-red-600' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'}`}>
-            {t.label}{tab === t.key && filtered.length > 0 ? ` (${filtered.length})` : ''}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
+              tab === t.key ? 'text-white border-transparent' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+            }`}
+            style={tab === t.key ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            {t.label}
           </button>
         ))}
       </div>
@@ -154,7 +206,7 @@ export default function AdminAdvertisersPage() {
         <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by business, name or mobile…"
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-300 transition" />
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-300 transition" />
       </div>
 
       {error && (
@@ -183,18 +235,31 @@ export default function AdminAdvertisersPage() {
       )}
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-16"><div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-3">
           <HiUserGroup className="w-12 h-12 text-slate-300" />
           <p className="text-base font-semibold text-slate-400">No {tab} advertisers</p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 gap-4">
-          {filtered.map((a) => (
-            <AdvertiserCard key={a.id} a={a} onApprove={handleApprove} onReject={(id) => setRejectTarget(id)} actioning={actioning} />
-          ))}
-        </div>
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {filtered.map((a) => (
+              <AdvertiserCard key={a.id} a={a} onApprove={handleApprove} onReject={(id) => setRejectTarget(id)} actioning={actioning} />
+            ))}
+          </div>
+
+          <div ref={sentinelRef} className="py-4 flex justify-center">
+            {loadingMore ? (
+              <div className="flex items-center gap-2 text-slate-400 text-sm">
+                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                Loading more…
+              </div>
+            ) : !hasMore && total > 0 ? (
+              <p className="text-xs text-slate-300 font-medium">All {total} advertisers loaded</p>
+            ) : null}
+          </div>
+        </>
       )}
     </div>
   );
