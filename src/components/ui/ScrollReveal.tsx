@@ -10,6 +10,7 @@ interface ScrollRevealProps {
   delay?: number;
   duration?: number;
   threshold?: number;
+  id?: string;
 }
 
 export function ScrollReveal({
@@ -19,6 +20,7 @@ export function ScrollReveal({
   delay = 0,
   duration = 700,
   threshold = 0.1,
+  id,
 }: ScrollRevealProps) {
   const { elementRef, isVisible } = useScrollAnimation({ threshold });
 
@@ -38,6 +40,7 @@ export function ScrollReveal({
   return (
     <div
       ref={elementRef}
+      id={id}
       className={cn(
         "transition-all ease-out",
         animationClasses[animation],
