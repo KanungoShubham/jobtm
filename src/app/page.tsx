@@ -17,6 +17,7 @@ import {
 } from "react-icons/hi";
 import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { LaunchOfferBanner } from "@/components/sections/LaunchOfferBanner";
 
 export default function HomePage() {
   return (
@@ -33,6 +34,7 @@ export default function HomePage() {
             <div className="animate-fade-in-up">
               <div className="mb-6 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/10 text-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wide">
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary animate-pulse" />
                   Verification-First Platform
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 text-muted-foreground px-4 py-1.5 text-xs font-medium">
@@ -40,10 +42,11 @@ export default function HomePage() {
                   Khandwa, MP · Since 2011
                 </span>
               </div>
-              <h1 className="font-heading text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl mb-6 leading-[1.1]">
-                Trusted Gig<br />Hiring.{" "}
-                <span className="text-secondary">Verified</span><br />
-                <span className="text-secondary">Talent.</span>
+              <h1 className="font-heading text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl mb-6 leading-[1.08]">
+                Trusted Gig Hiring.{" "}
+                <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                  Verified Talent.
+                </span>
               </h1>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
                 We are building a secure, verification-first gig hiring ecosystem
@@ -51,20 +54,19 @@ export default function HomePage() {
                 transparently, and at scale.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
-                <Link href="/auth">
+                <Link href="/auth" className="group">
                   <Button size="lg" className="w-full sm:w-auto rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-warm-lg hover-lift px-8">
                     Get Started
-                    <HiCheckCircle className="ml-2 h-5 w-5" />
+                    <HiArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full border-secondary/40 text-secondary hover:bg-secondary hover:text-secondary-foreground hover-lift px-8">
+                  <Button size="lg" variant="ghost" className="w-full sm:w-auto rounded-full text-foreground hover:bg-secondary/5 hover-lift px-8">
                     Contact Us
-                    <HiArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
                 {[
                   { icon: HiShieldCheck, label: "100% Verified" },
                   { icon: HiLightningBolt, label: "Fast Onboarding" },
@@ -76,12 +78,37 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
+
+              {/* Social proof — avatar stack + rating */}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2.5">
+                  {["#136BAB", "#7c3aed", "#1a8c6e", "#dc6b19"].map((c, i) => (
+                    <div key={c} className="h-9 w-9 rounded-full border-2 border-background flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: c, zIndex: 4 - i }}>
+                      {String.fromCharCode(65 + i)}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <HiBadgeCheck key={i} className="h-3.5 w-3.5 text-secondary" />
+                    ))}
+                    <span className="ml-1 text-xs font-bold text-foreground">4.9/5</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Trusted by verified workers &amp; companies</p>
+                </div>
+              </div>
             </div>
 
             {/* Right: Floating UI Mockup */}
             <div className="relative animate-fade-in-up animate-delay-200 hidden lg:block">
               {/* Main verification card */}
-              <div className="rounded-3xl border border-border/60 bg-white shadow-warm-lg p-6 relative z-10">
+              <div className="rounded-3xl border border-border/60 bg-white shadow-warm-lg p-6 relative z-10 hover-tilt" style={{ transform: "rotate(-1deg)" }}>
+                {/* Verified ribbon */}
+                <div className="absolute -top-3 left-6 flex items-center gap-1.5 rounded-full bg-secondary text-white px-3 py-1 text-[11px] font-bold shadow-warm z-20">
+                  <HiBadgeCheck className="h-3.5 w-3.5" />
+                  Verified Platform
+                </div>
                 <div className="flex items-center justify-between mb-5">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-widest text-secondary/50 mb-0.5">Live Status</p>
@@ -124,7 +151,7 @@ export default function HomePage() {
               </div>
 
               {/* Floating notification — top right */}
-              <div className="absolute -top-4 -right-4 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 flex items-center gap-3 z-20">
+              <div className="absolute -top-4 -right-4 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 flex items-center gap-3 z-20 animate-float">
                 <div className="h-8 w-8 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
                   <HiCheckCircle className="h-4 w-4 text-green-500" />
                 </div>
@@ -135,7 +162,7 @@ export default function HomePage() {
               </div>
 
               {/* Floating users card — middle right */}
-              <div className="absolute top-1/2 -right-8 -translate-y-1/2 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 z-20">
+              <div className="absolute top-1/2 -right-8 -translate-y-1/2 rounded-2xl bg-white border border-border/60 shadow-warm px-4 py-3 z-20 animate-float-slow">
                 <div className="flex items-center gap-2 mb-1">
                   <HiUsers className="h-4 w-4 text-secondary" />
                   <span className="text-xs font-bold">Matches Found</span>
@@ -147,6 +174,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <LaunchOfferBanner />
 
       {/* Stats Band */}
       <section className="py-14 border-y border-border/40 bg-white">
@@ -584,35 +613,33 @@ export default function HomePage() {
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-            {[
-              { number: "01", icon: HiUsers, title: "Sign Up", description: "Create your free account in minutes with secure authentication" },
-              { number: "02", icon: HiViewGridAdd, title: "Complete Profile", description: "Add skills, experience, and preferences for smart matching" },
-              { number: "03", icon: HiBriefcase, title: "Browse & Apply", description: "Explore gigs or post jobs, then connect with the perfect match" },
-              { number: "04", icon: HiTrendingUp, title: "Work & Earn", description: "Complete projects, get paid, and build your reputation" },
-            ].map((step, index) => {
-              const Icon = step.icon;
-              return (
-                <ScrollReveal key={step.number} animation="fade-up" delay={index * 120}>
-                  <div className="rounded-3xl bg-white p-7 h-full flex flex-col shadow-warm-lg hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center justify-between mb-5">
-                      <span className="text-4xl font-black" style={{ color: "rgba(19,107,171,0.15)" }}>{step.number}</span>
-                      <div className="h-10 w-10 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(19,107,171,0.1)" }}>
-                        <Icon className="h-5 w-5" style={{ color: "#136BAB" }} />
+          {/* Connected stepper — numbered circles on a joining line, not another card grid */}
+          <div className="max-w-5xl mx-auto">
+            <div className="relative grid md:grid-cols-4 gap-10 md:gap-4">
+              <div className="hidden md:block absolute top-7 left-[12.5%] right-[12.5%] h-0.5" style={{ backgroundColor: "rgba(255,255,255,0.2)" }} />
+              {[
+                { number: "01", icon: HiUsers, title: "Sign Up", description: "Create your free account in minutes with secure authentication" },
+                { number: "02", icon: HiViewGridAdd, title: "Complete Profile", description: "Add skills, experience, and preferences for smart matching" },
+                { number: "03", icon: HiBriefcase, title: "Browse & Apply", description: "Explore gigs or post jobs, then connect with the perfect match" },
+                { number: "04", icon: HiTrendingUp, title: "Work & Earn", description: "Complete projects, get paid, and build your reputation" },
+              ].map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <ScrollReveal key={step.number} animation="fade-up" delay={index * 120}>
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative z-10 h-14 w-14 rounded-2xl flex items-center justify-center bg-white shadow-warm-lg mb-5">
+                        <Icon className="h-6 w-6" style={{ color: "#136BAB" }} />
+                        <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-black text-white" style={{ backgroundColor: "#0d1f35" }}>
+                          {index + 1}
+                        </span>
                       </div>
+                      <h3 className="font-heading text-lg font-bold mb-2 text-white">{step.title}</h3>
+                      <p className="text-sm max-w-[220px]" style={{ color: "rgba(255,255,255,0.7)" }}>{step.description}</p>
                     </div>
-                    <h3 className="font-heading text-lg font-bold mb-2">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                    {index < 3 && (
-                      <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold" style={{ color: "#136BAB" }}>
-                        <span>Next step</span>
-                        <HiArrowRight className="h-3 w-3" />
-                      </div>
-                    )}
-                  </div>
-                </ScrollReveal>
-              );
-            })}
+                  </ScrollReveal>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -637,27 +664,39 @@ export default function HomePage() {
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-            {[
-              { title: "Verified Profiles", description: "Both sides verified for trust and safety", accent: "#136BAB" },
-              { title: "Faster Hiring", description: "Streamlined onboarding and matching process", accent: "#1a8c6e" },
-              { title: "Professional Experience", description: "Business-grade platform and support", accent: "#7c3aed" },
-              { title: "Compliance-Ready", description: "Industry-standard data handling and security", accent: "#dc6b19" },
-              { title: "Secure Documents", description: "Centralized, encrypted document management", accent: "#136BAB" },
-              { title: "Long-Term Scalability", description: "Built to grow with your needs", accent: "#1a8c6e" },
-            ].map((benefit, index) => (
-              <ScrollReveal key={benefit.title} animation="fade-up" delay={index * 80}>
-                <div className="flex gap-4 p-5 rounded-2xl hover:-translate-y-0.5 transition-all duration-300" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <div className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${benefit.accent}25` }}>
-                    <HiCheckCircle className="h-5 w-5" style={{ color: benefit.accent }} />
+          {/* Asymmetric layout — one featured stat panel + compact list, not a 6-up card grid */}
+          <div className="max-w-5xl mx-auto grid gap-4 lg:grid-cols-[1fr_1.4fr]">
+            <ScrollReveal animation="fade-right">
+              <div className="rounded-3xl p-8 h-full flex flex-col justify-center" style={{ background: "linear-gradient(150deg, #136BAB, #0d1f35)" }}>
+                <div className="text-5xl font-black text-white mb-2">0</div>
+                <p className="text-sm font-semibold text-white/80 mb-6">Fraud cases reported to date</p>
+                <div className="h-px w-full mb-6" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
+                <div className="text-5xl font-black text-white mb-2">2×</div>
+                <p className="text-sm font-semibold text-white/80">Faster hiring than industry average</p>
+              </div>
+            </ScrollReveal>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { title: "Verified Profiles", description: "Both sides verified for trust and safety", accent: "#136BAB" },
+                { title: "Faster Hiring", description: "Streamlined onboarding and matching process", accent: "#1a8c6e" },
+                { title: "Professional Experience", description: "Business-grade platform and support", accent: "#7c3aed" },
+                { title: "Compliance-Ready", description: "Industry-standard data handling and security", accent: "#dc6b19" },
+                { title: "Secure Documents", description: "Centralized, encrypted document management", accent: "#136BAB" },
+                { title: "Long-Term Scalability", description: "Built to grow with your needs", accent: "#1a8c6e" },
+              ].map((benefit, index) => (
+                <ScrollReveal key={benefit.title} animation="fade-up" delay={index * 80}>
+                  <div className="flex gap-4 p-5 rounded-2xl h-full hover:-translate-y-0.5 transition-all duration-300" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${benefit.accent}25` }}>
+                      <HiCheckCircle className="h-5 w-5" style={{ color: benefit.accent }} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-1 text-white">{benefit.title}</h3>
+                      <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>{benefit.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-1 text-white">{benefit.title}</h3>
-                    <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>{benefit.description}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>

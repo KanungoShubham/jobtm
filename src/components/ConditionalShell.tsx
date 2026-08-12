@@ -5,9 +5,9 @@ import { Footer } from './Footer';
 
 export function ConditionalShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith('/admin');
+  const isStandalone = pathname?.startsWith('/admin') || pathname?.startsWith('/employer') || pathname?.startsWith('/jobseeker');
 
-  if (isAdmin) return <>{children}</>;
+  if (isStandalone) return <>{children}</>;
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
