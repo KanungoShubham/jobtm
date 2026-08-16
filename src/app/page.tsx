@@ -54,7 +54,7 @@ export default function HomePage() {
                 transparently, and at scale.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
-                <Link href="/auth" className="group">
+                <Link href="/login" className="group">
                   <Button size="lg" className="w-full sm:w-auto rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-warm-lg hover-lift px-8">
                     Get Started
                     <HiArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
