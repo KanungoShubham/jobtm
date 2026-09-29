@@ -245,3 +245,13 @@
 @media (prefers-reduced-motion: reduce) {
   .cin-aurora, .cin-stagger > *, .cin-hero-exit { animation: none !important; }
 }
+
+@keyframes cin-rot {
+  to { transform: rotate(360deg); }
+}
+.cin-spin-slow {
+  animation: cin-rot 60s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cin-spin-slow { animation: none !important; }
+}
