@@ -6,9 +6,10 @@ interface LogoProps {
   width?: number;
   height?: number;
   showText?: boolean;
+  light?: boolean;
 }
 
-export function Logo({ className, width = 40, height = 40, showText = true }: LogoProps) {
+export function Logo({ className, width = 40, height = 40, showText = true, light = false }: LogoProps) {
   return (
     <div className={cn("inline-flex items-center gap-2.5", className)}>
       <Image
@@ -16,7 +17,7 @@ export function Logo({ className, width = 40, height = 40, showText = true }: Lo
         alt="Jobstm Logo"
         width={width}
         height={height}
-        className="object-contain"
+        className={cn("object-contain", light && "brightness-0 invert")}
         priority
       />
     </div>

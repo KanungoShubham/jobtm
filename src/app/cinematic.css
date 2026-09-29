@@ -156,12 +156,51 @@
   animation: cin-float-y 5s ease-in-out infinite;
 }
 
+@property --cin-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.cin-conic {
+  background: conic-gradient(from var(--cin-angle), transparent 0%, #3b82f6 14%, transparent 34%, #10b981 58%, transparent 80%);
+  animation: cin-spin 5s linear infinite;
+}
+@keyframes cin-spin {
+  to { --cin-angle: 360deg; }
+}
+.cin-shine {
+  position: relative;
+  overflow: hidden;
+}
+.cin-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: cin-shine 4.5s ease-in-out infinite;
+  animation-delay: var(--sd, 0s);
+}
+@keyframes cin-shine {
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+.cin-progress-fill {
+  background: linear-gradient(90deg, #10b981, #6ee7b7, #10b981);
+  background-size: 200% 100%;
+  animation: cin-fill-shimmer 2.2s linear infinite;
+}
+@keyframes cin-fill-shimmer {
+  to { background-position: 200% 0; }
+}
+
 @media (max-width: 767px) {
   .cin-aurora { filter: blur(60px); animation: none; }
   .cin-tilt { transform: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cin-aurora, .cin-shimmer-text, .cin-marquee, .cin-btn-glow, .cin-float, .cin-bar, .cin-line-draw.is-visible {
+  .cin-conic, .cin-shine::after, .cin-progress-fill, .cin-aurora, .cin-shimmer-text, .cin-marquee, .cin-btn-glow, .cin-float, .cin-bar, .cin-line-draw.is-visible {
     animation: none !important;
   }
   .cin-word, .cin-rise { animation: none !important; opacity: 1; transform: none; filter: none; }

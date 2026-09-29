@@ -30,26 +30,28 @@ export default function HomePage() {
       <LaunchOfferBanner />
 
       {/* Stats Band */}
-      <section className="relative py-14 bg-white">
+      <section className="relative overflow-hidden bg-white py-16 md:py-20">
+        <div aria-hidden className="pointer-events-none absolute -left-32 top-0 h-72 w-72 rounded-full bg-[#136BAB]/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-32 bottom-0 h-72 w-72 rounded-full bg-[#7c3aed]/10 blur-3xl" />
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { number: "100%", label: "Verified Profiles", icon: HiBadgeCheck, bg: "#136BAB" },
-              { number: "Zero", label: "Duplicate Records", icon: HiDatabase, bg: "#1a8c6e" },
-              { number: "Fast", label: "Hiring Process", icon: HiLightningBolt, bg: "#7c3aed" },
-              { number: "Secure", label: "Document Gateway", icon: HiLockClosed, bg: "#dc6b19" },
+              { number: "100%", label: "Verified Profiles", icon: HiBadgeCheck, bg: "#136BAB", delay: 0 },
+              { number: "Zero", label: "Duplicate Records", icon: HiDatabase, bg: "#1a8c6e", delay: 0.8 },
+              { number: "Fast", label: "Hiring Process", icon: HiLightningBolt, bg: "#7c3aed", delay: 1.6 },
+              { number: "Secure", label: "Document Gateway", icon: HiLockClosed, bg: "#dc6b19", delay: 2.4 },
             ].map((stat) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={stat.label}
-                  className="cin-card cin-glow-border flex flex-col items-center text-center p-6 rounded-3xl text-white group"
-                  style={{ backgroundColor: stat.bg }}
+                  className="cin-shine cin-float flex flex-col items-center text-center p-6 md:p-8 rounded-3xl text-white group transition-transform duration-500 hover:scale-105"
+                  style={{ background: `linear-gradient(150deg, ${stat.bg}, ${stat.bg}b3)`, boxShadow: `0 30px 60px -24px ${stat.bg}`, "--sd": `${stat.delay}s`, animationDelay: `${stat.delay - 3}s` } as React.CSSProperties}
                 >
                   <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform" style={{ backgroundColor: "rgba(255,255,255,0.2)" }}>
                     <Icon className="h-6 w-6 text-white" />
                   </div>
-                  <div className="text-3xl font-bold mb-1">{stat.number}</div>
+                  <div className="text-3xl md:text-4xl font-bold mb-1">{stat.number}</div>
                   <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.75)" }}>{stat.label}</div>
                 </div>
               );

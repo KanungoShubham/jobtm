@@ -45,6 +45,9 @@ export function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const loginRef = React.useRef<HTMLDivElement>(null);
+  const isHome = pathname === "/";
+  const dark = isHome; // transparent-over-hero, then floating glass pill
+  const pill = isHome && isScrolled;
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -81,14 +84,30 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-100 bg-white transition-shadow duration-300",
-        isScrolled && "shadow-sm"
+        "fixed z-50 transition-all duration-500 ease-out",
+        !isHome && "top-0 left-0 right-0 w-full border-b border-gray-100 bg-white",
+        !isHome && isScrolled && "shadow-sm",
+        isHome && !pill && "top-0 left-0 right-0 w-full border-b border-transparent",
+        pill &&
+          cn(
+            "top-3 left-3 right-3 mx-auto max-w-6xl border border-white/15 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)]",
+            mobileMenuOpen ? "rounded-3xl" : "rounded-full"
+          )
       )}
     >
-      <nav className="container flex items-center justify-between h-16 px-6 md:px-12">
+      {pill && (
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 -z-10 bg-[#0a1a2d]/90 backdrop-blur-xl",
+            mobileMenuOpen ? "rounded-3xl" : "rounded-full"
+          )}
+        />
+      )}
+      <nav className={cn("mx-auto flex h-16 w-full items-center justify-between px-5 md:px-8", !pill && "max-w-7xl")}>
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <Logo width={120} height={48} showText={false} />
+          <Logo width={120} height={48} showText={false} light={dark} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -98,28 +117,31 @@ export function Header() {
               key={item.name}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors duration-200 hover:text-secondary",
-                pathname === item.href
-                  ? "text-secondary font-semibold"
-                  : "text-foreground/70"
+                "relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+                dark
+                  ? "hover:bg-white/10 hover:text-white " + (pathname === item.href ? "text-white" : "text-white/70")
+                  : "hover:text-secondary " + (pathname === item.href ? "text-secondary font-semibold" : "text-foreground/70")
               )}
             >
               {item.name}
+              {dark && pathname === item.href && (
+                <span aria-hidden className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#7bb8e8] shadow-[0_0_10px_2px_rgba(123,184,232,0.9)]" />
+              )}
             </Link>
           ))}
 
           {!sessionReady ? (
-            <div className="w-24 h-9 rounded-lg bg-gray-100 animate-pulse ml-4" />
+            <div className={cn("ml-4 h-9 w-24 animate-pulse rounded-full", dark ? "bg-white/10" : "bg-gray-100")} />
           ) : session ? (
-            <div ref={loginRef} className="relative pl-4 border-l border-gray-200">
+            <div ref={loginRef} className={cn("relative border-l pl-4", dark ? "border-white/15" : "border-gray-200")}>
               <button
                 onClick={() => setLoginOpen((v) => !v)}
-                className="flex items-center gap-2 text-sm font-semibold pl-2 pr-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+                className={cn("flex items-center gap-2 rounded-full py-1.5 pl-2 pr-3 text-sm font-semibold transition-colors", dark ? "hover:bg-white/10" : "hover:bg-gray-50")}
               >
                 <span className="flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-bold" style={{ backgroundColor: session.color }}>
                   {initial}
                 </span>
-                <span className="text-foreground/80 max-w-[120px] truncate">{session.user.name || (session.role === "employer" ? "Employer" : session.role === "advertiser" ? "Advertiser" : "Job Seeker")}</span>
+                <span className={cn("max-w-[120px] truncate", dark ? "text-white/90" : "text-foreground/80")}>{session.user.name || (session.role === "employer" ? "Employer" : session.role === "advertiser" ? "Advertiser" : "Job Seeker")}</span>
                 <HiChevronDown className={cn("h-4 w-4 text-foreground/40 transition-transform", loginOpen && "rotate-180")} />
               </button>
               {loginOpen && (
@@ -155,10 +177,10 @@ export function Header() {
               )}
             </div>
           ) : (
-            <div className="pl-4 border-l border-gray-200">
+            <div className={cn("border-l pl-4", dark ? "border-white/15" : "border-gray-200")}>
               <Link
                 href="/login"
-                className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg text-white transition-opacity hover:opacity-90 bg-secondary"
+                className={dark ? "cin-btn-glow inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#136BAB] to-[#3b82f6] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-8px_rgba(59,130,246,0.8)] transition-transform hover:-translate-y-0.5" : "flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg text-white transition-opacity hover:opacity-90 bg-secondary"}
               >
                 Login
               </Link>
@@ -169,7 +191,9 @@ export function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-foreground/70 hover:bg-gray-100 transition-colors"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          className={cn("md:hidden -mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors", dark ? "text-white hover:bg-white/10" : "text-foreground/70 hover:bg-gray-100")}
         >
           {mobileMenuOpen ? (
             <HiX className="h-5 w-5" />
@@ -181,15 +205,19 @@ export function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className={cn("md:hidden border-t", dark ? "border-white/10 bg-[#0a1a2d] rounded-b-3xl" : "border-gray-100 bg-white")}>
           <div className="container py-4 space-y-1 px-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "block px-4 py-2.5 text-sm font-medium rounded-xl transition-colors",
-                  pathname === item.href
+                  "block px-4 py-3 text-base font-medium rounded-2xl transition-colors",
+                  dark
+                    ? pathname === item.href
+                      ? "bg-white/10 text-white"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                    : pathname === item.href
                     ? "bg-secondary/10 text-secondary font-semibold"
                     : "text-foreground/70 hover:bg-gray-50 hover:text-foreground"
                 )}
@@ -206,7 +234,7 @@ export function Header() {
                     {initial}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-foreground truncate">{session.user.name || "—"}</p>
+                    <p className={cn("text-sm font-semibold truncate", dark ? "text-white" : "text-foreground")}>{session.user.name || "—"}</p>
                     <p className="text-xs text-foreground/40 capitalize">{session.role} account</p>
                   </div>
                 </div>
@@ -231,7 +259,7 @@ export function Header() {
               </div>
             ) : (
               <div className="pt-3 mt-2 border-t border-gray-100">
-                <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-wider text-foreground/40">Login</p>
+                <p className={cn("px-4 pb-2 text-xs font-semibold uppercase tracking-wider", dark ? "text-white/50" : "text-foreground/40")}>Login</p>
                 <div className="flex flex-col gap-2">
                   <Link
                     href="/employer/login"

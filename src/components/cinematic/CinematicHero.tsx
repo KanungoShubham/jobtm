@@ -69,7 +69,7 @@ export function CinematicHero() {
         <div className="cin-grain absolute inset-0" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-16 md:px-10 md:pt-24 lg:pb-14">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-32 md:px-10 md:pt-40 lg:pb-14">
         <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Left */}
           <div>
@@ -244,7 +244,6 @@ export function CinematicHero() {
         </div>
       </div>
 
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-40 bg-gradient-to-b from-transparent to-white" />
       <div className="relative z-10 pb-24 md:pb-28">
         <Marquee
           items={[
