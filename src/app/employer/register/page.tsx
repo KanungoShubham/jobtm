@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { HiCheckCircle, HiUpload, HiExclamationCircle, HiArrowLeft, HiOfficeBuilding, HiDocumentText, HiFlag } from 'react-icons/hi';
 import { authApi, uploadApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
+import { Header } from '@/components/Header';
 import { Button, FormInput, FormSelect, PasswordInput, validatePassword } from '@/components/shared/FormField';
 import { LocationSelect } from '@/components/shared/LocationSelect';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
@@ -152,7 +153,8 @@ export default function EmployerRegisterPage() {
   );
 
   return (
-    <div className="cin-hero relative min-h-screen overflow-hidden px-4 py-8 text-white" style={{ ['--intro' as string]: '0ms' }}>
+    <div className="cin-hero relative min-h-screen overflow-hidden px-4 pb-8 pt-24 text-white" style={{ ['--intro' as string]: '0ms' }}>
+      <Header />
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="cin-aurora -left-32 -top-32 h-[520px] w-[520px] bg-[#136BAB]/35" />
         <div className="cin-aurora -right-40 top-1/3 h-[520px] w-[520px] bg-[#3b82f6]/18" style={{ animationDelay: '-6s' }} />

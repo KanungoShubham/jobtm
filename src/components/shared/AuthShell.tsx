@@ -3,6 +3,7 @@ import type { CSSProperties, ComponentType, ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { Header } from '@/components/Header';
 
 interface AuthShellProps {
   heading: ReactNode;
@@ -17,9 +18,11 @@ interface AuthShellProps {
 export function AuthShell({ heading, body, bullets, scroll, children }: AuthShellProps) {
   return (
     <div
-      className="cin-hero relative flex min-h-screen items-center justify-center overflow-hidden p-4 py-10 text-white"
+      className="cin-hero relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-8 pt-24 text-white"
       style={{ '--intro': '0ms' } as CSSProperties}
     >
+      <Header />
+
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="cin-aurora -left-32 -top-32 h-[520px] w-[520px] bg-[#136BAB]/35" />
         <div className="cin-aurora -right-40 top-1/3 h-[520px] w-[520px] bg-[#3b82f6]/18" style={{ animationDelay: '-6s' }} />
@@ -30,7 +33,7 @@ export function AuthShell({ heading, body, bullets, scroll, children }: AuthShel
       <div
         className={cn(
           'cin-rise relative z-10 grid w-full max-w-4xl overflow-hidden rounded-[2rem] border border-white/15 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.85)] lg:grid-cols-2',
-          scroll && 'lg:h-[min(46rem,calc(100vh-4rem))]'
+          scroll && 'lg:h-[min(46rem,calc(100vh-7.5rem))]'
         )}
         style={{ '--d': '0ms' } as CSSProperties}
       >
