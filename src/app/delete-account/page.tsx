@@ -8,12 +8,13 @@ import {
   HiExclamationCircle,
 } from "react-icons/hi";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Delete Your Account — JobsTM",
-  description:
-    "How to request deletion of your JobsTM account and associated personal data.",
-};
+export const metadata = pageMetadata({
+  title: "Delete Your Account",
+  description: "How to request deletion of your Jobstm account and associated personal data.",
+  path: "/delete-account",
+});
 
 export default function DeleteAccountPage() {
   return (

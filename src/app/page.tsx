@@ -16,6 +16,16 @@ import { IntroLoader } from "@/components/cinematic/IntroLoader";
 import { HowItWorks } from "@/components/cinematic/HowItWorks";
 import { WaveTop } from "@/components/cinematic/WaveTop";
 import { ExploreTabs } from "@/components/cinematic/ExploreTabs";
+import { FaqSection } from "@/components/cinematic/FaqSection";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Jobstm — Verified Gig Hiring Platform in India | Gig Jobs",
+  absoluteTitle: true,
+  description:
+    "Hire verified gig workers or find flexible gig jobs. Jobstm is India's verification-first gig hiring platform, serving Khandwa, Madhya Pradesh since 2011.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (
@@ -32,9 +42,12 @@ export default function HomePage() {
       {/* How it works */}
       <HowItWorks />
 
+      {/* FAQ (also feeds FAQPage structured data) */}
+      <FaqSection />
+
       {/* Final CTA */}
       <section className="cin-hero py-24 md:py-28 text-white relative overflow-hidden">
-        <WaveTop fill="#0d1f35" />
+        <WaveTop fill="#f3f7ff" />
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="cin-aurora -top-1/3 -right-1/4 w-[600px] h-[600px] bg-[#3b82f6]/35" />
           <div className="cin-aurora -bottom-1/2 -left-1/4 w-[500px] h-[500px] bg-[#0f5a94]/25" style={{ animationDelay: "-9s" }} />

@@ -10,12 +10,14 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/Card";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Marketing Materials - JOBS TM",
+export const metadata: Metadata = pageMetadata({
+  title: "Marketing Materials & Brand Assets",
   description:
-    "Access our brand assets, marketing guidelines, and downloadable resources for promotional activities.",
-};
+    "Access Jobstm brand assets, marketing guidelines and downloadable resources for promotional activities.",
+  path: "/marketing-materials",
+});
 
 const materialCategories = [
   {

@@ -12,6 +12,7 @@ import {
   HiChevronRight,
 } from "react-icons/hi";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { pageMetadata } from "@/lib/seo";
 
 const sections = [
   { id: "information-we-collect",    label: "Information We Collect" },
@@ -26,11 +27,11 @@ const sections = [
   { id: "contact",                  label: "Contact Us" },
 ];
 
-export const metadata = {
-  title: "Privacy Policy — JobsTM",
-  description:
-    "Learn how JobsTM collects, uses, and protects your personal information.",
-};
+export const metadata = pageMetadata({
+  title: "Privacy Policy",
+  description: "Learn how Jobstm collects, uses, and protects your personal information.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

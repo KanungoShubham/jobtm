@@ -19,12 +19,26 @@ import { PageHero, glassBadge } from "@/components/cinematic/PageHero";
 import { SectionHead } from "@/components/cinematic/SectionHead";
 import { WaveTop } from "@/components/cinematic/WaveTop";
 import { LineDraw } from "@/components/cinematic/LineDraw";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, serviceCatalogLd, webPageLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our Services - JOBS TM",
+export const metadata: Metadata = pageMetadata({
+  title: "Services: Training, Manpower Hiring & Promotions",
   description:
-    "Comprehensive vocational training, strategic manpower hiring, dynamic promotion activities, and upskilling programs. Discover how our services can drive your business success.",
-};
+    "Vocational training, manpower hiring, promotion activities and upskilling courses from Jobstm. 13+ years of expertise in Khandwa, Madhya Pradesh and India.",
+  path: "/services",
+  keywords: [
+    "vocational training Khandwa",
+    "manpower hiring agency Khandwa",
+    "manpower recruitment Madhya Pradesh",
+    "promotion activities staffing",
+    "BTL promotion and event management",
+    "upskilling courses and certifications",
+    "background verified candidates",
+    "Jobstm services",
+  ],
+});
 
 const LIGHT = "#f3f7ff";
 
@@ -114,6 +128,13 @@ const steps = [
 export default function ServicesPage() {
   return (
     <div className="overflow-x-hidden">
+      <JsonLd
+        data={[
+          webPageLd("WebPage", "Our Services", "/services", "Vocational training, manpower hiring, promotion activities and upskilling."),
+          serviceCatalogLd(services.map((sv) => ({ name: sv.title, description: sv.subtitle, features: sv.features.map((f) => f.label) }))),
+          breadcrumbLd([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]),
+        ]}
+      />
       {/* Hero */}
       <PageHero
         badges={

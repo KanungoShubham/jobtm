@@ -19,12 +19,16 @@ import { PageHero, glassBadge, outlineChip } from "@/components/cinematic/PageHe
 import { SectionHead } from "@/components/cinematic/SectionHead";
 import { WaveTop } from "@/components/cinematic/WaveTop";
 import { CountUp } from "@/components/cinematic/CountUp";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, webPageLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About Us - Jobstm",
+export const metadata: Metadata = pageMetadata({
+  title: "About Jobstm — Trusted Gig Hiring Since 2011",
   description:
-    "Serving clients since 2011, we've built a reputation for excellence in vocational training, manpower hiring, and promotional activities.",
-};
+    "Since 2011, Maikal and Taksharya built Jobstm, a verification-first gig hiring platform in Khandwa, Madhya Pradesh. Our story, vision, mission and values.",
+  path: "/about",
+});
 
 const LIGHT = "#f3f7ff";
 
@@ -56,6 +60,12 @@ const orb = "flex items-center justify-center bg-gradient-to-br from-[#136BAB] t
 export default function AboutPage() {
   return (
     <div className="overflow-x-hidden">
+      <JsonLd
+        data={[
+          webPageLd("AboutPage", "About Jobstm", "/about", "Serving clients since 2011, we've built a reputation for excellence in vocational training, manpower hiring, and promotional activities."),
+          breadcrumbLd([{ name: "Home", path: "/" }, { name: "About", path: "/about" }]),
+        ]}
+      />
       {/* Hero */}
       <PageHero
         badges={

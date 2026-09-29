@@ -1,0 +1,31 @@
+# Jobstm
+
+> Jobstm is a secure, verification-first gig hiring platform that connects verified gig workers and students with trusted companies for flexible, on-demand work across India. Built by Maikal and Taksharya Pvt Limited in Khandwa, Madhya Pradesh. Serving clients since 2011.
+
+Also written as: JobsTM, Jobs TM.
+
+## Key facts
+- What it is: a gig hiring marketplace where both workers and companies are verified before they can hire or apply.
+- Workers are verified on identity, education and availability. Companies are verified on identity, contact details and an authorised representative (PAN and registration documents, reviewed within 24–48 hours).
+- Founded/serving since: 2011. Company: Maikal and Taksharya Pvt Limited.
+- Location: 03 Friends Colony, Punjab Colony, Mata Chowk, Khandwa, Madhya Pradesh 450001, India.
+- Areas served: Khandwa, Indore, Madhya Pradesh and across India.
+- Contact: infomnt01@gmail.com, +91 9669099914. Hours: Mon–Fri 9:00–18:00, Sat 10:00–16:00 IST.
+
+## Services
+- Jobstm gig platform: post gig jobs, hire pre-verified workers, apply for flexible and part-time work.
+- Vocational training: industry-specific skill development, certified modules, hands-on sessions.
+- Manpower hiring: candidate screening, background verification, industry talent pools, replacement guarantee.
+- Promotion activities: campaign planning, multi-channel promotion, event management, performance tracking.
+- Upskill & Grow: free and premium courses, industry certifications, self-paced learning.
+
+## Pages
+- [Home](https://jobstm.co/): platform overview, live stats and FAQ.
+- [Services](https://jobstm.co/services): vocational training, manpower hiring, promotion activities, upskilling.
+- [About](https://jobstm.co/about): story, vision, mission and values.
+- [Contact](https://jobstm.co/contact): contact form, phone, email, business hours.
+- [Privacy Policy](https://jobstm.co/privacy)
+- [Terms & Conditions](https://jobstm.co/terms)
+
+## Not for indexing
+Dashboards and account areas (/admin, /employer, /jobseeker, /advertiser) and the API are private.

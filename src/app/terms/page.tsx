@@ -12,6 +12,7 @@ import {
   HiChevronRight,
 } from "react-icons/hi";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { pageMetadata } from "@/lib/seo";
 
 const sections = [
   { id: "acceptance",      label: "Acceptance of Terms" },
@@ -28,11 +29,11 @@ const sections = [
   { id: "contact",         label: "Contact Us" },
 ];
 
-export const metadata = {
-  title: "Terms & Conditions — JobsTM",
-  description:
-    "Read the Terms and Conditions governing your use of the JobsTM platform.",
-};
+export const metadata = pageMetadata({
+  title: "Terms & Conditions",
+  description: "Read the Terms and Conditions governing your use of the Jobstm gig hiring platform.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (
