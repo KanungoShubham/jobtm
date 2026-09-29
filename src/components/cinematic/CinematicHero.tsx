@@ -244,7 +244,7 @@ export function CinematicHero() {
         </div>
       </div>
 
-      <div className="relative z-10 pb-24 md:pb-28">
+      <div className="relative z-10 pb-14 md:pb-16">
         <Marquee
           items={[
             "Verified Profiles",

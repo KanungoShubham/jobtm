@@ -234,8 +234,8 @@ export function ExploreTabs() {
   const panels = [<FeaturePanel key="w" data={workers} />, <FeaturePanel key="b" data={businesses} />, <VerificationPanel key="v" />];
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%)" }}>
-      <WaveTop fill="#0a1526" />
+    <section className="relative overflow-hidden py-20 md:py-24" style={{ background: "linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%)" }}>
+      <WaveTop fill="#060f1c" />
       <div aria-hidden className="pointer-events-none absolute -right-40 top-40 h-[420px] w-[420px] rounded-full bg-secondary/10 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -left-40 bottom-10 h-[380px] w-[380px] rounded-full bg-[#136BAB]/10 blur-3xl" />
 
