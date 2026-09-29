@@ -62,15 +62,15 @@ export function CinematicHero() {
     >
       {/* Atmosphere */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="cin-aurora -left-32 -top-32 h-[520px] w-[520px] bg-[#136BAB]/50" />
-        <div className="cin-aurora -right-40 top-1/4 h-[560px] w-[560px] bg-[#3b82f6]/30" style={{ animationDelay: "-6s" }} />
-        <div className="cin-aurora bottom-[-200px] left-1/3 h-[480px] w-[480px] bg-[#7c3aed]/25" style={{ animationDelay: "-11s" }} />
+        <div className="cin-aurora -left-32 -top-32 h-[520px] w-[520px] bg-[#136BAB]/35" />
+        <div className="cin-aurora -right-40 top-1/4 h-[560px] w-[560px] bg-[#3b82f6]/18" style={{ animationDelay: "-6s" }} />
+        <div className="cin-aurora bottom-[-200px] left-1/3 h-[480px] w-[480px] bg-[#0f4c7c]/40" style={{ animationDelay: "-11s" }} />
         <div className="cin-spotlight absolute inset-0" />
         <div className="cin-grain absolute inset-0" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-32 md:px-10 md:pt-40 lg:pb-14">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="cin-hero-exit grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Left */}
           <div>
             <div className="cin-rise mb-7 flex flex-wrap items-center gap-2" style={{ "--d": "0ms" } as React.CSSProperties}>
@@ -135,7 +135,7 @@ export function CinematicHero() {
 
             <div className="cin-rise mt-7 flex items-center gap-3" style={{ "--d": "1150ms" } as React.CSSProperties}>
               <div className="flex -space-x-2.5">
-                {["#136BAB", "#7c3aed", "#1a8c6e", "#dc6b19"].map((c, i) => (
+                {["#136BAB", "#0f5a94", "#3b82f6", "#1e3a5f"].map((c, i) => (
                   <div
                     key={c}
                     className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#0d1f35] text-xs font-bold text-white"

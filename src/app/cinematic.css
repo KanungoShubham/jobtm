@@ -5,7 +5,8 @@
 .cin-aurora {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(90px);
+  filter: blur(100px);
+  opacity: 0.65;
   will-change: transform;
   animation: cin-drift 18s ease-in-out infinite alternate;
 }
@@ -30,7 +31,7 @@
   background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgba(56, 140, 220, 0.24), transparent 60%);
 }
 .cin-shimmer-text {
-  background: linear-gradient(90deg, #7bb8e8, #ffffff, #3b82f6, #7bb8e8);
+  background: linear-gradient(90deg, #7bb8e8, #cfe6ff, #5b9bd5, #7bb8e8);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -162,8 +163,8 @@
   inherits: false;
 }
 .cin-conic {
-  background: conic-gradient(from var(--cin-angle), transparent 0%, #3b82f6 14%, transparent 34%, #10b981 58%, transparent 80%);
-  animation: cin-spin 5s linear infinite;
+  background: conic-gradient(from var(--cin-angle), transparent 0%, #3b82f6 14%, transparent 38%, #9fd0ff 60%, transparent 80%);
+  animation: cin-spin 8s linear infinite;
 }
 @keyframes cin-spin {
   to { --cin-angle: 360deg; }
@@ -177,7 +178,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.13) 50%, transparent 70%);
   transform: translateX(-120%);
   animation: cin-shine 4.5s ease-in-out infinite;
   animation-delay: var(--sd, 0s);
@@ -187,7 +188,7 @@
   100% { transform: translateX(120%); }
 }
 .cin-progress-fill {
-  background: linear-gradient(90deg, #10b981, #6ee7b7, #10b981);
+  background: linear-gradient(90deg, #136BAB, #7bb8e8, #136BAB);
   background-size: 200% 100%;
   animation: cin-fill-shimmer 2.2s linear infinite;
 }
@@ -207,4 +208,40 @@
   .cin-line-draw { transform: scaleX(1); }
   .cin-tilt { transform: none !important; }
   .cin-card, .cin-glass-hover { transition: none; }
+}
+
+/* ---------- Scroll-driven motion (progressive enhancement) ---------- */
+@keyframes cin-par {
+  from { translate: 0 var(--par-from, 70px); }
+  to { translate: 0 var(--par-to, -70px); }
+}
+@keyframes cin-hero-exit {
+  to { translate: 0 90px; opacity: 0.1; }
+}
+@media (min-width: 768px) {
+  @supports (animation-timeline: view()) {
+    .cin-aurora {
+      animation: cin-drift 18s ease-in-out infinite alternate, cin-par linear both;
+      animation-timeline: auto, view();
+      --par-from: 140px;
+      --par-to: -140px;
+    }
+    .cin-stagger > * {
+      animation: cin-par linear both;
+      animation-timeline: view();
+    }
+    .cin-stagger > :nth-child(3n + 1) { --par-from: 40px; --par-to: -40px; }
+    .cin-stagger > :nth-child(3n + 2) { --par-from: 90px; --par-to: -90px; }
+    .cin-stagger > :nth-child(3n) { --par-from: 20px; --par-to: -20px; }
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .cin-hero-exit {
+    animation: cin-hero-exit linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 85vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cin-aurora, .cin-stagger > *, .cin-hero-exit { animation: none !important; }
 }
