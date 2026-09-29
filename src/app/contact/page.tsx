@@ -11,8 +11,9 @@ import {
   HiArrowRight,
   HiChat,
 } from "react-icons/hi";
-import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageHero, glassBadge } from "@/components/cinematic/PageHero";
+import { WaveTop } from "@/components/cinematic/WaveTop";
 
 const contactInfo = [
   {
@@ -111,54 +112,46 @@ export default function ContactPage() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-2xl border border-border/60 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary transition-all placeholder:text-muted-foreground/50";
+    "w-full px-4 py-3 rounded-2xl border border-secondary/15 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary transition-all placeholder:text-muted-foreground/50";
 
   return (
     <div className="overflow-x-hidden">
-
       {/* Hero */}
-      <section className="relative bg-secondary text-white py-20 md:py-28 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-1/3 -right-1/4 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/3 -left-1/4 w-[500px] h-[500px] bg-black/10 rounded-full blur-3xl" />
-        </div>
-        <div className="container relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-sm font-semibold mb-6">
-              <HiChat className="h-4 w-4" /> We&apos;d love to hear from you
-            </span>
-            <h1 className="font-heading text-5xl font-bold sm:text-6xl md:text-7xl mb-6 leading-tight">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-white/75 max-w-2xl mx-auto leading-relaxed">
-              Have a question or ready to start a project? Reach out and let&apos;s
-              discuss how we can help.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mt-10">
-              {[
-                { icon: HiMail, label: "infomnt01@gmail.com" },
-                { icon: HiPhone, label: "+91 9669099914" },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/20 px-5 py-2 text-sm font-medium">
-                  <Icon className="h-4 w-4" />
-                  {label}
-                </div>
-              ))}
+      <PageHero
+        badges={
+          <span className={glassBadge}>
+            <HiChat className="h-4 w-4" /> We&apos;d love to hear from you
+          </span>
+        }
+        title={["Get in"]}
+        accent={["Touch"]}
+        description="Have a question or ready to start a project? Reach out and let's discuss how we can help."
+      >
+        <div className="flex flex-wrap justify-center gap-3">
+          {[
+            { icon: HiMail, label: "infomnt01@gmail.com" },
+            { icon: HiPhone, label: "+91 9669099914" },
+          ].map(({ icon: Icon, label }) => (
+            <div key={label} className="cin-glass cin-glass-hover inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium">
+              <Icon className="h-4 w-4 text-[#7bb8e8]" />
+              {label}
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </PageHero>
 
       {/* Main Content */}
-      <section className="py-20 md:py-28">
-        <div className="container">
-          <div className="grid gap-10 lg:grid-cols-5 max-w-6xl mx-auto">
-
+      <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "#f3f7ff" }}>
+        <WaveTop fill="#060f1c" />
+        <div aria-hidden className="pointer-events-none absolute -right-40 top-40 h-[420px] w-[420px] rounded-full bg-secondary/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-40 bottom-10 h-[380px] w-[380px] rounded-full bg-secondary/10 blur-3xl" />
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pt-6 md:px-10">
+          <div className="grid gap-10 lg:grid-cols-5">
             {/* Form - wider column */}
-            <ScrollReveal animation="fade-right" className="lg:col-span-3">
-              <div className="rounded-3xl border border-border/50 bg-white shadow-warm-lg p-8 md:p-10">
+            <ScrollReveal animation="fade-up" className="lg:col-span-3">
+              <div className="rounded-3xl border border-secondary/10 bg-white p-8 shadow-[0_30px_80px_-30px_rgba(19,107,171,0.4)] md:p-10">
                 <div className="mb-8">
-                  <span className="text-xs font-bold uppercase tracking-widest text-secondary/60 mb-2 block">
+                  <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-secondary/60">
                     Send a Message
                   </span>
                   <h2 className="font-heading text-2xl font-bold">
@@ -167,13 +160,13 @@ export default function ContactPage() {
                 </div>
 
                 {submitted && (
-                  <div className="mb-6 flex items-center gap-3 p-4 bg-secondary/10 border border-secondary/20 rounded-2xl text-secondary">
+                  <div className="mb-6 flex items-center gap-3 rounded-2xl border border-secondary/20 bg-secondary/10 p-4 text-secondary">
                     <HiCheckCircle className="h-5 w-5 flex-shrink-0" />
                     <span className="text-sm font-medium">Message sent! We&apos;ll get back to you soon.</span>
                   </div>
                 )}
                 {apiError && (
-                  <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-2xl text-destructive text-sm">
+                  <div className="mb-6 rounded-2xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
                     {apiError}
                   </div>
                 )}
@@ -181,7 +174,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-semibold mb-2">Full Name</label>
+                      <label htmlFor="name" className="mb-2 block text-sm font-semibold">Full Name</label>
                       <input
                         type="text"
                         id="name"
@@ -194,7 +187,7 @@ export default function ContactPage() {
                       {errors.name && <p className="mt-1.5 text-xs text-destructive">{errors.name}</p>}
                     </div>
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-semibold mb-2">Phone Number</label>
+                      <label htmlFor="phone" className="mb-2 block text-sm font-semibold">Phone Number</label>
                       <input
                         type="tel"
                         id="phone"
@@ -209,7 +202,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold mb-2">Email Address</label>
+                    <label htmlFor="email" className="mb-2 block text-sm font-semibold">Email Address</label>
                     <input
                       type="email"
                       id="email"
@@ -223,7 +216,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-semibold mb-2">Subject</label>
+                    <label htmlFor="subject" className="mb-2 block text-sm font-semibold">Subject</label>
                     <input
                       type="text"
                       id="subject"
@@ -237,7 +230,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-semibold mb-2">Message</label>
+                    <label htmlFor="message" className="mb-2 block text-sm font-semibold">Message</label>
                     <textarea
                       id="message"
                       name="message"
@@ -250,11 +243,10 @@ export default function ContactPage() {
                     {errors.message && <p className="mt-1.5 text-xs text-destructive">{errors.message}</p>}
                   </div>
 
-                  <Button
+                  <button
                     type="submit"
-                    size="lg"
-                    className="w-full rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-warm"
                     disabled={loading}
+                    className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#136BAB] to-[#3b82f6] px-8 text-sm font-semibold text-white shadow-[0_18px_40px_-12px_rgba(59,130,246,0.6)] transition-transform hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60"
                   >
                     {loading ? (
                       <>
@@ -264,30 +256,29 @@ export default function ContactPage() {
                     ) : (
                       <>
                         Send Message
-                        <HiArrowRight className="h-4 w-4" />
+                        <HiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
-                  </Button>
+                  </button>
                 </form>
               </div>
             </ScrollReveal>
 
             {/* Info panel */}
-            <ScrollReveal animation="fade-left" delay={150} className="lg:col-span-2">
+            <ScrollReveal animation="fade-up" delay={150} className="lg:col-span-2">
               <div className="space-y-4">
-                {/* Contact cards */}
-                {contactInfo.map((info, index) => {
+                {contactInfo.map((info) => {
                   const Icon = info.icon;
                   return (
                     <div
                       key={info.title}
-                      className="flex gap-4 p-5 rounded-2xl bg-card border border-border/50 hover:border-secondary/25 hover:shadow-warm transition-all duration-300 group"
+                      className="cin-card cin-glow-border group flex gap-4 rounded-2xl border border-secondary/10 bg-white p-5"
                     >
-                      <div className="flex-shrink-0 h-11 w-11 rounded-2xl bg-secondary/10 group-hover:bg-secondary/20 flex items-center justify-center transition-colors">
-                        <Icon className="h-5 w-5 text-secondary" />
+                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#136BAB] to-[#3b82f6] shadow-[0_8px_20px_-8px_rgba(59,130,246,0.8)]">
+                        <Icon className="h-5 w-5 text-white" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-bold uppercase tracking-widest text-secondary/50 mb-0.5">
+                        <p className="mb-0.5 text-xs font-bold uppercase tracking-widest text-secondary/60">
                           {info.title}
                         </p>
                         {info.href ? (
@@ -295,32 +286,32 @@ export default function ContactPage() {
                             href={info.href}
                             target={info.href.startsWith("http") ? "_blank" : undefined}
                             rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="text-sm font-semibold hover:text-secondary transition-colors truncate block"
+                            className="block truncate text-sm font-semibold transition-colors hover:text-secondary"
                           >
                             {info.value}
                           </a>
                         ) : (
                           <p className="text-sm font-semibold">{info.value}</p>
                         )}
-                        <p className="text-xs text-muted-foreground mt-0.5">{info.desc}</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">{info.desc}</p>
                       </div>
                     </div>
                   );
                 })}
 
                 {/* Business Hours */}
-                <div className="rounded-2xl border border-secondary/20 bg-secondary/5 p-5">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="h-8 w-8 rounded-xl bg-secondary/10 flex items-center justify-center">
-                      <HiClock className="h-4 w-4 text-secondary" />
+                <div className="rounded-2xl bg-gradient-to-br from-[#0d1f35] to-[#136BAB] p-5 text-white shadow-[0_30px_60px_-24px_rgba(19,107,171,0.7)]">
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15">
+                      <HiClock className="h-4 w-4" />
                     </div>
                     <span className="text-sm font-bold">Business Hours</span>
                   </div>
                   <div className="space-y-2.5">
                     {hours.map(({ day, time }) => (
                       <div key={day} className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">{day}</span>
-                        <span className={`text-xs font-semibold ${time === "Closed" ? "text-destructive/70" : "text-secondary"}`}>
+                        <span className="text-xs text-white/65">{day}</span>
+                        <span className={`text-xs font-semibold ${time === "Closed" ? "text-white/50" : "text-[#bfe0ff]"}`}>
                           {time}
                         </span>
                       </div>
@@ -332,7 +323,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

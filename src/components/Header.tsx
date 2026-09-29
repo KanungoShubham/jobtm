@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { HiMenu, HiX, HiChevronDown, HiOfficeBuilding, HiUser, HiLogout, HiViewGrid, HiSpeakerphone } from "react-icons/hi";
 import { Logo } from "./ui/Logo";
 import { cn } from "@/lib/utils";
+import { hasDarkHero } from "@/lib/darkHeroRoutes";
 import { employerAuth, jobseekerAuth, advertiserAuth, RoleUser } from "@/lib/roleAuth";
 
 const navigation = [
@@ -45,7 +46,7 @@ export function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const loginRef = React.useRef<HTMLDivElement>(null);
-  const isHome = pathname === "/";
+  const isHome = hasDarkHero(pathname);
   const dark = isHome; // transparent-over-hero, then floating glass pill
   const pill = isHome && isScrolled;
 
