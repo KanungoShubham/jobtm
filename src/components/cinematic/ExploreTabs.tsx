@@ -161,7 +161,7 @@ function FeaturePanel({ data }: { data: typeof workers }) {
 
 function VerificationPanel() {
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+    <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
       <div>
         <span className="mb-5 inline-flex items-center rounded-full bg-gradient-to-r from-[#136BAB] to-[#3b82f6] px-4 py-1.5 text-xs font-semibold text-white">
           Verification Process
@@ -183,6 +183,9 @@ function VerificationPanel() {
             </div>
           </div>
         </div>
+        <p className="mt-5 border-l-2 border-secondary pl-4 font-heading text-lg font-semibold text-foreground/80">
+          {verification[0].tag}
+        </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -191,9 +194,9 @@ function VerificationPanel() {
             <p className="text-xs font-bold uppercase tracking-widest text-secondary/60">For</p>
             <h3 className="mb-4 font-heading text-xl font-bold">{col.audience}</h3>
             <p className="mb-2 text-xs font-bold uppercase tracking-widest text-secondary/50">What We Verify</p>
-            <div className="mb-5 flex flex-wrap gap-2">
+            <div className="mb-5 grid grid-cols-3 gap-2">
               {col.verify.map((v) => (
-                <span key={v} className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                <span key={v} className="rounded-full bg-secondary/10 px-2 py-1.5 text-center text-xs font-semibold text-secondary">
                   {v}
                 </span>
               ))}
@@ -207,9 +210,6 @@ function VerificationPanel() {
                 </li>
               ))}
             </ul>
-            {col.tag && (
-              <p className="mt-5 rounded-2xl bg-secondary px-4 py-3 text-sm font-medium text-white">{col.tag}</p>
-            )}
           </div>
         ))}
       </div>
