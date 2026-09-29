@@ -12,6 +12,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { LaunchOfferBanner } from "@/components/sections/LaunchOfferBanner";
 import { CinematicHero } from "@/components/cinematic/CinematicHero";
 import { ScrollProgress } from "@/components/cinematic/ScrollProgress";
+import { IntroLoader } from "@/components/cinematic/IntroLoader";
 import { HowItWorks } from "@/components/cinematic/HowItWorks";
 import { WaveTop } from "@/components/cinematic/WaveTop";
 import { ExploreTabs } from "@/components/cinematic/ExploreTabs";
@@ -19,6 +20,7 @@ import { ExploreTabs } from "@/components/cinematic/ExploreTabs";
 export default function HomePage() {
   return (
     <div className="overflow-x-hidden">
+      <IntroLoader />
       <ScrollProgress />
       <CinematicHero />
 

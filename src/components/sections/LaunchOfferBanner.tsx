@@ -81,7 +81,7 @@ export function LaunchOfferBanner() {
   return (
     <section className="relative overflow-hidden bg-[#060f1c] py-16 text-white md:py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="cin-aurora -left-40 top-0 h-[440px] w-[440px] bg-[#136BAB]/35" />
+        <div className="cin-aurora -left-40 top-[35%] h-[440px] w-[440px] bg-[#136BAB]/35" />
         <div className="cin-aurora -right-40 bottom-0 h-[440px] w-[440px] bg-[#0f4c7c]/40" style={{ animationDelay: "-8s" }} />
       </div>
 
