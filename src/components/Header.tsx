@@ -22,17 +22,17 @@ function readSession(): Session | null {
   const empToken = employerAuth.getToken();
   if (empToken) {
     const user = employerAuth.getUser();
-    if (user) return { role: "employer", user, color: "#7C3AED", dashboardHref: "/employer/dashboard" };
+    if (user) return { role: "employer", user, color: "#0d4a7a", dashboardHref: "/employer/dashboard" };
   }
   const jsToken = jobseekerAuth.getToken();
   if (jsToken) {
     const user = jobseekerAuth.getUser();
-    if (user) return { role: "jobseeker", user, color: "#0EA5E9", dashboardHref: "/jobseeker/home" };
+    if (user) return { role: "jobseeker", user, color: "#136BAB", dashboardHref: "/jobseeker/home" };
   }
   const advToken = advertiserAuth.getToken();
   if (advToken) {
     const user = advertiserAuth.getUser();
-    if (user) return { role: "advertiser", user, color: "#F59E0B", dashboardHref: "/advertiser" };
+    if (user) return { role: "advertiser", user, color: "#3b82f6", dashboardHref: "/advertiser" };
   }
   return null;
 }
@@ -265,7 +265,7 @@ export function Header() {
                   <Link
                     href="/employer/login"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
-                    style={{ backgroundColor: "#7C3AED" }}
+                    style={{ backgroundColor: "#0d4a7a" }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <HiOfficeBuilding className="h-4 w-4" />
@@ -274,7 +274,7 @@ export function Header() {
                   <Link
                     href="/jobseeker/login"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
-                    style={{ backgroundColor: "#0EA5E9" }}
+                    style={{ backgroundColor: "#136BAB" }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <HiUser className="h-4 w-4" />
@@ -283,7 +283,7 @@ export function Header() {
                   <Link
                     href="/advertiser/login"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
-                    style={{ backgroundColor: "#F59E0B" }}
+                    style={{ backgroundColor: "#3b82f6" }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <HiSpeakerphone className="h-4 w-4" />

@@ -10,7 +10,7 @@ import { advertiserAuth } from '@/lib/roleAuth';
 import { FormInput } from '@/components/shared/FormField';
 
 const COLOR = '#136BAB';
-const TINT  = '#FEF3C7';
+const TINT  = '#DBEAFE';
 
 const STATUS_STYLE: Record<string, { bg: string; text: string; label: string }> = {
   pending_payment: { bg: '#FEF3C7', text: '#92400E', label: 'Payment pending' },

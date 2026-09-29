@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import {
-  HiPlusCircle, HiTrash, HiCheckCircle, HiShieldCheck, HiDocumentText, HiExternalLink, HiMail, HiPhone, HiLocationMarker,
+  HiPlusCircle, HiTrash, HiCheckCircle, HiShieldCheck, HiDocumentText, HiExternalLink, HiMail, HiPhone, HiLocationMarker, HiCamera,
 } from 'react-icons/hi';
-import { profileApi, uploadApi } from '@/lib/api';
+import { authApi, profileApi, uploadApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { Button, FormInput, FormSelect } from '@/components/shared/FormField';
 import { LocationSelect } from '@/components/shared/LocationSelect';
@@ -32,6 +32,8 @@ export default function JobseekerProfilePage() {
   const [loading, setLoading] = useState(true);
   const [skillsInput, setSkillsInput] = useState('');
   const [resumeUploading, setResumeUploading] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarBroken, setAvatarBroken] = useState(false);
   const [msg, setMsg] = useState('');
 
   const load = () => {
@@ -65,6 +67,25 @@ export default function JobseekerProfilePage() {
     } finally { setResumeUploading(false); }
   };
 
+  const uploadAvatar = async (file: File) => {
+    const token = jobseekerAuth.getToken();
+    if (!token) return;
+    if (!file.type.startsWith('image/')) { setMsg('Please choose an image file (JPG, PNG or WebP).'); return; }
+    if (file.size > 5 * 1024 * 1024) { setMsg('Image is too large. Please choose one under 5 MB.'); return; }
+    setAvatarUploading(true);
+    setMsg('');
+    try {
+      const res: any = await uploadApi.avatar(token, file);
+      const url: string | undefined = res?.url ?? res?.data?.url ?? res?.data?.avatar_url;
+      if (url) await authApi.updateProfile(token, { avatar_url: url });
+      setAvatarBroken(false);
+      setMsg('Profile photo updated.');
+      load();
+    } catch (err: any) {
+      setMsg(err.message ?? 'Photo upload failed.');
+    } finally { setAvatarUploading(false); }
+  };
+
   const deleteResource = async (kind: 'work' | 'edu' | 'project' | 'cert' | 'lang', id: string) => {
     const token = jobseekerAuth.getToken();
     if (!token) return;
@@ -85,6 +106,7 @@ export default function JobseekerProfilePage() {
   const prefs       = data?.prefs ?? {};
   const personal    = data?.personal ?? {};
   const resume      = (data?.resumes ?? [])[0] ?? null;
+  const avatarUrl: string | null = profile.avatar_url || profile.avatar || profile.profile_image || profile.photo_url || null;
 
   const profileScore = Math.min(100,
     15 + (resume ? 20 : 0) + (experiences.length > 0 ? 15 : 0) +
@@ -107,9 +129,19 @@ export default function JobseekerProfilePage() {
               <div className="h-20" style={{ backgroundColor: COLOR }} />
               <div className="px-5 pb-5 -mt-8">
                 <div className="flex items-end justify-between mb-3">
-                  <div className="w-16 h-16 rounded-2xl bg-white border-4 border-white shadow-warm flex items-center justify-center text-xl font-black text-slate-300">
-                    {(profile.full_name || 'U').charAt(0).toUpperCase()}
-                  </div>
+                  <label className="group relative w-16 h-16 rounded-2xl bg-white border-4 border-white shadow-warm flex items-center justify-center text-xl font-black text-slate-300 overflow-hidden cursor-pointer" title="Change profile photo">
+                    {avatarUrl && !avatarBroken ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={avatarUrl} alt={profile.full_name || 'Profile photo'} className="h-full w-full object-cover" onError={() => setAvatarBroken(true)} />
+                    ) : (
+                      (profile.full_name || 'U').charAt(0).toUpperCase()
+                    )}
+                    <span className={`absolute inset-0 flex items-center justify-center bg-black/45 text-white transition-opacity ${avatarUploading ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                      {avatarUploading ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : <HiCamera className="w-5 h-5" />}
+                    </span>
+                    <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" disabled={avatarUploading}
+                      onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadAvatar(f); e.target.value = ''; }} />
+                  </label>
                   <div className="flex flex-col items-center justify-center w-12 h-12 rounded-full mt-6" style={{ backgroundColor: `${scoreColor}22`, border: `2px solid ${scoreColor}55` }}>
                     <span className="text-sm font-black" style={{ color: scoreColor }}>{profileScore}</span>
                     <span className="text-[7px] font-bold" style={{ color: scoreColor }}>SCORE</span>
