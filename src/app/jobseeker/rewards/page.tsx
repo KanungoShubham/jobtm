@@ -12,12 +12,12 @@ const CATEGORIES = [
   { key: '', label: 'All', color: '#64748B' },
   { key: 'food', label: 'Food', color: '#F97316' },
   { key: 'medical', label: 'Medical', color: '#10B981' },
-  { key: 'shopping', label: 'Shopping', color: '#7C3AED' },
+  { key: 'shopping', label: 'Shopping', color: '#136BAB' },
   { key: 'travel', label: 'Travel', color: '#2563EB' },
 ];
 const CAT_META: Record<string, { color: string; bg: string }> = {
   food: { color: '#F97316', bg: '#FFF7ED' }, medical: { color: '#10B981', bg: '#ECFDF5' },
-  shopping: { color: '#7C3AED', bg: '#F5F3FF' }, travel: { color: '#2563EB', bg: '#EFF6FF' },
+  shopping: { color: '#136BAB', bg: '#F5F3FF' }, travel: { color: '#2563EB', bg: '#EFF6FF' },
 };
 
 function fmtExpiry(iso: string) {
@@ -300,11 +300,11 @@ export default function RewardsPage() {
       {/* Tabs */}
       <div className="flex mb-5 rounded-2xl overflow-hidden border border-slate-200 bg-white p-1 max-w-sm">
         <button onClick={() => setTab('coupons')} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-sm font-bold transition"
-          style={tab === 'coupons' ? { backgroundColor: '#0EA5E9', color: '#fff' } : { color: '#64748B' }}>
+          style={tab === 'coupons' ? { backgroundColor: '#136BAB', color: '#fff' } : { color: '#64748B' }}>
           <HiGift className="w-4 h-4" /> Coupons
         </button>
         <button onClick={() => setTab('refer')} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-sm font-bold transition"
-          style={tab === 'refer' ? { backgroundColor: '#0EA5E9', color: '#fff' } : { color: '#64748B' }}>
+          style={tab === 'refer' ? { backgroundColor: '#136BAB', color: '#fff' } : { color: '#64748B' }}>
           <HiShare className="w-4 h-4" /> Refer & Earn
         </button>
       </div>

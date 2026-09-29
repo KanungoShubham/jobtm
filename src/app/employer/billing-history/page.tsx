@@ -8,7 +8,7 @@ import {
 import { subscriptionApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 const TINT_PURPLE = '#F5F3FF';
 const BASE = (process.env.NEXT_PUBLIC_API_URL ?? '').replace(/\/$/, '');
 
@@ -81,7 +81,7 @@ export default function EmployerBillingHistoryPage() {
               const active = rec.is_active && new Date(rec.expires_at) > new Date();
               return (
                 <div key={rec.id} className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-                  <div className="h-1" style={{ backgroundColor: active ? '#C4B5FD' : '#E2E8F0' }} />
+                  <div className="h-1" style={{ backgroundColor: active ? '#7bb8e8' : '#E2E8F0' }} />
                   <div className="flex items-center gap-3 px-4 pt-4 pb-2">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: active ? TINT_PURPLE : '#F1F5F9' }}>
                       {active ? <HiCheckCircle className="w-5 h-5" style={{ color: COLOR }} /> : <HiClock className="w-5 h-5 text-slate-400" />}

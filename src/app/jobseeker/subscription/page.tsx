@@ -7,7 +7,7 @@ import { jobseekerAuth } from '@/lib/roleAuth';
 import { PaywallModal, SubPlan } from '@/components/shared/PaywallModal';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 export default function SubscriptionPage() {
   const [status, setStatus] = useState<any>(null);
@@ -36,7 +36,7 @@ export default function SubscriptionPage() {
       </div>
 
       <ScrollReveal animation="fade-up">
-        <div className="rounded-2xl p-6" style={{ backgroundColor: isSubscribed ? '#7C3AED' : COLOR }}>
+        <div className="rounded-2xl p-6" style={{ backgroundColor: isSubscribed ? '#136BAB' : COLOR }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center flex-shrink-0">
               <HiStar className="w-6 h-6 text-white" />
@@ -48,7 +48,7 @@ export default function SubscriptionPage() {
               </p>
             </div>
           </div>
-          <button onClick={() => setShowPaywall(true)} className="w-full py-3 rounded-xl bg-white text-sm font-extrabold" style={{ color: isSubscribed ? '#7C3AED' : COLOR }}>
+          <button onClick={() => setShowPaywall(true)} className="w-full py-3 rounded-xl bg-white text-sm font-extrabold" style={{ color: isSubscribed ? '#136BAB' : COLOR }}>
             {isSubscribed ? 'Renew / Change Plan' : 'Upgrade to Unlimited'}
           </button>
         </div>
@@ -90,7 +90,7 @@ export default function SubscriptionPage() {
                 <button key={p.plan_type} onClick={() => setShowPaywall(true)}
                   className="w-full flex items-center justify-between rounded-xl bg-slate-50 hover:bg-slate-100 px-4 py-3 text-left transition">
                   <div>
-                    <p className="text-sm font-bold text-slate-800">{p.label} {p.badge && <span className="ml-1 text-[10px] font-bold text-white bg-sky-500 px-2 py-0.5 rounded-full">{p.badge}</span>}</p>
+                    <p className="text-sm font-bold text-slate-800">{p.label} {p.badge && <span className="ml-1 text-[10px] font-bold text-white bg-blue-500 px-2 py-0.5 rounded-full">{p.badge}</span>}</p>
                     <p className="text-xs text-slate-400">{p.validity_label}</p>
                   </div>
                   <span className="text-lg font-black text-slate-900">₹{p.amount / 100}</span>

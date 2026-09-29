@@ -96,7 +96,7 @@ function UserDetailPanel({ userId, onClose, onUpdate }: { userId: string | null;
 
         {loading ? (
           <div className="flex flex-col items-center py-20 gap-3">
-            <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
             <p className="text-sm text-slate-400">Loading details…</p>
           </div>
         ) : !u ? (
@@ -117,7 +117,7 @@ function UserDetailPanel({ userId, onClose, onUpdate }: { userId: string | null;
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full capitalize ${STATUS_PILL[status] ?? 'bg-slate-100 text-slate-500'}`}>
                     {status}
                   </span>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmployer ? 'bg-blue-100 text-blue-700' : u?.role === 'admin' ? 'bg-red-100 text-red-700' : 'bg-sky-100 text-sky-700'}`}>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmployer ? 'bg-blue-100 text-blue-700' : u?.role === 'admin' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
                     {isEmployer ? 'Employer' : u?.role === 'admin' ? 'Admin' : 'Job Seeker'}
                   </span>
                   {!isActive && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Suspended</span>}
@@ -177,7 +177,7 @@ function UserDetailPanel({ userId, onClose, onUpdate }: { userId: string | null;
                   <Section title={`Authorized Persons (${persons.length})`} icon={HiUsers}>
                     {persons.map((p: any, i: number) => (
                       <div key={p.id} className={`flex items-center gap-3 px-4 py-3 ${i > 0 ? 'border-t border-slate-50' : ''}`}>
-                        <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center text-sm font-extrabold text-violet-700">
+                        <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-sm font-extrabold text-blue-700">
                           {p.name?.charAt(0)}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -208,7 +208,7 @@ function UserDetailPanel({ userId, onClose, onUpdate }: { userId: string | null;
                 {workExp.map((w: any, i: number) => (
                   <div key={w.id ?? i} className={`px-4 py-3 ${i > 0 ? 'border-t border-slate-50' : ''}`}>
                     <p className="text-sm font-bold text-slate-900">{w.title}</p>
-                    <p className="text-xs text-violet-600 font-semibold">{w.company}</p>
+                    <p className="text-xs text-blue-600 font-semibold">{w.company}</p>
                     <p className="text-xs text-slate-400 mt-0.5">{w.start_date} – {w.end_date ?? 'Present'}{w.location ? ` · ${w.location}` : ''}</p>
                   </div>
                 ))}
@@ -368,7 +368,7 @@ export default function AdminUsersPage() {
         <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
           placeholder="Search name, phone, company…"
-          className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-300 transition" />
+          className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-300 transition" />
         {query && (
           <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
             <HiX className="w-4 h-4" />
@@ -382,7 +382,7 @@ export default function AdminUsersPage() {
             className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-sm font-semibold transition ${
               tab === t ? 'text-white border-transparent' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
             }`}
-            style={tab === t ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            style={tab === t ? { background: 'linear-gradient(135deg,#136BAB,#3b82f6)' } : {}}>
             {t}
           </button>
         ))}
@@ -396,7 +396,7 @@ export default function AdminUsersPage() {
 
       {loading ? (
         <div className="flex justify-center py-16">
-          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : visibleUsers.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-3">
@@ -409,7 +409,7 @@ export default function AdminUsersPage() {
             {visibleUsers.map((u) => {
               const isEmployer = u.role === 'employer';
               const status     = u.verify_status ?? 'pending';
-              const rolePill   = isEmployer ? 'bg-blue-100 text-blue-700' : 'bg-sky-100 text-sky-700';
+              const rolePill   = isEmployer ? 'bg-blue-100 text-blue-700' : 'bg-blue-100 text-blue-700';
               const avatarCls  = isEmployer ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600';
               return (
                 <div key={u.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center gap-3">
@@ -425,7 +425,7 @@ export default function AdminUsersPage() {
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${rolePill}`}>{isEmployer ? 'Employer' : 'Job Seeker'}</span>
                   </div>
                   <button onClick={() => setSelectedId(u.id)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-indigo-50 hover:border-indigo-200 text-slate-500 hover:text-indigo-600 text-xs font-bold transition">
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-blue-50 hover:border-blue-200 text-slate-500 hover:text-blue-600 text-xs font-bold transition">
                     <HiEye className="w-3.5 h-3.5" /> Details
                   </button>
                 </div>
@@ -436,7 +436,7 @@ export default function AdminUsersPage() {
           <div ref={sentinelRef} className="py-4 flex justify-center">
             {loadingMore ? (
               <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                <span className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
                 Loading more…
               </div>
             ) : !hasMore && total > 0 ? (

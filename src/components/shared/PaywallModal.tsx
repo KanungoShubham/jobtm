@@ -75,11 +75,11 @@ export function PaywallModal({
           {plans.map((plan) => (
             <button key={plan.plan_type} onClick={() => subscribe(plan)} disabled={!!payingPlan}
               className="w-full flex items-center gap-3 rounded-2xl border-2 p-4 text-left transition disabled:opacity-60"
-              style={plan.badge ? { borderColor: '#0EA5E9', backgroundColor: '#F0F9FF' } : { borderColor: '#E2E8F0' }}>
+              style={plan.badge ? { borderColor: '#136BAB', backgroundColor: '#F0F9FF' } : { borderColor: '#E2E8F0' }}>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-extrabold text-slate-900">{plan.label} Plan</span>
-                  {plan.badge && <span className="text-[10px] font-bold text-white bg-sky-500 px-2 py-0.5 rounded-full">{plan.badge}</span>}
+                  {plan.badge && <span className="text-[10px] font-bold text-white bg-blue-500 px-2 py-0.5 rounded-full">{plan.badge}</span>}
                 </div>
                 <p className="text-xs text-slate-500">{plan.validity_label ?? ''} · Unlimited applies</p>
               </div>

@@ -9,7 +9,7 @@ import { Button, FormInput, FormSelect, PasswordInput, validatePassword } from '
 import { LocationSelect } from '@/components/shared/LocationSelect';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 const STEPS = [
   { label: 'Company Info', desc: 'Tell us about your business', icon: HiOfficeBuilding },
   { label: 'Documents', desc: 'Verify & set up your login', icon: HiDocumentText },
@@ -135,7 +135,7 @@ export default function EmployerRegisterPage() {
     <div>
       <label className="block text-xs font-semibold text-slate-500 mb-1.5">{label}</label>
       <label className={`flex items-center gap-3 border-2 border-dashed rounded-xl px-4 py-4 cursor-pointer transition ${
-        fileName ? 'border-emerald-400 bg-emerald-50' : error ? 'border-red-400 bg-red-50' : 'border-slate-300 bg-white hover:border-violet-300'
+        fileName ? 'border-emerald-400 bg-emerald-50' : error ? 'border-red-400 bg-red-50' : 'border-slate-300 bg-white hover:border-blue-300'
       }`}>
         <HiUpload className={`w-5 h-5 flex-shrink-0 ${fileName ? 'text-emerald-500' : 'text-slate-400'}`} />
         <div className="flex-1 min-w-0">
@@ -152,17 +152,22 @@ export default function EmployerRegisterPage() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4">
-      <div className="max-w-5xl mx-auto">
-        <Link href="/employer/login" className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors mb-6">
+    <div className="cin-hero relative min-h-screen overflow-hidden px-4 py-8 text-white" style={{ ['--intro' as string]: '0ms' }}>
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="cin-aurora -left-32 -top-32 h-[520px] w-[520px] bg-[#136BAB]/35" />
+        <div className="cin-aurora -right-40 top-1/3 h-[520px] w-[520px] bg-[#3b82f6]/18" style={{ animationDelay: '-6s' }} />
+        <div className="cin-grain absolute inset-0" />
+      </div>
+      <div className="relative z-10 max-w-5xl mx-auto">
+        <Link href="/employer/login" className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors mb-6">
           <HiArrowLeft className="w-3.5 h-3.5" /> Back to login
         </Link>
 
         <div className="grid lg:grid-cols-[260px_1fr] gap-6 items-start">
           {/* Step rail */}
           <div className="lg:sticky lg:top-8 space-y-1">
-            <h1 className="text-lg font-extrabold text-slate-900 mb-1">Register as Employer</h1>
-            <p className="text-xs text-slate-400 mb-5">Get verified and start hiring in 24–48 hours.</p>
+            <h1 className="font-heading text-2xl font-bold text-white mb-1">Register as Employer</h1>
+            <p className="text-xs text-white/55 mb-5">Get verified and start hiring in 24–48 hours.</p>
             {STEPS.map((s, i) => {
               const Icon = s.icon;
               const state = i < step ? 'done' : i === step ? 'active' : 'upcoming';
@@ -171,17 +176,17 @@ export default function EmployerRegisterPage() {
                   <div className="flex flex-col items-center">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition"
                       style={
-                        state === 'done' ? { backgroundColor: '#10B981', color: '#fff' }
+                        state === 'done' ? { backgroundColor: '#3b82f6', color: '#fff' }
                         : state === 'active' ? { backgroundColor: COLOR, color: '#fff' }
-                        : { backgroundColor: '#F1F5F9', color: '#94A3B8' }
+                        : { backgroundColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }
                       }>
                       {state === 'done' ? <HiCheckCircle className="w-5 h-5" /> : <Icon className="w-4.5 h-4.5" />}
                     </div>
-                    {i < STEPS.length - 1 && <div className="w-0.5 flex-1 min-h-[24px]" style={{ backgroundColor: i < step ? '#10B981' : '#E2E8F0' }} />}
+                    {i < STEPS.length - 1 && <div className="w-0.5 flex-1 min-h-[24px]" style={{ backgroundColor: i < step ? '#3b82f6' : 'rgba(255,255,255,0.15)' }} />}
                   </div>
                   <div className="pb-6">
-                    <p className="text-sm font-bold" style={{ color: state === 'upcoming' ? '#94A3B8' : '#0F172A' }}>{s.label}</p>
-                    <p className="text-xs text-slate-400">{s.desc}</p>
+                    <p className="text-sm font-bold" style={{ color: state === 'upcoming' ? 'rgba(255,255,255,0.4)' : '#ffffff' }}>{s.label}</p>
+                    <p className="text-xs text-white/50">{s.desc}</p>
                   </div>
                 </div>
               );
@@ -190,7 +195,7 @@ export default function EmployerRegisterPage() {
 
           {/* Form panel */}
           <ScrollReveal key={step} animation="fade-up" duration={400}>
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-warm-lg p-6 sm:p-8">
+            <div className="bg-white text-slate-900 rounded-3xl border border-white/20 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)] p-6 sm:p-8">
               {step === 0 && (
                 <div className="space-y-4">
                   <FormInput label="Company Name *" value={companyName} onChange={(e) => setCompanyName(e.target.value)} error={errors.companyName} />

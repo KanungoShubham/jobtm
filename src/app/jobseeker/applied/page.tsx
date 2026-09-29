@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { jobsApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 export default function AppliedJobsPage() {
   const [apps, setApps] = useState<any[]>([]);
@@ -30,7 +30,7 @@ export default function AppliedJobsPage() {
                   <p className="font-bold text-slate-800 truncate">{app.job_title ?? app.title}</p>
                   <p className="text-xs text-slate-400">{app.company_name ?? app.company} · Applied {app.created_at ? new Date(app.created_at).toLocaleDateString() : ''}</p>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full capitalize flex-shrink-0" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>{app.status}</span>
+                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full capitalize flex-shrink-0" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>{app.status}</span>
               </div>
             </Link>
           ))}

@@ -20,7 +20,7 @@ function Stepper({ value, onChange, step, min = 0, prefix }: {
         {prefix && <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-slate-400">{prefix}</span>}
         <input type="number" value={value}
           onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
-          className={`w-20 ${prefix ? 'pl-5' : 'pl-2'} pr-2 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg text-center focus:outline-none focus:border-sky-300`} />
+          className={`w-20 ${prefix ? 'pl-5' : 'pl-2'} pr-2 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg text-center focus:outline-none focus:border-blue-300`} />
       </div>
       <button type="button" onClick={() => onChange(value + step)}
         className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-base leading-none flex-shrink-0">+</button>
@@ -73,7 +73,7 @@ function PlanRow({ plan, token, onChanged }: { plan: AdPlan; token: string; onCh
         <div className="flex flex-col gap-1 flex-1 min-w-[140px]">
           <span className="text-[10px] text-slate-400 uppercase tracking-wider">Label</span>
           <input value={label} onChange={(e) => setLabel(e.target.value)}
-            className="px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-sky-300" />
+            className="px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-300" />
         </div>
         <div className="flex flex-col gap-1">
           <span className="text-[10px] text-slate-400 uppercase tracking-wider">Duration (days)</span>
@@ -86,7 +86,7 @@ function PlanRow({ plan, token, onChanged }: { plan: AdPlan; token: string; onCh
         <div className="flex flex-col gap-1">
           <span className="text-[10px] text-slate-400 uppercase tracking-wider">Order</span>
           <input type="number" value={order} onChange={(e) => setOrder(Number(e.target.value) || 0)}
-            className="w-16 px-2 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg text-center focus:outline-none focus:border-sky-300" />
+            className="w-16 px-2 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg text-center focus:outline-none focus:border-blue-300" />
         </div>
 
         <div className="flex items-center gap-2 ml-auto">
@@ -96,7 +96,7 @@ function PlanRow({ plan, token, onChanged }: { plan: AdPlan; token: string; onCh
             {active ? 'Active' : 'Hidden'}
           </button>
           <button onClick={save} disabled={!!busy || !dirty}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-500 text-white hover:bg-sky-600 text-xs font-bold transition disabled:opacity-40">
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-500 text-white hover:bg-blue-600 text-xs font-bold transition disabled:opacity-40">
             {busy === 'save' ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <HiCheck className="w-4 h-4" />}
             Save
           </button>
@@ -147,13 +147,13 @@ export default function AdminAdPlansPage() {
         <div>
           <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">Super Admin</p>
           <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-            <HiTag className="w-6 h-6 text-sky-500" /> Ad Center Plans
+            <HiTag className="w-6 h-6 text-blue-500" /> Ad Center Plans
           </h1>
           <p className="text-sm text-slate-400 mt-0.5">Add and adjust the duration & price of ad plans advertisers can buy</p>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => setAdding((v) => !v)}
-            className="flex items-center gap-1.5 bg-sky-500 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-sky-600 transition">
+            className="flex items-center gap-1.5 bg-blue-500 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-blue-600 transition">
             <HiPlus className="w-4 h-4" /> New Plan
           </button>
           <button onClick={load} disabled={loading}
@@ -176,18 +176,18 @@ export default function AdminAdPlansPage() {
       )}
 
       {adding && (
-        <div className="bg-white rounded-2xl border border-sky-200 shadow-sm p-4 space-y-3">
+        <div className="bg-white rounded-2xl border border-blue-200 shadow-sm p-4 space-y-3">
           <p className="text-sm font-extrabold text-slate-900">New Plan</p>
           <div className="flex flex-wrap items-end gap-4">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] text-slate-400 uppercase tracking-wider">Key</span>
               <input value={draft.key} onChange={(e) => setDraft({ ...draft, key: e.target.value })} placeholder="e.g. 2m"
-                className="w-24 px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-sky-300" />
+                className="w-24 px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-300" />
             </div>
             <div className="flex flex-col gap-1 flex-1 min-w-[140px]">
               <span className="text-[10px] text-slate-400 uppercase tracking-wider">Label</span>
               <input value={draft.label} onChange={(e) => setDraft({ ...draft, label: e.target.value })} placeholder="e.g. 2 Months"
-                className="px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-sky-300" />
+                className="px-2.5 py-1.5 text-sm font-semibold text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-300" />
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] text-slate-400 uppercase tracking-wider">Duration (days)</span>
@@ -207,7 +207,7 @@ export default function AdminAdPlansPage() {
       )}
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-16"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>
       ) : list.length === 0 && !error ? (
         <div className="flex flex-col items-center py-16 gap-3">
           <HiTag className="w-12 h-12 text-slate-300" />

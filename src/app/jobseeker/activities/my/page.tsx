@@ -9,7 +9,7 @@ import { activitiesApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 const STATUS_STYLE: Record<string, { bg: string; fg: string; label: string }> = {
   pending:  { bg: '#FEF3C7', fg: '#D97706', label: 'Pending' },
@@ -76,9 +76,9 @@ export default function MyActivitiesPage() {
         </Link>
       </div>
 
-      <div className="flex items-start gap-2.5 bg-sky-50 border border-sky-200 rounded-2xl px-4 py-3 mb-6">
-        <HiInformationCircle className="w-4 h-4 text-sky-500 flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-sky-700 leading-relaxed">
+      <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-200 rounded-2xl px-4 py-3 mb-6">
+        <HiInformationCircle className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+        <p className="text-xs text-blue-700 leading-relaxed">
           List your coaching, classes or workshops. Students book directly. For paid sessions, you receive{' '}
           <strong>85% of the price</strong> — admin holds payment until session completes.
         </p>
@@ -88,7 +88,7 @@ export default function MyActivitiesPage() {
         <p className="text-sm text-slate-400 py-12 text-center">Loading…</p>
       ) : activities.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-4">
-          <div className="w-20 h-20 rounded-full bg-sky-50 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center">
             <HiOutlineMusicNote className="w-8 h-8" style={{ color: COLOR }} />
           </div>
           <div className="text-center">
@@ -109,7 +109,7 @@ export default function MyActivitiesPage() {
               <ScrollReveal key={item.id} animation="fade-up" delay={i * 40}>
                 <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#E0F2FE' }}>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#DBEAFE' }}>
                       <HiOutlineMusicNote className="w-5 h-5" style={{ color: COLOR }} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ export default function MyActivitiesPage() {
                     <div className="space-y-1.5">
                       <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Batches</p>
                       {item.batches.map((b: any) => (
-                        <div key={b.id} className="flex items-center gap-2 bg-sky-50 rounded-xl px-3 py-2 text-xs">
+                        <div key={b.id} className="flex items-center gap-2 bg-blue-50 rounded-xl px-3 py-2 text-xs">
                           <span className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-extrabold text-white flex-shrink-0" style={{ backgroundColor: COLOR }}>{b.sort_order + 1}</span>
                           <span className="font-bold flex-shrink-0" style={{ color: COLOR }}>{b.name}</span>
                           <span className="text-slate-500 truncate flex-1">{Array.isArray(b.days) ? b.days.join(', ') : ''}{b.time_start ? ` · ${fmt12(b.time_start)}–${fmt12(b.time_end)}` : ''}</span>
@@ -153,7 +153,7 @@ export default function MyActivitiesPage() {
                   </div>
 
                   {item.status === 'active' && (
-                    <button onClick={() => openBookings(item)} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-sky-200 bg-sky-50 text-sm font-bold hover:bg-sky-100 transition" style={{ color: COLOR }}>
+                    <button onClick={() => openBookings(item)} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-blue-200 bg-blue-50 text-sm font-bold hover:bg-blue-100 transition" style={{ color: COLOR }}>
                       <HiUsers className="w-4 h-4" /> View Booked Students
                     </button>
                   )}

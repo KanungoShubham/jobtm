@@ -5,7 +5,7 @@ import { notificationsApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 export default function NotificationsPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -57,7 +57,7 @@ export default function NotificationsPage() {
           {items.map((n, i) => (
             <ScrollReveal key={n.id} animation="fade-up" delay={i * 30}>
               <button onClick={() => !n.is_read && markRead(n.id)} className="w-full flex items-start gap-3 px-5 py-4 text-left hover:bg-slate-50 transition">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: n.is_read ? '#F1F5F9' : '#E0F2FE' }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: n.is_read ? '#F1F5F9' : '#DBEAFE' }}>
                   {n.is_read ? <HiCheckCircle className="w-4 h-4 text-slate-400" /> : <HiBell className="w-4 h-4" style={{ color: COLOR }} />}
                 </div>
                 <div className="flex-1 min-w-0">

@@ -8,7 +8,7 @@ import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 const TILES = [
-  { href: '/jobseeker/subscription', label: 'My Subscription', desc: 'View plan & upgrade', icon: HiStar, bg: '#7C3AED' },
+  { href: '/jobseeker/subscription', label: 'My Subscription', desc: 'View plan & upgrade', icon: HiStar, bg: '#136BAB' },
   { href: '/jobseeker/billing', label: 'Billing History', desc: 'Payments & invoices', icon: HiReceiptTax, bg: '#0891B2' },
   { href: '/jobseeker/rewards', label: 'Rewards & Coupons', desc: 'Scratch cards & offers', icon: HiGift, bg: '#D97706' },
   { href: '/jobseeker/notifications', label: 'Notifications', desc: 'Manage your alerts', icon: HiBell, bg: '#EA580C' },

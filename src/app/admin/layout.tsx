@@ -32,17 +32,17 @@ function Sidebar({ user, onLogout, onClose }: {
   const pathname = usePathname();
 
   return (
-    <aside className="flex flex-col h-full w-64 flex-shrink-0 bg-[#1a1f36]">
+    <aside className="flex flex-col h-full w-64 flex-shrink-0 bg-[#0a1a2d]">
       {/* Brand */}
       <div className="flex items-center justify-between px-5 py-5 border-b border-white/[0.07]">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", boxShadow: "0 4px 12px rgba(99,102,241,0.4)" }}>
+            style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)", boxShadow: "0 4px 12px rgba(19,107,171,0.4)" }}>
             <HiShieldCheck className="w-5 h-5 text-white" />
           </div>
           <div>
             <span className="text-white font-extrabold text-sm tracking-tight">jobstm</span>
-            <span className="ml-1.5 bg-indigo-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-widest">
+            <span className="ml-1.5 bg-blue-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-widest">
               ADMIN
             </span>
           </div>
@@ -66,7 +66,7 @@ function Sidebar({ user, onLogout, onClose }: {
                   : 'text-white/50 hover:bg-white/[0.07] hover:text-white'
               }`}
               style={active
-                ? { background: "linear-gradient(135deg, #6366f1, #8b5cf6)", boxShadow: "0 4px 14px rgba(99,102,241,0.35)" }
+                ? { background: "linear-gradient(135deg, #136BAB, #3b82f6)", boxShadow: "0 4px 14px rgba(19,107,171,0.35)" }
                 : {}
               }
             >
@@ -81,7 +81,7 @@ function Sidebar({ user, onLogout, onClose }: {
       <div className="px-3 py-4 border-t border-white/[0.07]">
         <div className="flex items-center gap-3 px-3 py-2.5 mb-1">
           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}>
+            style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)" }}>
             <span className="text-white text-xs font-bold">
               {(user?.name ?? 'A').charAt(0).toUpperCase()}
             </span>
@@ -123,8 +123,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (!ready) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#0f1225]">
-        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex h-screen items-center justify-center bg-[#060f1c]">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -132,7 +132,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (pathname === '/admin/login') return <>{children}</>;
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-screen bg-[#f3f7ff] overflow-hidden">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -154,13 +154,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile topbar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-[#1a1f36] border-b border-white/[0.07]">
+        <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-[#0a1a2d] border-b border-white/[0.07]">
           <button onClick={() => setSidebarOpen(true)} className="text-white/60 hover:text-white transition">
             <HiMenuAlt2 className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}>
+              style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)" }}>
               <HiShieldCheck className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-white text-sm">jobstm Admin</span>

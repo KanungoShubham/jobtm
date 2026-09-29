@@ -9,7 +9,7 @@ import { employerApi, subscriptionApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 
 function greeting() {
   const h = new Date().getHours();
@@ -45,17 +45,17 @@ export default function EmployerDashboardPage() {
   const hired       = stats?.hired ?? 0;
 
   const cards = [
-    { href: '/employer/jobs',         label: 'Active Jobs',  value: activeJobs, icon: HiBriefcase,     accent: '#7C3AED', tint: '#EDE9FE' },
+    { href: '/employer/jobs',         label: 'Active Jobs',  value: activeJobs, icon: HiBriefcase,     accent: '#136BAB', tint: '#DBEAFE' },
     { href: '/employer/applications', label: 'Applications', value: stats?.totalApplications ?? 0, icon: HiUserGroup, accent: '#2563EB', tint: '#DBEAFE' },
     { href: '/employer/applications', label: 'New Today',    value: newToday,   icon: HiBell,          accent: '#D97706', tint: '#FEF3C7' },
     { href: '/employer/applications', label: 'Hired',        value: hired,      icon: HiCheckCircle,   accent: '#059669', tint: '#D1FAE5' },
   ];
 
   const quickActions = [
-    { href: '/employer/post-job',   label: 'Post Job',   icon: HiPlusCircle,    accent: '#7C3AED', tint: '#EDE9FE' },
+    { href: '/employer/post-job',   label: 'Post Job',   icon: HiPlusCircle,    accent: '#136BAB', tint: '#DBEAFE' },
     { href: '/employer/applications', label: 'Applicants', icon: HiUserGroup,   accent: '#2563EB', tint: '#DBEAFE' },
     { href: '/employer/jobs',       label: 'My Jobs',    icon: HiBriefcase,     accent: '#059669', tint: '#D1FAE5' },
-    { href: '/employer/persons',    label: 'Persons',    icon: HiUserGroup,     accent: '#0EA5E9', tint: '#E0F2FE' },
+    { href: '/employer/persons',    label: 'Persons',    icon: HiUserGroup,     accent: '#136BAB', tint: '#DBEAFE' },
   ];
 
   return (
@@ -102,7 +102,7 @@ export default function EmployerDashboardPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {cards.map((c, i) => (
               <ScrollReveal key={c.label} animation="fade-up" delay={i * 90}>
-                <Link href={c.href} className="block rounded-2xl p-5 bg-white border border-slate-100 shadow-warm-lg hover-lift hover:border-violet-100 transition-all duration-300">
+                <Link href={c.href} className="block rounded-2xl p-5 bg-white border border-slate-100 shadow-warm-lg hover-lift hover:border-blue-100 transition-all duration-300">
                   <div className="flex items-start justify-between mb-3">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: c.tint }}>
                       <c.icon className="w-5 h-5" style={{ color: c.accent }} />
@@ -136,7 +136,7 @@ export default function EmployerDashboardPage() {
         {!loading && totalJobs === 0 && (
           <ScrollReveal animation="fade-up">
             <div className="flex flex-col items-center text-center bg-white rounded-2xl border border-slate-100 shadow-sm px-6 py-12">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#EDE9FE' }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#DBEAFE' }}>
                 <HiOutlineBriefcase className="w-8 h-8" style={{ color: COLOR }} />
               </div>
               <p className="font-extrabold text-slate-800 mb-1">Start hiring today</p>

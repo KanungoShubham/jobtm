@@ -52,8 +52,8 @@ function JobCard({ job, onModerate }: { job: any; onModerate: (id: string, statu
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
       <button onClick={() => setExpanded(!expanded)} className="w-full p-4 text-left space-y-3">
         <div className="flex items-start gap-3">
-          <div className="w-11 h-11 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
-            <span className="text-lg font-extrabold text-violet-600">{companyName.charAt(0) || '?'}</span>
+          <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+            <span className="text-lg font-extrabold text-blue-600">{companyName.charAt(0) || '?'}</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-extrabold text-slate-900 truncate">{job.title}</p>
@@ -71,7 +71,7 @@ function JobCard({ job, onModerate }: { job: any; onModerate: (id: string, statu
 
         <div className="flex flex-wrap gap-1.5">
           {job.job_type && <span className="bg-slate-100 text-slate-500 text-[11px] font-semibold px-2.5 py-1 rounded-full">{job.job_type}</span>}
-          {job.work_mode && <span className="bg-violet-50 text-violet-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">{WORK_MODE_ICON[job.work_mode] ?? ''} {job.work_mode}</span>}
+          {job.work_mode && <span className="bg-blue-50 text-blue-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">{WORK_MODE_ICON[job.work_mode] ?? ''} {job.work_mode}</span>}
           {job.is_urgent && <span className="bg-red-50 text-red-500 text-[11px] font-semibold px-2.5 py-1 rounded-full">⚡ Urgent</span>}
           {job.is_hindi && <span className="bg-orange-50 text-orange-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">🗣 Hindi</span>}
           {salaryText() && <span className="bg-emerald-50 text-emerald-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">{salaryText()}</span>}
@@ -231,7 +231,7 @@ export default function AdminJobsPage() {
         <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
           placeholder="Search jobs, companies…"
-          className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-300 transition" />
+          className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-300 transition" />
         {query && (
           <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
             <HiX className="w-4 h-4" />
@@ -245,7 +245,7 @@ export default function AdminJobsPage() {
             className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition ${
               statusFilter === s ? 'text-white border-transparent' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
             }`}
-            style={statusFilter === s ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            style={statusFilter === s ? { background: 'linear-gradient(135deg,#136BAB,#3b82f6)' } : {}}>
             {s === 'all' ? 'All Jobs' : STATUS_LABEL[s] ?? s}
           </button>
         ))}
@@ -259,7 +259,7 @@ export default function AdminJobsPage() {
 
       {loading ? (
         <div className="flex justify-center py-16">
-          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : jobs.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-3">
@@ -275,7 +275,7 @@ export default function AdminJobsPage() {
           <div ref={sentinelRef} className="py-4 flex justify-center">
             {loadingMore ? (
               <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                <span className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
                 Loading more…
               </div>
             ) : !hasMore && total > 0 ? (

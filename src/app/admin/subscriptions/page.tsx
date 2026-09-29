@@ -40,7 +40,7 @@ function isExpired(sub: any) {
 
 const PLAN_COLORS: Record<string, string> = {
   monthly:     'bg-blue-100 text-blue-700',
-  quarterly:   'bg-violet-100 text-violet-700',
+  quarterly:   'bg-blue-100 text-blue-700',
   half_yearly: 'bg-emerald-100 text-emerald-700',
   yearly:      'bg-amber-100 text-amber-700',
 };
@@ -110,9 +110,9 @@ function PlanPricingTab() {
             <div className="flex items-center gap-2">
               <span className="text-lg font-bold text-slate-700">₹</span>
               <input type="number" value={editAmt} onChange={(e) => setEditAmt(e.target.value.replace(/[^0-9.]/g, ''))}
-                className="w-24 border-2 border-indigo-400 bg-white rounded-xl px-3 py-2 text-base font-bold text-slate-900 text-center focus:outline-none focus:ring-2 focus:ring-indigo-400" autoFocus />
+                className="w-24 border-2 border-blue-400 bg-white rounded-xl px-3 py-2 text-base font-bold text-slate-900 text-center focus:outline-none focus:ring-2 focus:ring-blue-400" autoFocus />
               <button onClick={() => saveAmount(plan.id)} disabled={saving}
-                className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition disabled:opacity-60">
+                className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition disabled:opacity-60">
                 {saving ? '…' : 'Save'}
               </button>
               <button onClick={cancelEdit} className="text-slate-400 hover:text-slate-600 text-xs font-semibold">Cancel</button>
@@ -150,7 +150,7 @@ function PlanPricingTab() {
       </div>
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="w-6 h-6 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
         <>
@@ -164,7 +164,7 @@ function PlanPricingTab() {
           </div>
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-2 rounded-full bg-violet-500" />
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
               <p className="text-sm font-extrabold text-slate-900">Employer Plans</p>
               <span className="text-[10px] text-slate-400 font-semibold">· applies to employer job posting</span>
             </div>
@@ -257,7 +257,7 @@ function SubscriptionsListTab() {
             { label: 'Total',           value: stats.total,     icon: HiUsers,         color: 'text-slate-600',   bg: 'bg-slate-50',   border: 'border-slate-100' },
             { label: 'Active',          value: stats.active,    icon: HiCheckCircle,   color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
             { label: 'Monthly Plans',   value: stats.monthly,   icon: HiCalendar,      color: 'text-blue-600',    bg: 'bg-blue-50',    border: 'border-blue-100' },
-            { label: 'Quarterly Plans', value: stats.quarterly, icon: HiCalendar,      color: 'text-violet-600',  bg: 'bg-violet-50',  border: 'border-violet-100' },
+            { label: 'Quarterly Plans', value: stats.quarterly, icon: HiCalendar,      color: 'text-blue-600',  bg: 'bg-blue-50',  border: 'border-blue-100' },
             { label: 'Total Revenue',   value: `₹${((stats.total_revenue ?? 0) / 100).toLocaleString('en-IN')}`,
               icon: HiCurrencyRupee, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
           ].map((s) => (
@@ -282,7 +282,7 @@ function SubscriptionsListTab() {
                 ? 'text-white border-transparent'
                 : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
-            style={roleFilter === r.key ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            style={roleFilter === r.key ? { background: 'linear-gradient(135deg,#136BAB,#3b82f6)' } : {}}>
             {r.label}
           </button>
         ))}
@@ -294,7 +294,7 @@ function SubscriptionsListTab() {
                 ? 'text-white border-transparent'
                 : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
-            style={filter === f.key ? { background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' } : {}}>
+            style={filter === f.key ? { background: 'linear-gradient(135deg,#136BAB,#3b82f6)' } : {}}>
             {f.label}
           </button>
         ))}
@@ -353,7 +353,7 @@ function SubscriptionsListTab() {
                     </td>
                     <td className="px-4 py-3.5">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        role === 'employer' ? 'bg-violet-100 text-violet-700' : 'bg-blue-100 text-blue-700'
+                        role === 'employer' ? 'bg-blue-100 text-blue-700' : 'bg-blue-100 text-blue-700'
                       }`}>
                         {role === 'employer' ? 'Employer' : 'Jobseeker'}
                       </span>
@@ -387,7 +387,7 @@ function SubscriptionsListTab() {
         <div ref={sentinelRef} className="py-4 flex justify-center border-t border-slate-50">
           {loadingMore ? (
             <div className="flex items-center gap-2 text-slate-400 text-sm">
-              <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+              <span className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
               Loading more…
             </div>
           ) : !hasMore && total > 0 ? (

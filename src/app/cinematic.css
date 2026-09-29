@@ -319,3 +319,11 @@
   .cin-ring { animation: none !important; }
   .cin-phone-scroll { animation: none !important; }
 }
+
+.cin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.cin-scroll::-webkit-scrollbar { width: 6px; }
+.cin-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+.cin-scroll::-webkit-scrollbar-track { background: transparent; }

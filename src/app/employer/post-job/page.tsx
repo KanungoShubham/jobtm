@@ -18,8 +18,8 @@ function citiesFor(state: string): string[] {
     : [];
 }
 
-const COLOR = '#7C3AED';
-const TINT  = '#EDE9FE';
+const COLOR = '#136BAB';
+const TINT  = '#DBEAFE';
 
 const JOB_TYPES   = ['Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'];
 const EXP_OPTIONS = ['Fresher', '0–1 yr', '1–2 yrs', '2–4 yrs', '4–6 yrs', '6+ yrs'];

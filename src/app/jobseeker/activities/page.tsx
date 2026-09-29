@@ -9,17 +9,17 @@ import { activitiesApi, activityPaymentsApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 const CATEGORY_FILTERS = [
   { label: 'All', value: '', color: COLOR },
-  { label: 'Coaching', value: 'coaching', color: '#0EA5E9' },
+  { label: 'Coaching', value: 'coaching', color: '#136BAB' },
   { label: 'Dance', value: 'dance', color: '#EC4899' },
-  { label: 'Yoga', value: 'yoga', color: '#8B5CF6' },
+  { label: 'Yoga', value: 'yoga', color: '#3b82f6' },
   { label: 'Fitness', value: 'fitness', color: '#EF4444' },
   { label: 'Music', value: 'music', color: '#F59E0B' },
   { label: 'Sports', value: 'sports', color: '#10B981' },
-  { label: 'Academic', value: 'academic', color: '#6366F1' },
+  { label: 'Academic', value: 'academic', color: '#136BAB' },
   { label: 'Arts', value: 'arts', color: '#F97316' },
   { label: 'Language', value: 'language', color: '#06B6D4' },
 ];
@@ -177,11 +177,11 @@ export default function ActivitiesPage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-2.5 w-full lg:w-80 focus-within:border-sky-300 focus-within:ring-4 focus-within:ring-sky-50 transition-all">
+          <div className="flex items-center gap-2 bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-2.5 w-full lg:w-80 focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 transition-all">
             <HiSearch className="w-4 h-4 text-slate-400 flex-shrink-0" />
             <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search dance, yoga, coaching…" className="flex-1 text-sm outline-none placeholder:text-slate-400" />
           </div>
-          <Link href="/jobseeker/activities/my" className="flex-shrink-0 px-4 py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:border-sky-300 hover:text-sky-600 transition whitespace-nowrap">
+          <Link href="/jobseeker/activities/my" className="flex-shrink-0 px-4 py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:border-blue-300 hover:text-blue-600 transition whitespace-nowrap">
             My Activities
           </Link>
           <Link href="/jobseeker/activities/create" className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-sm font-bold text-white transition hover:opacity-90 whitespace-nowrap" style={{ backgroundColor: COLOR }}>
@@ -232,7 +232,7 @@ export default function ActivitiesPage() {
         <p className="text-sm text-slate-400 py-12 text-center">Loading…</p>
       ) : activities.length === 0 ? (
         <div className="flex flex-col items-center py-16 gap-3">
-          <div className="w-16 h-16 rounded-full bg-sky-50 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
             <HiAcademicCap className="w-7 h-7" style={{ color: COLOR }} />
           </div>
           <p className="font-bold text-slate-900">No classes found</p>

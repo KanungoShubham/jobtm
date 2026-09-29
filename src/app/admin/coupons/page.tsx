@@ -20,7 +20,7 @@ const CATEGORIES = [
 const CAT_COLORS: Record<string, { badge: string; text: string }> = {
   food:     { badge: 'bg-orange-100 text-orange-700',   text: 'Food' },
   medical:  { badge: 'bg-emerald-100 text-emerald-700', text: 'Medical' },
-  shopping: { badge: 'bg-violet-100 text-violet-700',   text: 'Shopping' },
+  shopping: { badge: 'bg-blue-100 text-blue-700',   text: 'Shopping' },
   travel:   { badge: 'bg-blue-100 text-blue-700',       text: 'Travel' },
 };
 

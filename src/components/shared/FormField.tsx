@@ -22,7 +22,7 @@ export function passwordStrength(pwd: string): { score: number; label: string; c
 }
 
 export function PasswordInput({
-  label, error, containerClassName = '', color = '#0EA5E9', showStrength, value, ...props
+  label, error, containerClassName = '', color = '#136BAB', showStrength, value, ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
   label?: string; error?: string; containerClassName?: string; color?: string; showStrength?: boolean;
 }) {
@@ -65,7 +65,7 @@ export function PasswordInput({
 }
 
 export function FormInput({
-  label, error, icon, containerClassName = '', color = '#0EA5E9', ...props
+  label, error, icon, containerClassName = '', color = '#136BAB', ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
   label?: string; error?: string; icon?: ReactNode; containerClassName?: string; color?: string;
 }) {
@@ -128,7 +128,7 @@ export function FormTextarea({
 }
 
 export function Button({
-  children, loading, variant = 'primary', color = '#0EA5E9', fullWidth, className = '', ...props
+  children, loading, variant = 'primary', color = '#136BAB', fullWidth, className = '', ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean; variant?: 'primary' | 'outline' | 'ghost'; color?: string; fullWidth?: boolean;
 }) {

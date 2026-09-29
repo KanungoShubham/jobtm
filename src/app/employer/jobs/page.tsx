@@ -5,7 +5,7 @@ import { HiPencil, HiTrash, HiLocationMarker, HiPlusCircle } from 'react-icons/h
 import { employerApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 const STATUSES = ['all', 'open', 'closed', 'draft'];
 
 export default function MyJobsPage() {

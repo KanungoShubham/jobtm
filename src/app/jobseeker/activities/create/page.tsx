@@ -11,7 +11,7 @@ import { jobseekerAuth } from '@/lib/roleAuth';
 import { Button, FormInput, FormTextarea } from '@/components/shared/FormField';
 import { LocationSelect } from '@/components/shared/LocationSelect';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 const CATEGORIES = [
   { label: 'Dance', value: 'dance' }, { label: 'Coaching', value: 'coaching' },
@@ -150,10 +150,10 @@ export default function CreateActivityPage() {
   };
 
   const UploadBox = ({ url, name, uploading, label, onFile }: { url: string; name: string; uploading: boolean; label: string; onFile: (f: File) => void }) => (
-    <label className={`flex items-center gap-3 border-2 border-dashed rounded-xl px-4 py-4 cursor-pointer transition ${url ? 'border-sky-400 bg-sky-50' : 'border-slate-300 bg-white hover:border-sky-300'}`}>
-      <HiUpload className={`w-5 h-5 flex-shrink-0 ${url ? 'text-sky-500' : 'text-slate-400'}`} />
+    <label className={`flex items-center gap-3 border-2 border-dashed rounded-xl px-4 py-4 cursor-pointer transition ${url ? 'border-blue-400 bg-blue-50' : 'border-slate-300 bg-white hover:border-blue-300'}`}>
+      <HiUpload className={`w-5 h-5 flex-shrink-0 ${url ? 'text-blue-500' : 'text-slate-400'}`} />
       <div className="flex-1 min-w-0">
-        <p className={`text-sm font-semibold truncate ${url ? 'text-sky-700' : 'text-slate-500'}`}>
+        <p className={`text-sm font-semibold truncate ${url ? 'text-blue-700' : 'text-slate-500'}`}>
           {uploading ? 'Uploading…' : name || label}
         </p>
         <p className="text-xs text-slate-400">JPG or PNG · Max 5MB</p>
@@ -256,7 +256,7 @@ export default function CreateActivityPage() {
               </div>
             </div>
           ))}
-          <button onClick={addBatch} className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed text-sm font-bold transition hover:bg-sky-50/50"
+          <button onClick={addBatch} className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed text-sm font-bold transition hover:bg-blue-50/50"
             style={{ borderColor: `${COLOR}80`, color: COLOR }}>
             <HiPlusCircle className="w-4 h-4" /> Add Another Batch
           </button>
@@ -276,7 +276,7 @@ export default function CreateActivityPage() {
           {skills.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {skills.map((s) => (
-                <span key={s} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>
+                <span key={s} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>
                   {s}
                   <button onClick={() => setSkills(skills.filter((x) => x !== s))}><HiXCircle className="w-3.5 h-3.5" /></button>
                 </span>

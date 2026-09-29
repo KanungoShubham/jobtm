@@ -5,7 +5,7 @@ import { HiArrowLeft } from 'react-icons/hi';
 import { employerApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 
 export default function ApplicantProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -50,7 +50,7 @@ export default function ApplicantProfilePage() {
           <h2 className="font-bold text-slate-800 mb-3">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {data.skills.map((s: string) => (
-              <span key={s} className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#EDE9FE', color: COLOR }}>{s}</span>
+              <span key={s} className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>{s}</span>
             ))}
           </div>
         </div>

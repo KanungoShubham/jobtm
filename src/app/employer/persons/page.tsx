@@ -6,8 +6,8 @@ import { employerApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 import { Button, FormInput, FormSelect } from '@/components/shared/FormField';
 
-const COLOR = '#7C3AED';
-const TINT  = '#EDE9FE';
+const COLOR = '#136BAB';
+const TINT  = '#DBEAFE';
 
 const DEPARTMENTS = ['HR', 'Recruitment', 'Operations', 'Engineering', 'Sales', 'Marketing', 'Finance', 'Admin', 'Management', 'Other'];
 

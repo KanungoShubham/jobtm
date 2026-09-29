@@ -11,7 +11,7 @@ import { Button, FormTextarea } from '@/components/shared/FormField';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { PaywallModal, SubPlan } from '@/components/shared/PaywallModal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 function StarRow({ value, interactive, size = 'w-6 h-6', onChange }: { value: number; interactive?: boolean; size?: string; onChange?: (v: number) => void }) {
   return (
@@ -132,7 +132,7 @@ export default function JobDetailPage() {
                 {company.is_verified && <HiShieldCheck className="w-4 h-4 text-emerald-500" />}
               </p>
             </div>
-            <button onClick={toggleSave} disabled={saving} className="p-2 rounded-xl border border-slate-200 hover:border-sky-300 transition flex-shrink-0">
+            <button onClick={toggleSave} disabled={saving} className="p-2 rounded-xl border border-slate-200 hover:border-blue-300 transition flex-shrink-0">
               <HiBookmark className="w-5 h-5" style={{ color: saved ? COLOR : '#CBD5E1' }} />
             </button>
           </div>
@@ -144,11 +144,11 @@ export default function JobDetailPage() {
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4">
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>{job.job_type ?? 'Full Time'}</span>
-            {job.is_remote && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-50 text-purple-600">Remote</span>}
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>{job.job_type ?? 'Full Time'}</span>
+            {job.is_remote && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-600">Remote</span>}
             {job.is_urgent && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-red-50 text-red-500">Urgent</span>}
             {job.experience && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">{job.experience}</span>}
-            {job.category && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-sky-50 text-sky-600">{job.category}</span>}
+            {job.category && <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-600">{job.category}</span>}
           </div>
 
           <div className="flex items-center justify-between pt-3 border-t border-slate-100">
@@ -193,7 +193,7 @@ export default function JobDetailPage() {
             <h2 className="font-bold text-slate-900 mb-3">Required Skills</h2>
             <div className="flex flex-wrap gap-2">
               {job.skills.map((s: string) => (
-                <span key={s} className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>{s}</span>
+                <span key={s} className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>{s}</span>
               ))}
             </div>
           </div>

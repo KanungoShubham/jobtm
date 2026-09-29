@@ -296,7 +296,7 @@ export default function AdminApprovalsPage() {
 
       {loading ? (
         <div className="flex justify-center py-8">
-          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : companies.length === 0 ? (
         <div className="flex flex-col items-center py-20 gap-3">
@@ -322,7 +322,7 @@ export default function AdminApprovalsPage() {
           <div ref={sentinelRef} className="py-4 flex justify-center">
             {loadingMore ? (
               <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+                <span className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
                 Loading more…
               </div>
             ) : !hasMore && total > 0 ? (

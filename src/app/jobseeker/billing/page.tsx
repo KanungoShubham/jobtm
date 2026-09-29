@@ -5,7 +5,7 @@ import { subscriptionApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 export default function BillingHistoryPage() {
   const [history, setHistory] = useState<any[]>([]);

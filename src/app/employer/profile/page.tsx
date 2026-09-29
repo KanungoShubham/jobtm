@@ -11,8 +11,8 @@ import { employerApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 import { Button, FormInput, FormTextarea } from '@/components/shared/FormField';
 
-const COLOR = '#7C3AED';
-const TINT  = '#EDE9FE';
+const COLOR = '#136BAB';
+const TINT  = '#DBEAFE';
 
 function formatDate(iso?: string) {
   if (!iso) return '';
@@ -68,7 +68,7 @@ export default function CompanyProfilePage() {
   const isVerified = company?.verify_status === 'approved' || company?.is_verified;
 
   const statCards = [
-    { label: 'Jobs',       value: stats?.totalJobs ?? 0,         icon: HiBriefcase,   accent: '#7C3AED', tint: '#EDE9FE' },
+    { label: 'Jobs',       value: stats?.totalJobs ?? 0,         icon: HiBriefcase,   accent: '#136BAB', tint: '#DBEAFE' },
     { label: 'Applicants', value: stats?.totalApplications ?? 0, icon: HiUserGroup,   accent: '#2563EB', tint: '#DBEAFE' },
     { label: 'Hired',      value: stats?.hired ?? 0,              icon: HiCheckCircle, accent: '#059669', tint: '#D1FAE5' },
     { label: 'Rating',     value: '–',                            icon: HiStar,        accent: '#D97706', tint: '#FEF3C7' },

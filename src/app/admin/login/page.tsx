@@ -48,23 +48,23 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#0f1225]">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#060f1c]">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl opacity-20" style={{ background: "radial-gradient(ellipse, #6366f1, transparent 70%)" }} />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-3xl opacity-10" style={{ background: "radial-gradient(ellipse, #8b5cf6, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl opacity-20" style={{ background: "radial-gradient(ellipse, #3b82f6, transparent 70%)" }} />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-3xl opacity-10" style={{ background: "radial-gradient(ellipse, #136BAB, transparent 70%)" }} />
       </div>
 
       <div className="relative w-full max-w-sm">
         {/* Brand */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 shadow-lg"
-            style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", boxShadow: "0 8px 24px rgba(99,102,241,0.4)" }}>
+            style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)", boxShadow: "0 8px 24px rgba(59,130,246,0.4)" }}>
             <HiShieldCheck className="w-9 h-9 text-white" />
           </div>
           <div className="flex items-center justify-center gap-2 mb-1">
             <span className="text-2xl font-extrabold text-white tracking-tight">jobstm</span>
-            <span className="bg-indigo-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full tracking-widest">
+            <span className="bg-[#136BAB] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full tracking-widest">
               ADMIN
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl p-6 shadow-2xl border" style={{ backgroundColor: "#1a1f36", borderColor: "rgba(255,255,255,0.08)" }}>
+        <div className="rounded-2xl p-6 shadow-2xl border" style={{ backgroundColor: "#0d1f35", borderColor: "rgba(255,255,255,0.08)" }}>
           <h1 className="text-lg font-bold text-white mb-1">Sign in to continue</h1>
           <p className="text-white/40 text-sm mb-6">Admin access only</p>
 
@@ -89,9 +89,9 @@ export default function AdminLoginPage() {
             .admin-input:-webkit-autofill:hover,
             .admin-input:-webkit-autofill:focus,
             .admin-input:-webkit-autofill:active {
-              -webkit-box-shadow: 0 0 0 1000px #252b45 inset !important;
+              -webkit-box-shadow: 0 0 0 1000px #12304f inset !important;
               -webkit-text-fill-color: #ffffff !important;
-              caret-color: #6366f1;
+              caret-color: #3b82f6;
             }
           `}</style>
 
@@ -113,8 +113,8 @@ export default function AdminLoginPage() {
                   onChange={(e) => { setMobile(e.target.value.replace(/\D/g, '')); setError(''); }}
                   placeholder="98765 43210"
                   className="admin-input w-full pl-20 pr-4 py-2.5 rounded-xl text-sm transition focus:outline-none"
-                  style={{ backgroundColor: "#252b45", border: "1px solid rgba(255,255,255,0.12)", color: "#ffffff", caretColor: "#6366f1" }}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "#6366f1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(99,102,241,0.2)"; }}
+                  style={{ backgroundColor: "#12304f", border: "1px solid rgba(255,255,255,0.12)", color: "#ffffff", caretColor: "#3b82f6" }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = "#3b82f6"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(59,130,246,0.2)"; }}
                   onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}
                 />
               </div>
@@ -132,8 +132,8 @@ export default function AdminLoginPage() {
                   onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder="Enter password"
                   className="admin-input w-full pl-9 pr-10 py-2.5 rounded-xl text-sm transition focus:outline-none"
-                  style={{ backgroundColor: "#252b45", border: "1px solid rgba(255,255,255,0.12)", color: "#ffffff", caretColor: "#6366f1" }}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "#6366f1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(99,102,241,0.2)"; }}
+                  style={{ backgroundColor: "#12304f", border: "1px solid rgba(255,255,255,0.12)", color: "#ffffff", caretColor: "#3b82f6" }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = "#3b82f6"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(59,130,246,0.2)"; }}
                   onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}
                 />
                 <button
@@ -151,7 +151,7 @@ export default function AdminLoginPage() {
               type="submit"
               disabled={loading}
               className="w-full flex items-center justify-center gap-2 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}
+              style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)" }}
             >
               {loading ? (
                 <>

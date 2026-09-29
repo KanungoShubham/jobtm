@@ -5,7 +5,7 @@ import { activitiesApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 function fmt12(t: string) {
   if (!t) return '';
@@ -45,7 +45,7 @@ export default function MyBookingsPage() {
                       <p className="text-sm font-bold text-slate-900">{activity.title}</p>
                       <p className="text-xs text-slate-400 capitalize">{activity.category}</p>
                     </div>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>
                       {b.session_date ? new Date(b.session_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }) : ''}
                     </span>
                   </div>

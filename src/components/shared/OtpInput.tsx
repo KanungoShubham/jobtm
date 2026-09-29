@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from 'react';
 
 export function OtpInput({
-  value, onChange, length = 5, color = '#0EA5E9',
+  value, onChange, length = 5, color = '#136BAB',
 }: { value: string; onChange: (v: string) => void; length?: number; color?: string }) {
   const refs = useRef<(HTMLInputElement | null)[]>([]);
 

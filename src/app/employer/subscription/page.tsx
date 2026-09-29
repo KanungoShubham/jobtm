@@ -5,8 +5,8 @@ import { HiArrowLeft, HiCheckCircle, HiBriefcase, HiStar, HiShieldCheck, HiCredi
 import { subscriptionApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#7C3AED';
-const TINT  = '#EDE9FE';
+const COLOR = '#136BAB';
+const TINT  = '#DBEAFE';
 
 const PLAN_ICONS: Record<string, any> = {
   half_yearly: HiBriefcase,

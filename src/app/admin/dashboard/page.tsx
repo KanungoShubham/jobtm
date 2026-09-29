@@ -25,10 +25,10 @@ interface Stats {
 
 const QUICK_ACTIONS = [
   { href: '/admin/approvals',     label: 'Approvals',     desc: 'Review pending requests',    icon: HiCheckCircle,   gradient: 'from-rose-500 to-red-500'      },
-  { href: '/admin/users',         label: 'Users',         desc: 'Manage all user accounts',   icon: HiUsers,         gradient: 'from-blue-500 to-indigo-600'   },
-  { href: '/admin/jobs',          label: 'Jobs',          desc: 'Moderate job listings',      icon: HiBriefcase,     gradient: 'from-violet-500 to-purple-600' },
+  { href: '/admin/users',         label: 'Users',         desc: 'Manage all user accounts',   icon: HiUsers,         gradient: 'from-blue-500 to-blue-600'   },
+  { href: '/admin/jobs',          label: 'Jobs',          desc: 'Moderate job listings',      icon: HiBriefcase,     gradient: 'from-blue-500 to-blue-600' },
   { href: '/admin/subscriptions', label: 'Subscriptions', desc: 'Manage user subscriptions',  icon: HiCash,          gradient: 'from-emerald-500 to-teal-600'  },
-  { href: '/admin/activities',    label: 'Activities',    desc: 'Classes, payments & payouts', icon: HiAcademicCap,  gradient: 'from-sky-500 to-cyan-600'      },
+  { href: '/admin/activities',    label: 'Activities',    desc: 'Classes, payments & payouts', icon: HiAcademicCap,  gradient: 'from-blue-500 to-cyan-600'      },
   { href: '/admin/launch-offer',  label: 'Launch Offer',  desc: 'Configure free offer',       icon: HiLightningBolt, gradient: 'from-amber-500 to-orange-500'  },
   { href: '/admin/coupons',       label: 'Coupons',       desc: 'Manage reward coupons',      icon: HiTicket,        gradient: 'from-pink-500 to-rose-500'     },
   { href: '/admin/audit',         label: 'Audit Log',     desc: 'View admin activity log',    icon: HiDocumentText,  gradient: 'from-slate-500 to-slate-600'   },
@@ -124,11 +124,11 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-indigo-500 uppercase tracking-widest font-bold mb-0.5">Super Admin</p>
+          <p className="text-xs text-blue-500 uppercase tracking-widest font-bold mb-0.5">Super Admin</p>
           <h1 className="text-2xl font-extrabold text-slate-900">Control Panel</h1>
         </div>
         <button onClick={load} disabled={loading}
-          className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-600 text-sm font-medium px-4 py-2 rounded-xl shadow-sm transition">
+          className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600 text-sm font-medium px-4 py-2 rounded-xl shadow-sm transition">
           <HiRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh
         </button>
@@ -144,12 +144,12 @@ export default function AdminDashboard() {
       {/* Main Stat Cards — gradient */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          label="Total Users" icon={HiUsers} gradient="from-blue-500 to-indigo-600"
+          label="Total Users" icon={HiUsers} gradient="from-blue-500 to-blue-600"
           value={loading ? '—' : (stats?.totalUsers ?? 0)}
           sub={loading ? '' : `+${stats?.newUsersToday ?? 0} today`}
         />
         <StatCard
-          label="Active Jobs" icon={HiBriefcase} gradient="from-violet-500 to-purple-600"
+          label="Active Jobs" icon={HiBriefcase} gradient="from-blue-500 to-blue-600"
           value={loading ? '—' : (stats?.activeJobs ?? 0)}
           sub={loading ? '' : `${stats?.totalJobs ?? 0} total`}
         />
@@ -168,8 +168,8 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Job Seekers',        value: stats?.jobSeekers      ?? 0, sub: 'registered',              iconBg: 'bg-blue-50',    iconColor: 'text-blue-600',   icon: HiUsers       },
-          { label: 'Employers',          value: stats?.employers        ?? 0, sub: 'accounts',                iconBg: 'bg-indigo-50',  iconColor: 'text-indigo-600', icon: HiBriefcase   },
-          { label: 'Verified Companies', value: stats?.verifiedCompanies ?? 0, sub: `${stats?.totalCompanies ?? 0} total`, iconBg: 'bg-violet-50', iconColor: 'text-violet-600', icon: HiCheckCircle },
+          { label: 'Employers',          value: stats?.employers        ?? 0, sub: 'accounts',                iconBg: 'bg-blue-50',  iconColor: 'text-blue-600', icon: HiBriefcase   },
+          { label: 'Verified Companies', value: stats?.verifiedCompanies ?? 0, sub: `${stats?.totalCompanies ?? 0} total`, iconBg: 'bg-blue-50', iconColor: 'text-blue-600', icon: HiCheckCircle },
         ].map((s) => (
           <MiniCard key={s.label} label={s.label} value={loading ? '—' : s.value} sub={s.sub}
             icon={s.icon} iconBg={s.iconBg} iconColor={s.iconColor} />
@@ -187,7 +187,7 @@ export default function AdminDashboard() {
             icon={HiDocumentText} iconBg="bg-slate-50" iconColor="text-slate-500" />
           <MiniCard label="Total Revenue"
             value={loading ? '—' : `₹${((subStats.total_revenue ?? 0) / 100).toLocaleString('en-IN')}`}
-            icon={HiUsers} iconBg="bg-violet-50" iconColor="text-violet-600" />
+            icon={HiUsers} iconBg="bg-blue-50" iconColor="text-blue-600" />
         </div>
       )}
 
@@ -212,12 +212,12 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 gap-3">
             {QUICK_ACTIONS.map((a) => (
               <Link key={a.href} href={a.href}
-                className="flex items-center gap-3 bg-white border border-slate-100 hover:border-indigo-200 rounded-2xl px-4 py-3.5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
+                className="flex items-center gap-3 bg-white border border-slate-100 hover:border-blue-200 rounded-2xl px-4 py-3.5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
                 <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${a.gradient} flex items-center justify-center flex-shrink-0 shadow-sm`}>
                   <a.icon className="w-4.5 h-4.5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{a.label}</p>
+                  <p className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{a.label}</p>
                   <p className="text-[10px] text-slate-400">{a.desc}</p>
                 </div>
               </Link>
@@ -232,8 +232,8 @@ export default function AdminDashboard() {
             <div className="space-y-4">
               {[
                 { label: 'Job Seekers',       value: stats.jobSeekers       ?? 0, max: Math.max(stats.totalUsers, 1),     color: 'bg-blue-500'   },
-                { label: 'Employers',          value: stats.employers         ?? 0, max: Math.max(stats.totalUsers, 1),     color: 'bg-indigo-500' },
-                { label: 'Verified Companies', value: stats.verifiedCompanies ?? 0, max: Math.max(stats.totalCompanies, 1), color: 'bg-violet-500' },
+                { label: 'Employers',          value: stats.employers         ?? 0, max: Math.max(stats.totalUsers, 1),     color: 'bg-blue-500' },
+                { label: 'Verified Companies', value: stats.verifiedCompanies ?? 0, max: Math.max(stats.totalCompanies, 1), color: 'bg-blue-500' },
               ].map((h) => {
                 const pct = Math.min(100, Math.round((h.value / h.max) * 100));
                 return (
@@ -258,20 +258,20 @@ export default function AdminDashboard() {
       {/* Activity payments summary */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MiniCard label="Activity Bookings" value={loading ? '—' : actPayments.length}
-          icon={HiAcademicCap} iconBg="bg-sky-50" iconColor="text-sky-600" />
+          icon={HiAcademicCap} iconBg="bg-blue-50" iconColor="text-blue-600" />
         <MiniCard label="Total Collected" value={loading ? '—' : `₹${actCollected.toLocaleString('en-IN')}`}
           icon={HiCash} iconBg="bg-emerald-50" iconColor="text-emerald-600" />
         <MiniCard label="Held (pending payout)" value={loading ? '—' : `₹${actHeld.toLocaleString('en-IN')}`}
           icon={HiLockClosed} iconBg="bg-amber-50" iconColor="text-amber-600" />
         <MiniCard label="Platform Earnings (15%)" value={loading ? '—' : `₹${actPlatform.toLocaleString('en-IN')}`}
-          icon={HiCash} iconBg="bg-indigo-50" iconColor="text-indigo-600" />
+          icon={HiCash} iconBg="bg-blue-50" iconColor="text-blue-600" />
       </div>
 
       {/* Recent Activity Transactions */}
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <p className="text-sm font-extrabold text-slate-900">Recent Activity Transactions</p>
-          <Link href="/admin/activities" className="text-xs font-semibold text-indigo-500 hover:text-indigo-600">View all →</Link>
+          <Link href="/admin/activities" className="text-xs font-semibold text-blue-500 hover:text-blue-600">View all →</Link>
         </div>
         {recentActPayments.length > 0 ? (
           <div className="overflow-x-auto">
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
               </thead>
               <tbody>
                 {recentActPayments.map((p) => (
-                  <tr key={p.id} className="border-b border-slate-50 last:border-0 hover:bg-indigo-50/30 transition-colors">
+                  <tr key={p.id} className="border-b border-slate-50 last:border-0 hover:bg-blue-50/30 transition-colors">
                     <td className="px-5 py-2.5 font-semibold text-slate-800 max-w-[160px] truncate">{p.activity_title ?? 'Activity'}</td>
                     <td className="px-3 py-2.5 text-slate-600">{p.booked_by_name ?? '—'}</td>
                     <td className="px-3 py-2.5 text-slate-600">{p.provider_name ?? '—'}</td>
@@ -318,18 +318,18 @@ export default function AdminDashboard() {
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <p className="text-sm font-extrabold text-slate-900">Pending Reviews</p>
-          <Link href="/admin/approvals" className="text-xs font-semibold text-indigo-500 hover:text-indigo-600">View all →</Link>
+          <Link href="/admin/approvals" className="text-xs font-semibold text-blue-500 hover:text-blue-600">View all →</Link>
         </div>
         {pendingTotal > 0 ? (
           <div className="px-5 pb-5">
             <p className="text-sm text-slate-600">
               There {pendingTotal === 1 ? 'is' : 'are'}{' '}
-              <span className="font-bold text-indigo-600">{pendingTotal}</span>{' '}
+              <span className="font-bold text-blue-600">{pendingTotal}</span>{' '}
               pending {pendingTotal === 1 ? 'review' : 'reviews'} awaiting your attention.
             </p>
             <Link href="/admin/approvals"
               className="mt-3 inline-flex items-center gap-2 text-white text-sm font-semibold px-4 py-2 rounded-xl transition hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)" }}>
+              style={{ background: "linear-gradient(135deg, #136BAB, #3b82f6)" }}>
               <HiExclamationCircle className="w-4 h-4" />
               Review Now
             </Link>

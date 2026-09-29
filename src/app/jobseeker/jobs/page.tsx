@@ -8,7 +8,7 @@ import { jobsApi } from '@/lib/api';
 import { jobseekerAuth } from '@/lib/roleAuth';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 const PAGE_SIZE = 10;
 
 function timeAgo(iso: string) {
@@ -83,12 +83,12 @@ export default function BrowseJobsPage() {
         <div className="relative flex-1">
           <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Job title, company, skill…"
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-sky-300 focus:ring-4 focus:ring-sky-50 transition" />
+            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50 transition" />
         </div>
         <div className="relative flex-1">
           <HiLocationMarker className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="All locations — filter by city"
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-sky-300 focus:ring-4 focus:ring-sky-50 transition" />
+            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50 transition" />
         </div>
       </div>
 

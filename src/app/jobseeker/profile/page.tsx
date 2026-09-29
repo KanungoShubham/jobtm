@@ -9,11 +9,11 @@ import { Button, FormInput, FormSelect } from '@/components/shared/FormField';
 import { LocationSelect } from '@/components/shared/LocationSelect';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const COLOR = '#0EA5E9';
+const COLOR = '#136BAB';
 
 function Card({ title, children, onAdd }: { title: string; children: React.ReactNode; onAdd?: () => void }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-warm hover:border-sky-100 transition-all duration-300 p-6">
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-warm hover:border-blue-100 transition-all duration-300 p-6">
       <div className="flex items-center justify-between mb-3">
         <h2 className="font-bold text-slate-800">{title}</h2>
         {onAdd && (
@@ -171,7 +171,7 @@ export default function JobseekerProfilePage() {
                 <p className="text-xs text-slate-400 mb-2">No resume uploaded yet.</p>
               )}
               <label className="inline-block mt-3 w-full">
-                <span className="block text-center text-xs font-bold px-3 py-2 rounded-xl border cursor-pointer transition hover:bg-sky-50" style={{ borderColor: COLOR, color: COLOR }}>
+                <span className="block text-center text-xs font-bold px-3 py-2 rounded-xl border cursor-pointer transition hover:bg-blue-50" style={{ borderColor: COLOR, color: COLOR }}>
                   {resumeUploading ? 'Uploading…' : resume ? 'Replace Resume' : 'Upload Resume'}
                 </span>
                 <input type="file" accept=".pdf" className="hidden" disabled={resumeUploading}
@@ -187,7 +187,7 @@ export default function JobseekerProfilePage() {
               {skills.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {skills.map((s: string) => (
-                    <span key={s} className="text-[11px] font-semibold px-2 py-1 rounded-full" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>{s}</span>
+                    <span key={s} className="text-[11px] font-semibold px-2 py-1 rounded-full" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>{s}</span>
                   ))}
                 </div>
               )}
@@ -325,7 +325,7 @@ function PreferredLocationsSection({ prefs, onReload }: { prefs: any; onReload: 
       <Card title="Preferred Job Locations">
         <div className="flex flex-wrap gap-2 mb-3">
           {locations.map((loc) => (
-            <span key={loc} className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#E0F2FE', color: COLOR }}>
+            <span key={loc} className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: '#DBEAFE', color: COLOR }}>
               {loc}
               <button onClick={() => setLocations(locations.filter((l) => l !== loc))} className="hover:opacity-60">×</button>
             </span>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { employerApi } from '@/lib/api';
 import { employerAuth } from '@/lib/roleAuth';
 
-const COLOR = '#7C3AED';
+const COLOR = '#136BAB';
 const STATUSES = ['all', 'applied', 'shortlisted', 'rejected', 'hired'];
 
 export default function ApplicationsPage() {

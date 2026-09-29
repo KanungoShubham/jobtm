@@ -6,7 +6,7 @@ import { hasDarkHero } from '@/lib/darkHeroRoutes';
 
 export function ConditionalShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isStandalone = pathname?.startsWith('/admin') || pathname?.startsWith('/employer') || pathname?.startsWith('/jobseeker');
+  const isStandalone = pathname?.startsWith('/admin') || pathname?.startsWith('/employer') || pathname?.startsWith('/jobseeker') || pathname === '/advertiser/login' || pathname === '/advertiser/register';
 
   if (isStandalone) return <>{children}</>;
 

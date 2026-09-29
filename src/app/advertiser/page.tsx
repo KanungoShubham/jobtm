@@ -9,12 +9,12 @@ import { adsApi, uploadApi } from '@/lib/api';
 import { advertiserAuth } from '@/lib/roleAuth';
 import { FormInput } from '@/components/shared/FormField';
 
-const COLOR = '#F59E0B';
+const COLOR = '#136BAB';
 const TINT  = '#FEF3C7';
 
 const STATUS_STYLE: Record<string, { bg: string; text: string; label: string }> = {
   pending_payment: { bg: '#FEF3C7', text: '#92400E', label: 'Payment pending' },
-  pending:         { bg: '#E0F2FE', text: '#0369A1', label: 'Under review' },
+  pending:         { bg: '#DBEAFE', text: '#0369A1', label: 'Under review' },
   active:          { bg: '#D1FAE5', text: '#047857', label: 'Live' },
   rejected:        { bg: '#FEE2E2', text: '#B91C1C', label: 'Rejected' },
   expired:         { bg: '#F1F5F9', text: '#64748B', label: 'Expired' },
@@ -80,8 +80,8 @@ export default function AdCenterPage() {
 function PendingCard({ advertiser }: { advertiser: any }) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col items-center text-center gap-4">
-      <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E0F2FE' }}>
-        <HiClock className="w-7 h-7" style={{ color: '#0EA5E9' }} />
+      <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#DBEAFE' }}>
+        <HiClock className="w-7 h-7" style={{ color: '#136BAB' }} />
       </div>
       <p className="text-lg font-extrabold text-slate-900">Under Review</p>
       <p className="text-sm text-slate-500 leading-relaxed">
